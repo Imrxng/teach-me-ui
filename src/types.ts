@@ -36,5 +36,16 @@ export interface Answer {
 
 export enum Type {
     Multi = 'multi',
-    Single = 'single',
+    Single = 'single'
+}
+
+
+export interface LoginSession {
+    type: 'admin' | 'user';
+    username: string | undefined;
+}
+
+export interface LoginRequest {
+    username: string;
+    password: string;
 }

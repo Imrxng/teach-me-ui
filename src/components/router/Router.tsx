@@ -5,6 +5,8 @@ import Root from '../root/Root';
 import NOT_FOUND from '../not-found/Not_Found';
 import HOME from '../home/Home';
 import QUIZ from '../quiz-detail/Quiz';
+import Login from '../login/Login';
+import LOGOUT from '../logout/Logout';
 
 export const ROUTER = createBrowserRouter([
 	{
@@ -13,11 +15,23 @@ export const ROUTER = createBrowserRouter([
 		children: [
 			{
 				path: '',
+				element: <Login/>
+			},
+			{
+				path: 'home',
 				element: <HOME />
 			},
 			{
 				path: 'quiz/:ID',
 				element: <QUIZ />
+			},
+			{
+				path: '/login',
+				element: <Login />
+			},
+			{
+				path: '/logout',
+				element: <LOGOUT />
 			},
 			{
 				path: '*',

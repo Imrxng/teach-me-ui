@@ -36,7 +36,7 @@ const TABLE = ({ COURSES, CURRENT_INDEX }: TABLE_Props) => {
 									<td>{course.content.name}</td>
 									<td>{course.content.category}</td>
 									<td>{course.content.date}</td>
-									<td style={{ padding: 0 }}><button className="startQuizButton" onClick={()=> navigate(`quiz/${course.key.substring(8, course.key.length - 5)}`)} >Start</button></td>
+									<td style={{ padding: 0 }}><button className="startQuizButton" onClick={()=> navigate(`/quiz/${course.key.substring(8, course.key.length - 5)}`)} >Start</button></td>
 								</tr>
 							);
 						}

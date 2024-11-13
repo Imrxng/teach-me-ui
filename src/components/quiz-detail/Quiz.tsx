@@ -7,12 +7,12 @@ import LoadingSpinner from '../loader/LoadingSpinner';
 
 const QUIZ = () => {
 	const [COURSE, SET_COURSE] = useState<Content>();
-	const { SETLOADING, LOADING } = useContext(DATACONTEXT);
+	const { SET_LOADING, LOADING } = useContext(DATACONTEXT);
 	const { ID } = useParams();
 	const navigate = useNavigate();
 	
 	const fetchQuestions = async () => {
-		SETLOADING(true);
+		SET_LOADING(true);
 		const responseTitles = await fetch('http://localhost:3000/api/get-course-titles');
 		const titles: string[] = await responseTitles.json();
 
@@ -25,7 +25,7 @@ const QUIZ = () => {
 		const data: RootObject = await responseCourse.json();
 		SET_COURSE(data.content);
 
-		SETLOADING(false);
+		SET_LOADING(false);
 	};
 
 	useEffect(() => {
@@ -38,7 +38,7 @@ const QUIZ = () => {
 
 
 	if (!COURSE) {
-		navigate('/quiz');
+		navigate('/home');
 		return;
 	}
 	return (

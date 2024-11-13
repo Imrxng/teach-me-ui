@@ -12,11 +12,9 @@ const HOME = () => {
 	const [FILTERED_COURSES, SET_FILTERED_COURSES] = useState<RootObject[]>([]);
 	const [SEARCH, SETSEARCH] = useState<string>('');
 	const [CURRENT_INDEX, SET_CURRENT_INDEX] = useState<number>(1);
-	const { LOADING, SETLOADING } = useContext(DATACONTEXT);
-
-	 
+	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	
-
+	 
 	const getCourses = async () => {
 		const responseTitles = await fetch('http://localhost:3000/api/get-course-titles');
 		const titles: string[] = await responseTitles.json();
@@ -53,7 +51,7 @@ const HOME = () => {
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
-			SETLOADING(true);
+			SET_LOADING(true);
 			try {
 				const coursesArray = await getCourses();
 				SET_COURSES(coursesArray);
@@ -61,11 +59,11 @@ const HOME = () => {
 			} catch (error) {
 				console.error('Error fetching courses:', error);
 			} finally {
-				SETLOADING(false);
+				SET_LOADING(false);
 			}
 		};
 		fetchQuestions();
-	}, [SETLOADING]);
+	}, [SET_LOADING]);
 
 	if (LOADING) return <LoadingSpinner message='Gathering information, please wait!' />;
 
