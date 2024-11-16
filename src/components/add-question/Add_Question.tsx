@@ -11,6 +11,7 @@ const ADD_QUESTION = () => {
 	const [COURSE_TITLES, SET_COURSE_TITLES] = useState<string[]>([]);
 	const [COURSE, SET_COURSE] = useState('');
 	const [selectedType, setSelectedType] = useState<Type>(Type.Single);
+	const [CORRECT_ANSWERS, SET_CORRECT_ANSWERS] = useState<string[]>(['']);
 	const {
 		control,
 		register,
@@ -33,10 +34,9 @@ const ADD_QUESTION = () => {
 		name: 'answers',
 	});
 
-	const { fields: correctAnswerFields, append: appendCorrectAnswer, remove: removeCorrectAnswer } = useFieldArray({
-		control,
-		name: 'questionAnswerResult',
-	});
+	const appendCorrectAnswer = () => SET_CORRECT_ANSWERS([...CORRECT_ANSWERS, '']);
+	
+	const removeCorrectAnswer = (index: number) => SET_CORRECT_ANSWERS(CORRECT_ANSWERS.filter((_, i) => i !== index));
 
 	const loadCourseTitles = async () => {
 		try {
@@ -80,7 +80,8 @@ const ADD_QUESTION = () => {
 		});
 	};
 
-	const onSubmit = async (data: Question) => {
+	const onSubmit = async (data: any) => {
+		data as Question;
 		SET_LOADING(true);
 		const course: Content = await getCourse(COURSE);
 		course.questions.push(data);
@@ -201,8 +202,8 @@ const ADD_QUESTION = () => {
 
 				<div>
 					{selectedType === 'single' ? <h5>Correct Answer</h5> : <h5>Correct Answers</h5>}
-					{correctAnswerFields.map((field, index) => (
-						<div key={field.id} className="answer-section">
+					{CORRECT_ANSWERS.map((_, index) => (
+						<div key={index} className="answer-section">
 							<label>Correct Answer {index + 1}</label>
 							<input
 								{...register(`questionAnswerResult.${index}`, { required: true })}
@@ -214,11 +215,11 @@ const ADD_QUESTION = () => {
 						</div>
 					))}
 					{selectedType === Type.Multi && (
-						correctAnswerFields.length < answerFields.length && (
+						CORRECT_ANSWERS.length < answerFields.length && (
 							<button
 								type="button"
 								className="btn-add"
-								onClick={() => appendCorrectAnswer('')}
+								onClick={() => appendCorrectAnswer()}
 							>
                             Add Correct Answer
 							</button>
