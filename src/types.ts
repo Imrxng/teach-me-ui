@@ -6,10 +6,10 @@ export interface TableContent {
 
 export interface RootObject {
     key:     string;
-    content: Content;
+    content: Course;
 }
 
-export interface Content {
+export interface Course {
     id:                 string;
     name:               string;
     category:           string;

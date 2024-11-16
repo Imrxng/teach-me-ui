@@ -1,8 +1,9 @@
-import { Content, RootObject } from './types';
+import { Course, RootObject } from './types';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 export const fetchCourseTitles = async (): Promise<string[]> => {
 	try {
-		const response = await fetch('http://localhost:3000/api/get-course-titles');
+		const response = await fetch(`${BASE_URL}/get-course-titles`);
 		const data = await response.json();
 		return data;
 	} catch (error) {
@@ -12,8 +13,9 @@ export const fetchCourseTitles = async (): Promise<string[]> => {
 };
 
 export const deleteCourse = async (course: string) => {
+
 	try {
-		const response = await fetch(`http://localhost:3000/api/delete-course/${course}`, {
+		const response = await fetch(`${BASE_URL}/delete-course/${course}`, {
 			method: 'DELETE'
 		});
 
@@ -27,9 +29,9 @@ export const deleteCourse = async (course: string) => {
 	}
 };
 
-export const addCourse = async (course: Content) => {
+export const addCourse = async (course: Course) => {
 	try {
-		const response = await fetch('http://localhost:3000/api/create-course', {
+		const response = await fetch(`${BASE_URL}/create-course`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -48,8 +50,8 @@ export const addCourse = async (course: Content) => {
 	}
 };
 
-export const getCourse = async (course: string): Promise<Content> => {
-    let data: Content = {
+export const getCourse = async (course: string): Promise<Course> => {
+    let data: Course = {
         id: '',
         name: '',
         category: '',
@@ -60,7 +62,7 @@ export const getCourse = async (course: string): Promise<Content> => {
         date: ''
     }
     try {
-        const response = await fetch(`http://localhost:3000/api/get-course/${course}`);
+        const response = await fetch(`${BASE_URL}/get-course/${course}`);
         const json: RootObject = await response.json();
         data = json.content;
         if(!response.ok) throw new Error("");
@@ -73,9 +75,9 @@ export const getCourse = async (course: string): Promise<Content> => {
     return data
 };
 
-export const updateCourse = async (data: Content) => {
+export const updateCourse = async (data: Course) => {
     try {
-        const response = await fetch('http://localhost:3000/api/modify-course', {
+        const response = await fetch(`${BASE_URL}/modify-course`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,9 +97,9 @@ export const updateCourse = async (data: Content) => {
     }
 }
 
-export const addQuestion = async (data: Content) => {
+export const addQuestion = async (data: Course) => {
     try {
-        const response = await fetch('http://localhost:3000/api/modify-course', {
+        const response = await fetch(`${BASE_URL}/modify-course`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

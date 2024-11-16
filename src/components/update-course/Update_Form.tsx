@@ -1,6 +1,6 @@
 import { useForm, UseFormReset } from 'react-hook-form';
 import './Update_Form.css';
-import { Content } from '../../types';
+import { Course } from '../../types';
 import { useContext, useEffect, useState } from 'react';
 import DATACONTEXT from '../../context/DataContext';
 import LoadingSpinner from '../loader/LoadingSpinner';
@@ -37,12 +37,12 @@ const loadCourseTitles = async (setLoading: (loading: boolean) => void,
 };
 
 const onSubmit = async (
-	data: Content,
+	data: Course,
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 	setQuestionCategories: React.Dispatch<React.SetStateAction<string[]>>,
 	questionCategories: string[],
 	setCourse: React.Dispatch<React.SetStateAction<string>>,
-	reset: UseFormReset<Content>
+	reset: UseFormReset<Course>
 ) => {
 	const confirmation: boolean = confirm('Are you sure you want to update this course?');
 	if (confirmation) {
@@ -71,7 +71,7 @@ const onSelect = async (
 	setCourse: React.Dispatch<React.SetStateAction<string>>,
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 	setQuestionCategories: React.Dispatch<React.SetStateAction<string[]>>,
-	reset: UseFormReset<Content>
+	reset: UseFormReset<Course>
 ) => {
 	setCourse(selectedCourse);
 	setLoading(true); 
@@ -112,7 +112,7 @@ const UPDATE_FORM = () => {
 		reset,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<Content>({
+	} = useForm<Course>({
 		defaultValues: {
 			id: new Date().getTime().toString(),
 			name: '',

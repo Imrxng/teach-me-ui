@@ -5,11 +5,10 @@ import DATACONTEXT from '../../context/DataContext';
 
 const NAV = () => {
 	const { DARKMODE, SET_DARKMODE, LOGIN_SESSION } = useContext(DATACONTEXT);
-	console.log(LOGIN_SESSION);
 	
 	return (
 		<div className="nav">
-			<NavLink className={'navLink'} to='logout' >Home</NavLink>
+			<NavLink className={'navLink'} to='home' >Home</NavLink>
 			{ LOGIN_SESSION && LOGIN_SESSION.type === 'admin' ? 
 				<NavLink className={'navLink'} to="/administration" >Adminstration</NavLink>
 				:

@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import './Create_From.css';
-import { Content } from '../../types';
+import { Course } from '../../types';
 import { useContext, useState } from 'react';
 import DATACONTEXT from '../../context/DataContext';
 import LoadingSpinner from '../loader/LoadingSpinner';
@@ -20,7 +20,7 @@ const handleRemoveCategory = (
 );
 
 const uploadCourse = async (
-	data: Content,
+	data: Course,
 	questionCategories: string[],
 	setLoading: (loading: boolean) => void,
 	reset: () => void,
@@ -43,7 +43,7 @@ const CREATE_FORM = () => {
 		reset,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<Content>({
+	} = useForm<Course>({
 		defaultValues: {
 			id: new Date().getTime().toString(),
 			name: '',

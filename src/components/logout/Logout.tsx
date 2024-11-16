@@ -2,13 +2,14 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DATACONTEXT from '../../context/DataContext';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 const LOGOUT = () => {
 	const { SET_LOGIN_SESSION } = useContext(DATACONTEXT);
 	const NAVIGATE = useNavigate();
 
 	const handleLogout = async () => {
-		const response = await fetch('http://localhost:3000/api/logout', {
+		const response = await fetch(`${BASE_URL}/logout`, {
 			method: 'POST',
 			credentials: 'include', 
 		});

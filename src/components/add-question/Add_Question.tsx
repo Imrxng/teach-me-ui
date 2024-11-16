@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { Content, Question, Type } from '../../types';
+import { Course, Question, Type } from '../../types';
 import './Add_Question.css';
 import DATACONTEXT from '../../context/DataContext';
 import LoadingSpinner from '../loader/LoadingSpinner';
@@ -83,7 +83,7 @@ const ADD_QUESTION = () => {
 	const onSubmit = async (data: any) => {
 		data as Question;
 		SET_LOADING(true);
-		const course: Content = await getCourse(COURSE);
+		const course: Course = await getCourse(COURSE);
 		course.questions.push(data);
 		await addQuestion(course);
 		resetForm();

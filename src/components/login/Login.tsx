@@ -9,12 +9,13 @@ const Login = () => {
 	const [INPUT_PASSWORD, SET_INPUT_PASSWORD] = useState<string>('');
 	const [ERROR_MESSAGE, SET_ERROR_MESSAGE] = useState<string | undefined>(undefined);
 	const { SET_LOGIN_SESSION } = useContext(DATACONTEXT);
+	const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 
 	useEffect(() => {
 		const tryLogin = async () => {
 			if (!LOGIN_REQUEST) return;
-			const response = await fetch('http://localhost:3000/api/login', {
+			const response = await fetch(`${BASE_URL}/login`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',

@@ -8,7 +8,7 @@ const ADMINISTRATION = () => {
 	const NAVIGATE = useNavigate();
 	useEffect(() => {
 		if ( LOGIN_SESSION && LOGIN_SESSION.type === 'user') {
-			NAVIGATE('/');
+			NAVIGATE('/home');
 		}
 	}, [LOGIN_SESSION, NAVIGATE]);
 	return (

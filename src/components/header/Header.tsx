@@ -5,6 +5,7 @@ import pictureDark from '../../assets/images/logo-dark.svg';
 import DATACONTEXT from '../../context/DataContext';
 import './Header.component.css';
 import NAV from './Nav';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 import {  useLocation, useNavigate } from 'react-router-dom';
 
 const HEADER = () => {
@@ -24,7 +25,7 @@ const HEADER = () => {
 
 	useEffect(() => {
 		const checkSession = async () => {
-			const response = await fetch('http://localhost:3000/api/login/session', {
+			const response = await fetch(`${BASE_URL}/login/session`, {
 				method: 'GET',
 				credentials: 'include',
 			});

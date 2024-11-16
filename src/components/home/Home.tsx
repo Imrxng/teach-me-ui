@@ -6,6 +6,7 @@ import DATACONTEXT from '../../context/DataContext';
 import Search from './Search';
 import Pagination from './Pagination';
 import LoadingSpinner from '../loader/LoadingSpinner';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 const HOME = () => {
 	const [COURSES, SET_COURSES] = useState<RootObject[]>([]);
@@ -16,12 +17,12 @@ const HOME = () => {
 	
 	 
 	const getCourses = async () => {
-		const responseTitles = await fetch('http://localhost:3000/api/get-course-titles');
+		const responseTitles = await fetch(`${BASE_URL}/get-course-titles`);
 		const titles: string[] = await responseTitles.json();
 
 		return await Promise.all(
 			titles.map(async (title) => {
-				const responseCourse = await fetch(`http://localhost:3000/api/get-course/${title}`);
+				const responseCourse = await fetch(`${BASE_URL}/get-course/${title}`);
 				return await responseCourse.json();
 			})
 		);
@@ -71,13 +72,20 @@ const HOME = () => {
 		<div className="homeMain">
 			<Search search={SEARCH} onSearchChange={handleSearchChange} />
 			<TABLE COURSES={FILTERED_COURSES} CURRENT_INDEX={CURRENT_INDEX} />
-			<Pagination
-				currentIndex={CURRENT_INDEX}
-				maxIndex={Math.ceil(FILTERED_COURSES.length / 5)}
-				onPrevious={goToPreviousPage}
-				onNext={goToNextPage}
-			/>
-		</div>
+			{
+				FILTERED_COURSES.length > 0 
+				?
+					<Pagination
+					currentIndex={CURRENT_INDEX}
+					maxIndex={Math.ceil(FILTERED_COURSES.length / 5)}
+					onPrevious={goToPreviousPage}
+					onNext={goToNextPage}
+					/>
+				:
+					<>
+					</>
+			}
+		</div>	
 	);
 };
 
