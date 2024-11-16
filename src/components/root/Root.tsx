@@ -18,9 +18,9 @@ const Root = () => {
 	return (
 		<div className={DARKMODE ? 'body' : 'body lightmode'}>
 			<HEADER/>
-			<div className="main">
+			<main className="main">
 				<Outlet/>
-			</div>
+			</main>
 		</div>
 	);
 };

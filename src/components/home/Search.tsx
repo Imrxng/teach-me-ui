@@ -10,9 +10,10 @@ const Search = ({ search, onSearchChange } : SearchProps) => (
 		type="text"
 		name="search"
 		id="search"
+		className="search-input"
 		value={search}
 		onChange={onSearchChange}
-		placeholder="Name"
+		placeholder="Search course"
 	/>
 );
 

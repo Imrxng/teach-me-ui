@@ -13,7 +13,7 @@ export interface Content {
     id:                 string;
     name:               string;
     category:           string;
-    passingGrade:       string;
+    passingGrade:       number;
     completeTime:       number;
     questionCategories: string[];
     questions:          Question[];

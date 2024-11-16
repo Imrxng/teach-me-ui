@@ -1,0 +1,48 @@
+.courses-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#search {
+    background: var(--primary-light-color);
+    color: var(--primary-dark-color);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.courses-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 3rem;
+    max-width: 1200px;
+}
+
+.course-card {
+    flex: 1 1 calc(25% - 1rem);
+    width: 250px;
+    text-align: center;
+    background: var(--primary-light-color);
+    color: var(--primary-dark-color);
+    padding: 1rem;
+    position: relative;
+    font-weight: bolder;
+    border-radius: 0.25rem;
+}
+
+.delete-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 5px;
+    font-size: 16pt;
+    font-weight: normal;
+}
+
+.delete-button:hover{
+    color: red;
+    cursor: pointer;
+}
