@@ -7,10 +7,15 @@ const LOGOUT = () => {
 	const { SET_LOGIN_SESSION } = useContext(DATACONTEXT);
 	const NAVIGATE = useNavigate();
 
-	const handleLogout = () => {
-		SET_LOGIN_SESSION(undefined);
-		localStorage.removeItem('loginSession');
-		NAVIGATE('/login');
+	const handleLogout = async () => {
+		const response = await fetch('http://localhost:3000/api/logout', {
+			method: 'POST',
+			credentials: 'include', 
+		});
+		if (response.ok) {
+			SET_LOGIN_SESSION(undefined);
+			NAVIGATE('/login');	
+		}
 	};
 	useEffect(() => {
 		handleLogout();

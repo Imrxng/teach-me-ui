@@ -9,51 +9,26 @@ const Login = () => {
 	const [INPUT_USERNAME, SET_INPUT_USERNAME] = useState<string>('');
 	const [INPUT_PASSWORD, SET_INPUT_PASSWORD] = useState<string>('');
 	const [ERROR_MESSAGE, SET_ERROR_MESSAGE] = useState<string | undefined>(undefined);
-	const { SET_LOGIN_SESSION } = useContext(DATACONTEXT);
+	const { SET_LOGIN_SESSION, LOGIN_SESSION } = useContext(DATACONTEXT);
 	const NAVIGATE = useNavigate();
 
-	const checkAdminUsername = (username: string | undefined) => username === 'admin';
-	const checkAdminPassword = (password: string | undefined) => password === 'admin';
-
-	const HardCodedLogin = () => {
-		const usernameValid = checkAdminUsername(LOGIN_REQUEST?.username);
-		const passwordValid = checkAdminPassword(LOGIN_REQUEST?.password);
-		handleLogin(usernameValid, passwordValid);
-	};
-
-	const handleLogin = (usernameValid: boolean, passwordValid: boolean) => {
-		if (usernameValid && passwordValid) {
-		  const sessionData: LoginSession = {
-				type: 'admin',
-				username: 'admin',
-		  };
-	  
-		  const expiryTime = Date.now() + 12 * 60 * 60 * 1000;
-	  
-		  localStorage.setItem('loginSession', JSON.stringify({
-				...sessionData,
-				expiryTime
-		  }));
-	  
-		  SET_LOGIN_SESSION(sessionData);
-		}
-	  };
-
 	useEffect(() => {
-		const savedSession = localStorage.getItem('loginSession');
-		if (savedSession) {
-		  const sessionData = JSON.parse(savedSession);
-	  
-		  if (sessionData.expiryTime > Date.now()) {
-				SET_LOGIN_SESSION(sessionData);
+		const checkSession = async () => {
+			const response = await fetch('http://localhost:3000/api/login/session', {
+				method: 'GET',
+				credentials: 'include',
+			});
+
+			if (response.ok) {
+				const sessionData = await response.json();
+				SET_LOGIN_SESSION({ username: sessionData.token.USERNAME, type: sessionData.token.TYPE });
 				NAVIGATE('/home');
-		  } else {
-				localStorage.removeItem('loginSession');
-				NAVIGATE('/login');
-		  }
-		}
-	  }, [NAVIGATE, SET_LOGIN_SESSION]);
-	  
+			}
+		};
+
+		checkSession();
+	}, [LOGIN_SESSION, NAVIGATE, SET_LOGIN_SESSION]);
+
 
 	useEffect(() => {
 		const tryLogin = async () => {
@@ -61,22 +36,24 @@ const Login = () => {
 			const response = await fetch('http://localhost:3000/api/login', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(LOGIN_REQUEST)
+				credentials: 'include',
+				body: JSON.stringify({ USERNAME: INPUT_USERNAME, PASSWORD: INPUT_PASSWORD }),
 			});
-			const data: LoginSession = await response.json();
-			HardCodedLogin();
-			if (data.username) {
+
+			if (response.ok) {
+				const data: LoginSession = await response.json();
 				SET_LOGIN_SESSION(data);
 				SET_ERROR_MESSAGE(undefined);
-				localStorage.setItem('loginSession', JSON.stringify(data));  
+				localStorage.setItem('loginSession', JSON.stringify(data));
 			} else {
-				SET_ERROR_MESSAGE('Username or password incorrect!');
+				const message = await response.json();				
+				SET_ERROR_MESSAGE(message.message);
 			}
 			SET_LOGIN_REQUEST(undefined);
 		};
 		tryLogin();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [LOGIN_REQUEST, SET_LOGIN_SESSION]);
+		 
+	}, [INPUT_PASSWORD, INPUT_USERNAME, LOGIN_REQUEST, SET_LOGIN_SESSION]);
 
 	const handleLoginClick = () => {
 		if (INPUT_USERNAME && INPUT_PASSWORD) {
@@ -118,7 +95,7 @@ const Login = () => {
 				{ERROR_MESSAGE && <p id='errorMessage'>{ERROR_MESSAGE} </p>}
 			</div>
 			<div className="hexagon">
-				<img src={picture} alt='decoLogin'/>
+				<img src={picture} alt='decoLogin' />
 			</div>
 		</div>
 	);
