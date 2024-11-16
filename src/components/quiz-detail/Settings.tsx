@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Course } from "../../types";
-
+import "./settings.css"
 interface SETTINGS_Props {
     COURSE: Course;
     SET_START_QUIZ: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,13 +10,14 @@ const SETTINGS = ({ COURSE, SET_START_QUIZ } : SETTINGS_Props) => {
     const [AMOUNT_OF_QUESTIONS, SET_AMOUNT_OF_QUESTIONS] = useState<number>(1);
 	const [CHECK_BETWEEN_QUESTIONS, SET_CHECK_BETWEEN_QUESTIONS] = useState<boolean>(true);
     return (
-        <div>
+        <div className="card">
             {COURSE ? 
                 <>
-                    <p>Settings</p>
+                    <h2>Settings</h2>
+                    <div className="doos">
                     <label htmlFor="AMOUNT_OF_QUESTIONS">
-                        Amount of questions (max {COURSE.questions.length})
-                    </label>
+                        Amount of questions (max {COURSE.questions.length}):
+                    </label><br/>
                     <input
                     type="number"
                     value={AMOUNT_OF_QUESTIONS}
@@ -29,8 +30,10 @@ const SETTINGS = ({ COURSE, SET_START_QUIZ } : SETTINGS_Props) => {
                         }
                     }}
                     />	
+                    </div>
+                    <div className="doos">
                     <p>Check for outcome in between questions?</p>
-                    <label htmlFor="checkBetweenQuestionsYes">Yes</label>
+                    
                     <input
                         type="radio"
                         name="CHECK_BETWEEN_QUESTIONS"
@@ -39,7 +42,9 @@ const SETTINGS = ({ COURSE, SET_START_QUIZ } : SETTINGS_Props) => {
                         checked={CHECK_BETWEEN_QUESTIONS === true}
                         onChange={(e) => SET_CHECK_BETWEEN_QUESTIONS(e.target.value === 'true' ? true : false)}
                     />
-                    <label htmlFor="checkBetweenQuestionsNo">No</label>
+                    <label htmlFor="checkBetweenQuestionsYes">Yes</label>
+                    <br/>
+                    
                     <input
                         type="radio"
                         name="CHECK_BETWEEN_QUESTIONS"
@@ -48,6 +53,9 @@ const SETTINGS = ({ COURSE, SET_START_QUIZ } : SETTINGS_Props) => {
                         checked={CHECK_BETWEEN_QUESTIONS === false}
                         onChange={(e) => SET_CHECK_BETWEEN_QUESTIONS(e.target.value === 'true' ? true : false)}
                     />
+                    <label htmlFor="checkBetweenQuestionsNo">No</label>
+                    <br/>
+                    </div>
                     <button className='startQuizButton' onClick={() => SET_START_QUIZ(true)}>Start quiz</button>
                 </>
             : 
