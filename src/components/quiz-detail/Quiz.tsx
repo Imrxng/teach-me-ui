@@ -9,7 +9,7 @@ const QUIZ = () => {
 	const [COURSE, SET_COURSE] = useState<Content>();
 	const { SET_LOADING, LOADING } = useContext(DATACONTEXT);
 	const { ID } = useParams();
-	const navigate = useNavigate();
+	const NAVIGATE = useNavigate();
 	
 	const fetchQuestions = async () => {
 		SET_LOADING(true);
@@ -17,7 +17,7 @@ const QUIZ = () => {
 		const titles: string[] = await responseTitles.json();
 
 		if (ID && !titles.includes(ID)) {
-			navigate('/quiz');
+			NAVIGATE('/not-found');
 			return;
 		}
 
@@ -35,15 +35,25 @@ const QUIZ = () => {
 
 	if (LOADING) return <LoadingSpinner message='Gathering information, please wait!' />;
 
+	
+	// const Settings = () => {
+	// 	return (
+			
+	// 	);
+	// }
 
-
-	if (!COURSE) {
-		navigate('/home');
-		return;
-	}
 	return (
 		<div>
-			{COURSE.name}
+			{COURSE ? 
+				<>
+					<p>Settings</p>
+					<label htmlFor="amountOfQuestions">amount of questions (max {COURSE.questions.length}) </label>
+					<input type="number" name="amountOfQuestions" id="amountOfQuestions" min={1} value={COURSE.questions.length} max={COURSE.questions.length} />
+				</>
+					:
+				<></>
+			}
+			
 		</div>
 	);
 

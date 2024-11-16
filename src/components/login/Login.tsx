@@ -2,32 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { LoginRequest, LoginSession } from '../../types';
 import picture from '../../assets/images/testop-software-testing.webp';
 import DATACONTEXT from '../../context/DataContext';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const [LOGIN_REQUEST, SET_LOGIN_REQUEST] = useState<LoginRequest | undefined>();
 	const [INPUT_USERNAME, SET_INPUT_USERNAME] = useState<string>('');
 	const [INPUT_PASSWORD, SET_INPUT_PASSWORD] = useState<string>('');
 	const [ERROR_MESSAGE, SET_ERROR_MESSAGE] = useState<string | undefined>(undefined);
-	const { SET_LOGIN_SESSION, LOGIN_SESSION } = useContext(DATACONTEXT);
-	const NAVIGATE = useNavigate();
-
-	useEffect(() => {
-		const checkSession = async () => {
-			const response = await fetch('http://localhost:3000/api/login/session', {
-				method: 'GET',
-				credentials: 'include',
-			});
-
-			if (response.ok) {
-				const sessionData = await response.json();
-				SET_LOGIN_SESSION({ username: sessionData.token.USERNAME, type: sessionData.token.TYPE });
-				NAVIGATE('/home');
-			}
-		};
-
-		checkSession();
-	}, [LOGIN_SESSION, NAVIGATE, SET_LOGIN_SESSION]);
+	const { SET_LOGIN_SESSION } = useContext(DATACONTEXT);
 
 
 	useEffect(() => {

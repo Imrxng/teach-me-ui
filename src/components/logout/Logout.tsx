@@ -14,6 +14,7 @@ const LOGOUT = () => {
 		});
 		if (response.ok) {
 			SET_LOGIN_SESSION(undefined);
+			localStorage.removeItem('persistedRoute');
 			NAVIGATE('/login');	
 		}
 	};

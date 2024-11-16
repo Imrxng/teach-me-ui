@@ -20,7 +20,7 @@ export const ROUTER = createBrowserRouter([
 		children: [
 			{
 				path: '',
-				element: <Login/>
+				element: <NOT_FOUND/>
 			},
 			{
 				path: 'home',
@@ -59,6 +59,9 @@ export const ROUTER = createBrowserRouter([
 				element: <UPDATE_COURSE />
 			},
 			{
+				path: '/not-found',
+				element: <NOT_FOUND />
+			},{
 				path: '*',
 				element: <NOT_FOUND />
 			}
