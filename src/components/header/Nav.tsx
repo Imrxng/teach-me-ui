@@ -10,7 +10,7 @@ const NAV = () => {
 		<div className="nav">
 			<NavLink className={'navLink'} to='logout' >Home</NavLink>
 			{ LOGIN_SESSION && LOGIN_SESSION.type === 'admin' ? 
-				<NavLink className={'navLink'} to="/Adminstration" >Adminstration</NavLink>
+				<NavLink className={'navLink'} to="/administration" >Adminstration</NavLink>
 				:
 				<></>
 			}

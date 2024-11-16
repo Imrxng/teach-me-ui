@@ -30,7 +30,6 @@ tr {
 }
 
 .body {
-  height: 100vh;
   background-color: var(--primary-dark-color);
   margin: 0;
   padding: 0;
@@ -38,6 +37,7 @@ tr {
   flex-direction: column;
   font-family: Arial, sans-serif;
   color: white;
+  min-height: 100vh;
 }
 
 
@@ -58,7 +58,6 @@ tr {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20rem;
 }
 
 .mainLogin {

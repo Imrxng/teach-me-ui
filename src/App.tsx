@@ -6,11 +6,15 @@ import { DATAPROVIDER } from './context/DataContext';
 import ROUTER from './components/router/Router';
 
 function App() {
-  
+
 	return (
-		<DATAPROVIDER>
-			<RouterProvider future={{ v7_startTransition: true }} router={ROUTER}/>
-		</DATAPROVIDER>
+		<html>
+			<body>
+				<DATAPROVIDER>
+					<RouterProvider future={{ v7_startTransition: true }} router={ROUTER} />
+				</DATAPROVIDER>
+			</body>
+		</html>
 	);
 }
 
