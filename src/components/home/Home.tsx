@@ -74,14 +74,14 @@ const HOME = () => {
 			<TABLE COURSES={FILTERED_COURSES} CURRENT_INDEX={CURRENT_INDEX} />
 			{
 				FILTERED_COURSES.length > 0 
-				?
+					?
 					<Pagination
-					currentIndex={CURRENT_INDEX}
-					maxIndex={Math.ceil(FILTERED_COURSES.length / 5)}
-					onPrevious={goToPreviousPage}
-					onNext={goToNextPage}
+						currentIndex={CURRENT_INDEX}
+						maxIndex={Math.ceil(FILTERED_COURSES.length / 5)}
+						onPrevious={goToPreviousPage}
+						onNext={goToNextPage}
 					/>
-				:
+					:
 					<>
 					</>
 			}

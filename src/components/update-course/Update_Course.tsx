@@ -1,4 +1,3 @@
-import React from 'react';
 import UPDATE_FORM from './Update_Form';
 
 const UPDATE_COURSE = () => {

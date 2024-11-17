@@ -39,17 +39,28 @@ const HEADER = () => {
 			}
 		};
 
-		if (!LOGIN_SESSION ) {
-			checkSession();
-		} else {
-			const persistedRoute = localStorage.getItem('persistedRoute');
-			if (persistedRoute && persistedRoute !== '/login') {
-				NAVIGATE(persistedRoute);
-			} else if (LOCATION.pathname === '/login') {
-				NAVIGATE('/home');
+		const handleLoginSession = () => {
+			if (!LOGIN_SESSION) {
+			  checkSession();
+			  return;
 			}
-		}
-	}, [LOGIN_SESSION, NAVIGATE, SET_LOGIN_SESSION]);
+		  
+			const persistedRoute = localStorage.getItem('persistedRoute');
+			const shouldNavigate = getRouteToNavigate(persistedRoute);
+			
+			if (shouldNavigate) {
+			  NAVIGATE(shouldNavigate);
+			}
+		  };
+		  
+		  const getRouteToNavigate = (persistedRoute: string | null) => {
+			if (persistedRoute === '/login') {
+			  return LOCATION.pathname === '/login' ? '/home' : null;
+			}
+			return persistedRoute;
+		  };
+		  handleLoginSession();
+	}, [LOCATION.pathname, LOGIN_SESSION, NAVIGATE, SET_LOGIN_SESSION]);
 
 	return (
 		<div className="header">

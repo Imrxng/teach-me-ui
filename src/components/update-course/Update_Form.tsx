@@ -7,14 +7,14 @@ import LoadingSpinner from '../loader/LoadingSpinner';
 import { fetchCourseTitles, getCourse, updateCourse } from '../../ApiService';
 
 const handleAddCategory = (
-	questionCategories: string[], 
+	questionCategories: string[],
 	setQuestionCategories: React.Dispatch<React.SetStateAction<string[]>>
 ) => setQuestionCategories([...questionCategories, '']);
 
 const handleRemoveCategory = (
 	index: number,
 	questionCategories: string[],
-	setQuestionCategories: React.Dispatch<React.SetStateAction<string[]>> 
+	setQuestionCategories: React.Dispatch<React.SetStateAction<string[]>>
 ) => setQuestionCategories(
 	questionCategories.filter((_, i) => i !== index)
 );
@@ -74,7 +74,7 @@ const onSelect = async (
 	reset: UseFormReset<Course>
 ) => {
 	setCourse(selectedCourse);
-	setLoading(true); 
+	setLoading(true);
 
 	if (selectedCourse) {
 		try {
@@ -95,10 +95,10 @@ const onSelect = async (
 			console.error('Error fetching course details:', error);
 			alert('Failed to fetch course details.');
 		} finally {
-			setLoading(false); 
+			setLoading(false);
 		}
 	} else {
-		setLoading(false); 
+		setLoading(false);
 	}
 };
 
@@ -242,7 +242,7 @@ const UPDATE_FORM = () => {
 									onClick={() => handleRemoveCategory(index, QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES)}
 									className="delete-category-button"
 								>
-                                    Delete
+									Delete
 								</button>
 							</div>
 						</div>
@@ -253,7 +253,7 @@ const UPDATE_FORM = () => {
 						onClick={() => handleAddCategory(QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES)}
 						className="add-category-button"
 					>
-                        Add Question Category
+						Add Question Category
 					</button>
 				</div>
 
@@ -261,7 +261,7 @@ const UPDATE_FORM = () => {
 					type="submit"
 					className={`submit-button ${Object.keys(errors).length === 0 ? 'valid' : 'invalid'}`}
 				>
-                    Update Course
+					Update Course
 				</button>
 			</form>
 		</div>

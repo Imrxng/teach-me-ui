@@ -27,6 +27,7 @@ export interface Question {
     category:             string;
     answers:              Answer[];
     questionAnswerResult: string[];
+    yourAnswer?:          string;
 }
 
 export interface Answer {

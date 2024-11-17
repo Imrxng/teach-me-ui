@@ -1,4 +1,4 @@
-import { Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import HEADER from '../header/Header';
 import { useContext } from 'react';
 import DATACONTEXT from '../../context/DataContext';

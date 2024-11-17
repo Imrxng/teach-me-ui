@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import './Reset.css';
