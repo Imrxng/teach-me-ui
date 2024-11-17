@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Question } from '../../types';
 import OneAnswer from './OneAnswer';
 
@@ -43,7 +43,12 @@ const QuestionComponent = ({ TIME, QUESTION, CURRENT_INDEX, LENGTH, SET_CURRENT_
 			handleAnswerReview();
 		}
 	};
-
+	useEffect(() => {
+		if (TIME <= 0) {
+			finishQuiz();
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [TIME]);
 	return (
 		<>
 			<p>Question {CURRENT_INDEX} of {LENGTH}</p>
