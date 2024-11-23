@@ -6,7 +6,7 @@
   }
 
 h1 {
-    font-size: 26pt;
+    font-size: 20pt;
     background: linear-gradient(45deg, var(--primary-light-color), var(--secondary-color));
     -webkit-background-clip: text;
     background-clip: text;
@@ -16,17 +16,18 @@ h1 {
 
 .btn-list{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
 }
 
 
 .btn {
     padding: 10px;
-    margin: 0 10px;
+    width: 200px;
+    text-align: center;
     margin-top: 2rem;
     background: var(--secondary-color);
-    border-radius: .25rem;
+    border-radius: .5rem;
     font-weight: bold;
     color: #f5f5f5;
 }
@@ -36,4 +37,23 @@ h1 {
     color: var(--primary-dark-color);
     background: var(--primary-light-color);
     font-weight: bold;
+}
+
+.admin-container {
+    display: flex;
+    width: 100vw;
+    margin: 0 9rem;
+}
+
+.admin-aside {
+    width: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.admin-main {
+    flex: 1; 
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: auto; 
 }

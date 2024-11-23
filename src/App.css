@@ -126,7 +126,6 @@ tr {
 
 #search, .input {
   border-bottom: 1px var(--secondary-color) solid;
-  padding-bottom: 1rem;
   transition: border-bottom 0.3s ease-in-out; 
 }
 

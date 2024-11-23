@@ -1,33 +1,34 @@
-.create-form-container {
-    max-width: 800px;
+.createFormContainer {
     margin: 0 auto;
 }
 
-.form-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-top: 10px;
+.createTitle {
+    font-size: 40pt;
+    margin-bottom: 2rem;
+    text-align: left;
 }
 
-.create-form {
+.createForm {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.form-group {
+.formGroup {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1;
 }
 
-.form-label {
+.formLabel {
     font-weight: 600;
-    font-size: 1rem
+    font-size: 1rem;
+    margin-bottom: 0;
 }
 
-.form-input {
+.formInput {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -35,33 +36,35 @@
     width: 100%;
     background: var(--primary-light-color);
     color: var(--primary-dark-color);
-    width: 400px;
 }
 
-.question-category-item .form-input{
+.formInput:disabled{
+    background-color: rgba(220, 220, 220, 0.5);
+}
+
+.questionCategoryItem .formInput{
     width: 200px;
 }
 
-.error-message {
+.errorMessage {
     color: red;
     font-size: 0.875rem;
 }
 
-.question-categories {
+.questionCategories {
     display: flex;
-    flex-direction: column;
+    gap: 0.5rem;
+    flex-direction: row;
     flex-wrap: wrap;
-    max-width: 800px;
-    margin-top: 20px;
 }
 
-.question-categories-title {
+.questionCategoriesTitle {
+    margin-top: 10px;
     font-size: 1.25rem;
     font-weight: bold;
-    margin-bottom: 10px;
 }
 
-.question-category-item {
+.questionCategoryItem {
     display:flex;
     gap:10px;
     flex-direction: column;
@@ -71,34 +74,40 @@
     margin-bottom: 15px;
 }
 
-.delete-category-button {
-    background-color: #f44336;
+.deleteCategoryButton {
+    background-color: red;
     color: white;
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-align: center;
+    width: 100px;
+    font-weight: bold;
 }
 
-.delete-category-button:hover {
+.deleteCategoryButton:hover {
     background-color: #d32f2f;
 }
 
-.add-category-button {
-    background-color: #4caf50;
+.addCategoryButton {
+    background-color: var(--secondary-color);
     color: white;
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
+    text-align: center;
+    width: 200px;
 }
 
-.add-category-button:hover {
-    background-color: #388e3c;
+.addCategoryButton:hover {
+    background-color: var(--primary-light-color);
+    color: var(--primary-dark-color);
 }
 
-.submit-button {
+.submitButton {
     padding: 12px 24px;
     border-radius: 5px;
     color: white;
@@ -107,20 +116,23 @@
     cursor: pointer;
     border: none;
     font-weight: bold;
+    text-align: center;
+    width: 200px;
 }
 
-.submit-button.valid {
-    background-color: #3f51b5;
+.submitButton.valid {
+    background-color: var(--secondary-color);
 }
 
-.submit-button.invalid {
+.submitButton.invalid {
     background-color: #9e9e9e;
 }
 
-.submit-button:hover {
-    background-color: #303f9f;
+.submitButton:hover {
+    background-color: var(--primary-light-color);
+    color: var(--primary-dark-color);
 }
 
-.submit-button:disabled {
+.submitButton:disabled {
     cursor: not-allowed;
 }

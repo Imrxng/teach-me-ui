@@ -1,3 +1,4 @@
+import styles from './search.module.css'
 
 interface SearchProps {
     search: string;
@@ -10,7 +11,7 @@ const Search = ({ search, onSearchChange } : SearchProps) => (
 		type="text"
 		name="search"
 		id="search"
-		className="search-input"
+		className={styles.searchInput}
 		value={search}
 		onChange={onSearchChange}
 		placeholder="Search course"
