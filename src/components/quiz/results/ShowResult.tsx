@@ -1,30 +1,31 @@
-import { useState } from 'react';
-import { Course } from '../../types';
-import Pagination from '../home/Pagination';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { QuizContext } from '../provider/QuizContext';
+import Pagination from '../../home/Pagination';
 
-interface ShowResultProps {
-    COURSE: Course;
-    AMOUNT_OF_QUESTIONS: number;
-}
-
-const ShowResult = ({ COURSE, AMOUNT_OF_QUESTIONS }: ShowResultProps) => {
+const ShowResult = () => {
 	const [currentPage, setCurrentPage] = useState(1);
-	const answersPerPage = 3;   
+	const { COURSE, AMOUNT_OF_QUESTIONS } = useContext(QuizContext);
 	const NAVIGATE = useNavigate();
-	let SCORE = 0;
-	const INCORRECT_ANSWERS: { question: string, correctAnswer: string | string[], yourAnswer: string | undefined}[] = [];
+	const { ID } = useParams();
+	let score = 0;
+	const answersPerPage = 3;   
+
+	const INCORRECT_ANSWERS: { question: string, correctAnswer: string[], yourAnswer:  string[] | undefined }[] = [];
 
 	COURSE.questions.slice(0, AMOUNT_OF_QUESTIONS).forEach((question) => {
-		const IS_CORRECT = question.yourAnswer && question.questionAnswerResult.includes(question.yourAnswer);
+		const yourAnswer = question.yourAnswer;
+		const correctAnswer = question.questionAnswerResult;
+
+		const IS_CORRECT = yourAnswer && correctAnswer.every(answer => yourAnswer.includes(answer));
 
 		if (IS_CORRECT) {
-			SCORE++;
+			score++;
 		} else {
 			INCORRECT_ANSWERS.push({
 				question: question.question,
-				correctAnswer: question.questionAnswerResult,  
-				yourAnswer: question.yourAnswer,
+				correctAnswer: correctAnswer,  
+				yourAnswer: yourAnswer,
 			});
 		}
 	});
@@ -46,7 +47,7 @@ const ShowResult = ({ COURSE, AMOUNT_OF_QUESTIONS }: ShowResultProps) => {
 
 	return (
 		<div>
-			<h3>SCORE: {((SCORE / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</h3>
+			<h3>score: {((score / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</h3>
 			<div>
 				<h4>{INCORRECT_ANSWERS.length > 0 ? 'Incorrect Answers:' : 'Resultaten:'}</h4>
 				{INCORRECT_ANSWERS.length > 0 ? (
@@ -55,12 +56,12 @@ const ShowResult = ({ COURSE, AMOUNT_OF_QUESTIONS }: ShowResultProps) => {
 							{CURRENT_INCORRECT_ANSWERS.map((answer, index) => (
 								<li key={index}>
 									<p><strong>Question:</strong> {answer.question}</p>
-									<p><strong>Your Answer:</strong> {answer.yourAnswer}</p>
-									<p><strong>Correct Answer:</strong> {Array.isArray(answer.correctAnswer) ? answer.correctAnswer.join(', ') : answer.correctAnswer}</p>
+									<p><strong>Your Answer:</strong> {answer.yourAnswer?.join(', ') || 'No answer given'}</p>
+									<p><strong>Correct Answer:</strong> {answer.correctAnswer.join(', ')}</p>
 								</li>
 							))}
 						</ul>
-						<Pagination 
+						<Pagination
 							currentIndex={currentPage}
 							maxIndex={TOTAL_PAGES}
 							onPrevious={handlePreviousPage}
@@ -72,6 +73,7 @@ const ShowResult = ({ COURSE, AMOUNT_OF_QUESTIONS }: ShowResultProps) => {
 				)}
 			</div>
 			<button className='startQuizButton' onClick={() => NAVIGATE('/home')}>Back to home</button>
+			<a className='startQuizButton' href={`/quiz/${ID}`}>Restart quiz</a>
 		</div>
 	);
 };

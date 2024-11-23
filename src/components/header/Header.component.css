@@ -15,3 +15,8 @@
 #logo {
     height: 5rem;
 }
+
+#modeButton:hover {
+    transition-duration: 1s;
+    color: var(--secondary-color);
+}

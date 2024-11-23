@@ -42,7 +42,7 @@ input[type="radio"] {
 
 
 button:hover {
-  background: #0056b3;
+  background: #87c9b8;
 }
 
 input[type="radio"] {
@@ -50,7 +50,7 @@ input[type="radio"] {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid #007bff;
+  border: 2px solid #87c9b8;
   background-color: white;
   position: relative;
   vertical-align: middle;
@@ -58,8 +58,8 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #87c9b8;
+  border-color: #87c9b8;
 }
 
 input[type="radio"]:checked::after {
@@ -75,5 +75,5 @@ input[type="radio"]:checked::after {
 
 input[type="radio"]:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 5px rgba(135, 201, 184, 0.5);
 }

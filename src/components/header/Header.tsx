@@ -3,21 +3,21 @@ import { useContext, useEffect } from 'react';
 import picture from '../../assets/images/logo.svg';
 import pictureDark from '../../assets/images/logo-dark.svg';
 import DATACONTEXT from '../../context/DataContext';
-import './Header.component.css';
-import NAV from './Nav';
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 import {  useLocation, useNavigate } from 'react-router-dom';
+import NAV from './Nav';
+import './Header.component.css';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 const HEADER = () => {
 	const { DARKMODE, LOGIN_SESSION, SET_LOGIN_SESSION } = useContext(DATACONTEXT);
 	const LOCATION = useLocation();	
 	
 	  useEffect(() => {
-		const currentRoute = LOCATION.pathname;
-		const persistedRoute = localStorage.getItem('persistedRoute');
-
-		if (persistedRoute !== currentRoute) {
-		  localStorage.setItem('persistedRoute', currentRoute);
+		const CURRENT_ROUTE = LOCATION.pathname;
+		const PERSISTED_ROUTE = localStorage.getItem('persistedRoute');
+		
+		if (PERSISTED_ROUTE !== CURRENT_ROUTE) {
+		  localStorage.setItem('persistedRoute', CURRENT_ROUTE);
 		}
 	  }, [LOCATION]);
 
@@ -45,19 +45,19 @@ const HEADER = () => {
 			  return;
 			}
 		  
-			const persistedRoute = localStorage.getItem('persistedRoute');
-			const shouldNavigate = getRouteToNavigate(persistedRoute);
+			const PERSISTED_ROUTE = localStorage.getItem('persistedRoute');
+			const shouldNavigate = getRouteToNavigate(PERSISTED_ROUTE);
 			
 			if (shouldNavigate) {
 			  NAVIGATE(shouldNavigate);
 			}
 		  };
 		  
-		  const getRouteToNavigate = (persistedRoute: string | null) => {
-			if (persistedRoute === '/login') {
+		  const getRouteToNavigate = (PERSISTED_ROUTE: string | null) => {
+			if (PERSISTED_ROUTE === '/login') {
 			  return LOCATION.pathname === '/login' ? '/home' : null;
 			}
-			return persistedRoute;
+			return PERSISTED_ROUTE;
 		  };
 		  handleLoginSession();
 	}, [LOCATION.pathname, LOGIN_SESSION, NAVIGATE, SET_LOGIN_SESSION]);

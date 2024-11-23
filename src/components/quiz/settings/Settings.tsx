@@ -1,16 +1,9 @@
-import { Course } from '../../types';
+import { useContext } from 'react';
+import { QuizContext } from '../provider/QuizContext';
+import './Settings.css';
 
-interface SETTINGS_Props {
-    COURSE: Course;
-    SET_START_QUIZ: React.Dispatch<React.SetStateAction<boolean>>;
-    SET_TIME: React.Dispatch<React.SetStateAction<number>>;
-    AMOUNT_OF_QUESTIONS: number;
-    SET_AMOUNT_OF_QUESTIONS: React.Dispatch<React.SetStateAction<number>>;
-    CHECK_BETWEEN_QUESTIONS: boolean;
-    SET_CHECK_BETWEEN_QUESTIONS: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const SETTINGS = ({ COURSE, SET_START_QUIZ, SET_TIME, SET_AMOUNT_OF_QUESTIONS, CHECK_BETWEEN_QUESTIONS, SET_CHECK_BETWEEN_QUESTIONS, AMOUNT_OF_QUESTIONS }: SETTINGS_Props) => {
+const SETTINGS = () => {
+	const { SET_START_QUIZ, SET_TIME, COURSE, AMOUNT_OF_QUESTIONS, SET_AMOUNT_OF_QUESTIONS, CHECK_BETWEEN_QUESTIONS, SET_CHECK_BETWEEN_QUESTIONS } = useContext(QuizContext);
 
 	const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
 		SET_START_QUIZ(true);
@@ -29,7 +22,7 @@ const SETTINGS = ({ COURSE, SET_START_QUIZ, SET_TIME, SET_AMOUNT_OF_QUESTIONS, C
 						<input
 							type="number"
 							min={1}
-							value={AMOUNT_OF_QUESTIONS || COURSE.questions.length}
+							value={AMOUNT_OF_QUESTIONS}
 							max={COURSE.questions.length}
 							onChange={(e) => {
 								const value = parseInt(e.target.value);
