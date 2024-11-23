@@ -1,15 +1,14 @@
+import { useContext } from 'react';
+import { createUser } from '../../../ApiService';
+import { User } from '../../../types';
 import styles from './Create_User.module.css';
 import { useForm } from 'react-hook-form';
-
-interface User{
-    username: string,
-    email: string,
-    password: string
-}
+import DATACONTEXT from '../../../context/DataContext';
+import LoadingSpinner from '../../loader/LoadingSpinner';
 
 const CREATE_USER = () => {
+	const {SET_LOADING, LOADING} = useContext(DATACONTEXT)
 	const {
-		watch,
 		register,
 		handleSubmit,
 		reset,
@@ -17,28 +16,33 @@ const CREATE_USER = () => {
 	} = useForm<User>({
 		defaultValues: {
 			username: '',
-			email: '',
 			password: '',
+			type: 'user'
 		},
 	});
 
-	const onSubmit = (data: User) => {
+	const onSubmit = async (data: User) => {
 		console.log(data);
-		console.log(watch());
+		SET_LOADING(true);
+		await createUser(data);
 		reset();
+		SET_LOADING(false);
 	};
 
 	const usernameError = () => {
 		return errors.username && <div className={styles.errorMessage}>Username is required</div>;
 	};
 
-	const emailError = () => {
-		return errors.email && <div className={styles.errorMessage}>E-mail is required</div>;
+	const typeError = () => {
+		return errors.type && <div className={styles.errorMessage}>Type is required</div>;
 	};
 
 	const passwordError = () => {
 		return errors.password && <div className={styles.errorMessage}>Password is required</div>;
 	};
+
+	if (LOADING) return <LoadingSpinner message='Creating user!' />;
+
 	return (
 		<div className={styles.container}>
 			<h1 className={styles.createUserTitle}>Create User</h1>
@@ -57,18 +61,6 @@ const CREATE_USER = () => {
 				</div>
 
 				<div className={styles.formGroup}>
-					<label className={styles.label}>Email address</label>
-					<input
-						{...register('email', { required: true })}
-						className={styles.formControl}
-						placeholder="Enter email address"
-						type='email'
-						autoComplete='off'
-					/>
-					{ emailError() }
-				</div>
-
-				<div className={styles.formGroup}>
 					<label className={styles.label}>Password</label>
 					<input
 						{...register('password', { required: true })}
@@ -78,6 +70,15 @@ const CREATE_USER = () => {
 						autoComplete='new-password'
 					/>
 					{ passwordError() }
+				</div>
+
+				<div className={styles.formGroup}>
+					<label className={styles.label}>Select user type</label>
+					<select {...register('type', { required: true })} className={styles.formControl}>
+						<option value="user">User</option>
+						<option value="admin">Admin</option>
+					</select>
+					{ typeError() }
 				</div>
 
 				<button type="submit" className={styles.btnSubmit}>Create</button>

@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
 import stylesUpdate from './Update_Form.module.css';
 import styles from '../create-course/Create_From.module.css';
-import { Course } from '../../types';
+import { Course } from '../../../types';
 import { useContext, useEffect, useState } from 'react';
-import DATACONTEXT from '../../context/DataContext';
-import LoadingSpinner from '../loader/LoadingSpinner';
-import { fetchCourseTitles, getCourse, updateCourse } from '../../ApiService';
+import DATACONTEXT from '../../../context/DataContext';
+import LoadingSpinner from '../../loader/LoadingSpinner';
+import { fetchCourseTitles, getCourse, updateCourse } from '../../../ApiService';
 import COURSE_CATEGORY_INPUT from '../create-course/Course_Category_Input';
 import DATE_INPUT from '../create-course/Date_Input';
 import PG_CT_INPUT from '../create-course/PG_CT_Input';
@@ -28,7 +28,7 @@ const UPDATE_FORM = () => {
 			name: '',
 			category: '',
 			passingGrade: 50,
-			completeTime: 0,
+			completeTime: 60,
 			questionCategories: [''],
 			questions: [],
 			date: ''
@@ -65,7 +65,7 @@ const UPDATE_FORM = () => {
 				name: '',
 				category: '',
 				passingGrade: 50,
-				completeTime: 0,
+				completeTime: 60,
 				questionCategories: [''],
 				questions: [],
 				date: ''

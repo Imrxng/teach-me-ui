@@ -1,17 +1,17 @@
 /* eslint-disable camelcase */
 /* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter } from 'react-router-dom';
-import ADD_QUESTION from '../add-question/Add_Question';
+import ADD_QUESTION from '../administration/add-question/Add_Question';
 import ADMINISTRATION from '../administration/Administration';
-import CREATE_COURSE from '../create-course/Create_Course';
-import DELETE_COURSE from '../delete-course/Delete_Course';
+import CREATE_COURSE from '../administration/create-course/Create_Course';
+import DELETE_COURSE from '../administration/delete-course/Delete_Course';
 import HOME from '../home/Home';
 import Login from '../login/Login';
 import LOGOUT from '../logout/Logout';
 import NOT_FOUND from '../not-found/Not_Found';
 import QUIZ from '../quiz/provider/QuizProvider';
 import Root from '../root/Root';
-import UPDATE_COURSE from '../update-course/Update_Course';
+import UPDATE_COURSE from '../administration/update-course/Update_Course';
 
 export const ROUTER = createBrowserRouter([
 	{

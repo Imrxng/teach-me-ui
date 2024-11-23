@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { Question, Type } from '../../types';
+import { Question, Type } from '../../../types';
 import styles from './Add_Question.module.css';
 
 interface AddAnswersInputProps {

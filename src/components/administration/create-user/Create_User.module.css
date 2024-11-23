@@ -22,10 +22,10 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #d1d5db;
-    background: white;
+    background: var(--input-bg-color);
     border-radius: 0.5rem;
     outline: none;
-    color: black;
+    color: var(--input-txt-color);
 }
 
 .errorMessage {

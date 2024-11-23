@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import styles from './Create_From.module.css';
-import { Course } from '../../types';
+import { Course } from '../../../types';
 import { useContext, useState } from 'react';
-import DATACONTEXT from '../../context/DataContext';
-import LoadingSpinner from '../loader/LoadingSpinner';
-import { addCourse } from '../../ApiService';
+import DATACONTEXT from '../../../context/DataContext';
+import LoadingSpinner from '../../loader/LoadingSpinner';
+import { addCourse } from '../../../ApiService';
 import COURSE_CATEGORY_INPUT from './Course_Category_Input';
 import PG_CT_INPUT from './PG_CT_Input';
 import DATE_INPUT from './Date_Input';
@@ -24,7 +24,7 @@ const CREATE_FORM = () => {
 			name: '',
 			category: '',
 			passingGrade: 50,
-			completeTime: 0,
+			completeTime: 60,
 			questionCategories: [''],
 			questions: [],
 			date: ''

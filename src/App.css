@@ -3,6 +3,11 @@
   /* --primary-dark-color: #ef7524; */
   --primary-dark-color: #0d3b50;
   --secondary-color:  #87c9b8;
+  --input-bg-color:#f5f5f5;
+  --input-txt-color: #0d3b50;
+}
+::placeholder{
+  opacity: 0.5;
 }
 
 table {
@@ -42,7 +47,7 @@ tr {
 
 
 .lightmode {
-  background-color: var(--primary-light-color);
+  background-color: white;
   color: var(--primary-dark-color);
 }
 

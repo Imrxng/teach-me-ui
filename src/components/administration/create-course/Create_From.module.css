@@ -34,8 +34,8 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
-    background: var(--primary-light-color);
-    color: var(--primary-dark-color);
+    background: var(--input-bg-color);
+    color: var(--input-txt-color);
 }
 
 .formInput:disabled{

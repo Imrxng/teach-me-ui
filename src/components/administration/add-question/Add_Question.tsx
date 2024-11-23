@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { Course, Question, Type } from '../../types';
+import { Course, Question, Type } from '../../../types';
 import styles from './Add_Question.module.css';
-import DATACONTEXT from '../../context/DataContext';
-import LoadingSpinner from '../loader/LoadingSpinner';
-import { addQuestion, fetchCourseTitles, getCourse } from '../../ApiService';
+import DATACONTEXT from '../../../context/DataContext';
+import LoadingSpinner from '../../loader/LoadingSpinner';
+import { addQuestion, fetchCourseTitles, getCourse } from '../../../ApiService';
 import ADD_COURSE_INPUT from './Add_Course_Input';
 import ADD_QUESTION_INPUT from './Add_Question_Input';
 import ADD_TYPE_CATEGORY_INPUT from './Add_Type_Category_Input';

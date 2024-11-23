@@ -1,5 +1,5 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { Course } from '../../types';
+import { Course } from '../../../types';
 import styles from './Create_From.module.css';
 
 interface DateInputProps {

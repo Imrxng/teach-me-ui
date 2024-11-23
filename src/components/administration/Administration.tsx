@@ -2,11 +2,11 @@ import  { useContext, useEffect, useState } from 'react';
 import './administration.css';
 import { useNavigate } from 'react-router-dom';
 import DATACONTEXT from '../../context/DataContext';
-import CREATE_FORM from '../create-course/Create_From';
-import UPDATE_FORM from '../update-course/Update_Form';
-import DELETE_COURSE from '../delete-course/Delete_Course';
-import ADD_QUESTION from '../add-question/Add_Question';
-import CREATE_USER from '../create-user/Create_User';
+import CREATE_FORM from './create-course/Create_From';
+import UPDATE_FORM from './update-course/Update_Form';
+import DELETE_COURSE from './delete-course/Delete_Course';
+import ADD_QUESTION from './add-question/Add_Question';
+import CREATE_USER from './create-user/Create_User';
 
 const ADMINISTRATION = () => {
 	const { DARKMODE, LOGIN_SESSION } = useContext(DATACONTEXT);
@@ -19,8 +19,8 @@ const ADMINISTRATION = () => {
 	}, [LOGIN_SESSION, NAVIGATE]);
 
 	return (
-		<div className='admin-container'>
-			<div className={!DARKMODE ? 'light-mode admin-aside' : 'admin-aside'}>
+		<div className={!DARKMODE ? 'light-mode admin-container' : 'admin-container'}>
+			<div className='admin-aside'>
 				<h1>Hello Admin,<br/>what would you like to do?</h1>
 				<div className='btn-list'>
 					<button className='btn' onClick={() => SET_COMPONENT(() => CREATE_FORM)}>Create Course</button>

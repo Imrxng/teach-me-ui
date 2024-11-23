@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import DATACONTEXT from '../../context/DataContext';
-import LoadingSpinner from '../loader/LoadingSpinner';
-import Search from '../home/Search';
-import { deleteCourse, fetchCourseTitles } from '../../ApiService';
+import DATACONTEXT from '../../../context/DataContext';
+import LoadingSpinner from '../../loader/LoadingSpinner';
+import Search from '../../home/Search';
+import { deleteCourse, fetchCourseTitles } from '../../../ApiService';
 import styles from './Delete_Course.module.css';
 
 const loadCourseTitles = async (setLoading: (loading: boolean) => void,

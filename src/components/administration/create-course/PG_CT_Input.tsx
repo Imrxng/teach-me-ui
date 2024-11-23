@@ -1,5 +1,5 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { Course } from '../../types';
+import { Course } from '../../../types';
 import styles from './Create_From.module.css';
 
 interface PgCtInputProps {
@@ -32,8 +32,8 @@ const PG_CT_INPUT = ({ register, errors }: PgCtInputProps) => {
 					type="number"
 					{...register('completeTime', {
 						required: 'Complete time is required',
-						min: { value: 0, message: 'Complete time must be between 0 and 120' },
-						max: { value: 120, message: 'Complete time must be between 0 and 120' },
+						min: { value: 60, message: 'Complete time must be between 60 and 120' },
+						max: { value: 120, message: 'Complete time must be between 60 and 120' },
 					})}
 					className={styles.formInput}
 					placeholder="Enter complete time"

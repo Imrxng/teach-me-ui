@@ -1,4 +1,4 @@
-import { Course, RootObject } from './types';
+import { Course, RootObject, User } from './types';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 export const fetchCourseTitles = async (): Promise<string[]> => {
@@ -24,8 +24,14 @@ export const deleteCourse = async (course: string) => {
 		} else throw new Error(`Failed to delete course ${course}`);
 	}
 	catch (error) {
-		console.error('Error deleting course:', error);
-		alert('Error deleting course. Please try again.');
+		handleError(error,'Error deleting course. Please try again.');
+	}
+};
+
+const handleError = (error: unknown, errorMessage: string): void => {
+	if (error instanceof Error) {
+		console.error('error: '+error.message);
+		alert(errorMessage);
 	}
 };
 
@@ -43,10 +49,7 @@ export const addCourse = async (course: Course) => {
 			alert(`${course.name}, has been created successfully!`);
 		} else throw new Error(`Failed to create course: ${course}`);
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error(`Failed to add course: ${error.message}`);
-			alert('Failed to add course. Please try again.');
-		}
+		handleError(error, 'Failed to add course. Please try again.');
 	}
 };
 
@@ -67,10 +70,7 @@ export const getCourse = async (course: string): Promise<Course> => {
 		data = json.content;
 		if(!response.ok) throw new Error('');
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error(`Failed to get course: ${error.message}`);
-			alert('failed to get course');
-		}
+		handleError(error, 'Failed to get course');
 	}
 	return data;
 };
@@ -90,10 +90,7 @@ export const updateCourse = async (data: Course) => {
 		}
 		alert(`${data.name}, has been updated successfully`);
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error('Failed to update course:', error.message);
-			alert('Failed to update course. Please try again.');
-		}
+		handleError(error, 'Failed to update course. Please try again.');
 	}
 };
 
@@ -112,9 +109,24 @@ export const addQuestion = async (data: Course) => {
 		}
 		alert(`${data.name}, has been updated successfully`);
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error('Failed to update course:', error.message);
-			alert('Failed to update course. Please try again.');
-		}
+		handleError(error, 'Failed to add question. Please try again.');
+	}
+};
+
+export const createUser = async (user: User) => {
+	try {
+		const response = await fetch(`${BASE_URL}/add-user`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(user),
+		});
+
+		if (response.ok) {
+			alert(`${user.username}, has been created successfully!`);
+		} else throw new Error(`Failed to create user: ${user.username}`);
+	} catch (error) {
+		handleError(error, 'Failed to create user. Please try again.');
 	}
 };
