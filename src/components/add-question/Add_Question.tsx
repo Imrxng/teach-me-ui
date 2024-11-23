@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { Course, Question, Type } from '../../types';
-import './Add_Question.css';
+import styles from './Add_Question.module.css';
 import DATACONTEXT from '../../context/DataContext';
 import LoadingSpinner from '../loader/LoadingSpinner';
 import { addQuestion, fetchCourseTitles, getCourse } from '../../ApiService';
+import ADD_COURSE_INPUT from './Add_Course_Input';
+import ADD_QUESTION_INPUT from './Add_Question_Input';
+import ADD_TYPE_CATEGORY_INPUT from './Add_Type_Category_Input';
+import ADD_ANSWER_INPUT from './Add_Answer_Input';
+import ADD_REASON_INPUT from './Add_Reason_Input';
 
 const ADD_QUESTION = () => {
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
@@ -22,7 +27,7 @@ const ADD_QUESTION = () => {
 	} = useForm({
 		defaultValues: {
 			question: '',
-			type: '',
+			type: '' as Type,
 			category: '',
 			answers: [{ answer: '', reason: '' }],
 			questionAnswerResult: [''],
@@ -35,7 +40,7 @@ const ADD_QUESTION = () => {
 	});
 
 	const appendCorrectAnswer = () => SET_CORRECT_ANSWERS([...CORRECT_ANSWERS, '']);
-	
+
 	const removeCorrectAnswer = (index: number) => SET_CORRECT_ANSWERS(CORRECT_ANSWERS.filter((_, i) => i !== index));
 
 	const loadCourseTitles = async () => {
@@ -60,12 +65,19 @@ const ADD_QUESTION = () => {
 	const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newType = e.target.value as Type;
 		setSelectedType(newType);
-		console.log(newType);
-		if (e.target.value === 'single') {
+	
+		if (newType === 'single') {
+			SET_CORRECT_ANSWERS(['']); 
 			reset({
 				...watch(),
 				type: newType,
-				questionAnswerResult: newType === 'single' ? [''] : watch('questionAnswerResult')
+				questionAnswerResult: [''],
+			});
+		} else {
+			reset({
+				...watch(),
+				type: newType,
+				questionAnswerResult: watch('questionAnswerResult'),
 			});
 		}
 	};
@@ -73,15 +85,14 @@ const ADD_QUESTION = () => {
 	const resetForm = () => {
 		reset({
 			question: '',
-			type: Type.Single,
+			type: '' as Type,
 			category: '',
 			answers: [{ answer: '', reason: '' }],
 			questionAnswerResult: [''],
 		});
 	};
 
-	const onSubmit = async (data: any) => {
-		data as Question;
+	const onSubmit = async (data: Question) => {
 		SET_LOADING(true);
 		const course: Course = await getCourse(COURSE);
 		course.questions.push(data);
@@ -92,146 +103,106 @@ const ADD_QUESTION = () => {
 
 	const renderDeleteButton = (index: number) => {
 		return index > 0 && (
-		  <button
+			<button
 				type="button"
-				className="btn-delete"
+				className={styles.btnDelete}
 				onClick={() => removeCorrectAnswer(index)}
-		  >
-			Delete
-		  </button>
+			>
+				Delete
+			</button>
 		);
-	  };
-	  
-	  const renderError = (index: number) => {
+	};
+
+	const renderError = (index: number) => {
 		return errors.questionAnswerResult?.[index] && (
-		  <div className="error">Correct answer is required</div>
+			<div className={styles.errorMessage}>Correct answer is required</div>
 		);
-	  };
+	};
+
+	const answerFieldDeleteButton = (index: number) => {
+		return index > 0 && (
+			<button type="button" className={styles.btnDelete} onClick={() => removeAnswer(index)}>
+				Delete
+			</button>
+		);
+	};
+
+	const answersFieldAddButton = () => {
+		return answerFields.length < 4 && (
+			<button type="button" className={styles.btnAdd} onClick={() => appendAnswer({ answer: '', reason: '' })}>
+				Add Answer
+			</button>
+		);
+	};
+
+	const handleCorrectAnswer = () => {
+		return selectedType === Type.Multi && (
+			CORRECT_ANSWERS.length < answerFields.length && (
+				<button
+					type="button"
+					className={styles.btnAdd}
+					onClick={() => appendCorrectAnswer()}
+				>
+					Add Correct Answer
+				</button>
+			)
+		);
+	};
 
 	if (LOADING) return <LoadingSpinner message='Adding course!' />;
 
 	return (
-		<div className="container">
-			<div className="form-group">
-			    <h1 className="header">Choose Course</h1>
-				<label>Course</label>
-				<select
-					className="form-control"
-					value={COURSE}
-					onChange={(e) => SET_COURSE(e.target.value)}
-					required
-				>
-					<option value="">--SELECT COURSE--</option>
-					{COURSE_TITLES.map((course, index) => <option key={index} value={course}>{course}</option>)}
-				</select>
-				{COURSE === '' && <div className="error">Course is required</div>}
+		<div className={styles.container}>
+			<h1 className={styles.addQuesionTitle}>Add Question</h1>
+			<div className={styles.formGroup}>
+				<label>Select a course to add the question to</label>
+				<ADD_COURSE_INPUT course={COURSE} setCourse={SET_COURSE} courseTitles={COURSE_TITLES} />
 			</div>
 
-			<form onSubmit={handleSubmit(onSubmit)} className="form">
-				<h1 className="header">Question Form</h1>
+			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+				<h2 className={styles.header}>Question Form</h2>
 
-				<div className="form-group">
-					<label>Question</label>
-					<input
-						{...register('question', { required: true })}
-						className="form-control"
-						placeholder="Enter question"
-					/>
-					{errors.question && <div className="error">Question is required</div>}
-				</div>
+				<ADD_QUESTION_INPUT register={register} errors={errors} />
 
-				<div className="row">
-					<div className="form-group">
-						<label>Type</label>
-						<select {...register('type', { required: true })} className="form-control" onChange={handleTypeChange}>
-							<option value="">-- SELECT TYPE --</option>
-							<option value={Type.Single}>Single</option>
-							<option value={Type.Multi}>Multiple</option>
-						</select>
-						{errors.type && <div className="error">Type is required</div>}
-					</div>
-
-					<div className="form-group">
-						<label>Category</label>
-						<input
-							{...register('category', { required: true })}
-							className="form-control"
-							placeholder="Enter question category"
-						/>
-						{errors.category && <div className="error">Category is required</div>}
-					</div>
-				</div>
+				<ADD_TYPE_CATEGORY_INPUT register={register} errors={errors} handleTypeChange={handleTypeChange} />
 
 				<div>
-					<h5>Possible Answers</h5>
+					<h5 className={styles.subTitle}>Possible Answers</h5>
 					{answerFields.map((field, index) => (
-						<div key={field.id} className="answer-section">
-							<div className="form-group">
-								<label>Answer</label>
-								<input
-									{...register(`answers.${index}.answer`, { required: true })}
-									className="form-control"
-									placeholder="Enter answer"
-								/>
-								{errors.answers?.[index]?.answer && <div className="error">Answer is required</div>}
-							</div>
+						<div key={field.id} className={styles.answerSection}>
 
-							<div className="form-group">
-								<label>Reason</label>
-								<input
-									{...register(`answers.${index}.reason`, { required: true })}
-									className="form-control"
-									placeholder="Enter reason"
-								/>
-								{errors.answers?.[index]?.reason && <div className="error">Reason is required</div>}
-							</div>
+							<ADD_ANSWER_INPUT register={register} errors={errors} index={index} />
 
-							{index > 0 && (
-								<button type="button" className="btn-delete" onClick={() => removeAnswer(index)}>
-                                    Delete
-								</button>
-							)}
+							<ADD_REASON_INPUT register={register} errors={errors} index={index} />
+
+							{answerFieldDeleteButton(index)}
 						</div>
 					))}
-					{answerFields.length < 4 && (
-						<button type="button" className="btn-add" onClick={() => appendAnswer({ answer: '', reason: '' })}>
-                            Add Answer
-						</button>
-					)}
+					{answersFieldAddButton()}
 				</div>
 
 				<div>
-					{selectedType === 'single' ? <h5>Correct Answer</h5> : <h5>Correct Answers</h5>}
+					<h5 className={styles.subTitle}>Correct Answer(s)</h5>
 					{CORRECT_ANSWERS.map((_, index) => (
-						<div key={index} className="answer-section">
+						<div key={index} className={styles.answerSection}>
 							<label>Correct Answer {index + 1}</label>
 							<input
 								{...register(`questionAnswerResult.${index}`, { required: true })}
-								className="form-control"
+								className={styles.formControl}
 								placeholder="Enter correct answer"
 							/>
 							{renderError(index)}
 							{renderDeleteButton(index)}
 						</div>
 					))}
-					{selectedType === Type.Multi && (
-						CORRECT_ANSWERS.length < answerFields.length && (
-							<button
-								type="button"
-								className="btn-add"
-								onClick={() => appendCorrectAnswer()}
-							>
-                            Add Correct Answer
-							</button>
-						)
-					)}
+					{handleCorrectAnswer()}
 				</div>
 
-				<button type="submit" className="btn-submit" disabled={answerFields.length < 2 || COURSE === ''}>
-                    Add Question
+				<button type="submit" className={styles.btnSubmit} disabled={answerFields.length < 2 || COURSE === ''}>
+					Add Question
 				</button>
-				<button type="button" className="btn-reset" onClick={() => resetForm()}>
-                    Reset form
+				<button type="button" className={styles.btnReset} onClick={() => resetForm()}>
+					Reset form
 				</button>
 			</form>
 		</div>

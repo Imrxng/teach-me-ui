@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import DATACONTEXT from '../../context/DataContext';
 import LoadingSpinner from '../loader/LoadingSpinner';
 import Search from '../home/Search';
-import './Delete_Course.css';
 import { deleteCourse, fetchCourseTitles } from '../../ApiService';
+import styles from './Delete_Course.module.css';
 
 const loadCourseTitles = async (setLoading: (loading: boolean) => void,
 	setCourseTitles: (titles: string[]) => void
@@ -57,20 +57,23 @@ const DELETE_COURSE = () => {
 	if (LOADING) return <LoadingSpinner message='Gathering courses, please wait!' />;
 
 	return (
-		<div className="courses-container">
-			<div className="search-container">
+		<div className={styles.coursesContainer}>
+			<div>
+				<h1 className={styles.deleteTitle}>Delete Course</h1>
+			</div>
+			<div className={styles.searchContainer}>
 				<Search search={SEARCH} onSearchChange={handleSearchChange} />
 			</div>
-			<div className="courses-list">
+			<div className={styles.coursesList}>
 				{filteredCourses().map((course, index) => (
-					<div key={index} className="course-card">
+					<div key={index} className={styles.courseCard}>
 						<button
 							onClick={() => deleteThisCourse(course, SET_LOADING, SET_COURSE_TITLES)}
-							className="delete-button"
+							className={styles.deleteButton}
 						>
                             &times;
 						</button>
-						<h3 className="course-title">{course.toUpperCase()}</h3>
+						<p className={styles.courseTitle}>{course.toUpperCase()}</p>
 					</div>
 				))}
 			</div>

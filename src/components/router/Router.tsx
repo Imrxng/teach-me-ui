@@ -61,7 +61,7 @@ export const ROUTER = createBrowserRouter([
 			{
 				path: '/not-found',
 				element: <NOT_FOUND />
-			},{
+			}, {
 				path: '*',
 				element: <NOT_FOUND />
 			}
