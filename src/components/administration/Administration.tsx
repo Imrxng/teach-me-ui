@@ -1,5 +1,5 @@
 import  { useContext, useEffect, useState } from 'react';
-import './administration.css';
+import styles from './administration.module.css';
 import { useNavigate } from 'react-router-dom';
 import DATACONTEXT from '../../context/DataContext';
 import CREATE_FORM from './create-course/Create_From';
@@ -19,18 +19,18 @@ const ADMINISTRATION = () => {
 	}, [LOGIN_SESSION, NAVIGATE]);
 
 	return (
-		<div className={!DARKMODE ? 'light-mode admin-container' : 'admin-container'}>
-			<div className='admin-aside'>
-				<h1>Hello Admin,<br/>what would you like to do?</h1>
-				<div className='btn-list'>
-					<button className='btn' onClick={() => SET_COMPONENT(() => CREATE_FORM)}>Create Course</button>
-					<button className='btn' onClick={() => SET_COMPONENT(() => UPDATE_FORM)}>Update Course</button>
-					<button className='btn' onClick={() => SET_COMPONENT(() => DELETE_COURSE)}>Delete Course</button>
-					<button className='btn' onClick={() => SET_COMPONENT(() => ADD_QUESTION)}>Add Question</button>
-					<button className='btn' onClick={() => SET_COMPONENT(() => CREATE_USER)}>Create User</button>
+		<div className={`${!DARKMODE ? styles.lightMode : ''} ${styles.adminContainer}`}>
+			<div className={styles.adminAside}>
+				<h1 className={styles.pageTitle}>Hello Admin,<br/>what would you like to do?</h1>
+				<div className={styles.btnList}>
+					<button className={styles.btn} onClick={() => SET_COMPONENT(() => CREATE_FORM)}>Create Course</button>
+					<button className={styles.btn} onClick={() => SET_COMPONENT(() => UPDATE_FORM)}>Update Course</button>
+					<button className={styles.btn} onClick={() => SET_COMPONENT(() => DELETE_COURSE)}>Delete Course</button>
+					<button className={styles.btn} onClick={() => SET_COMPONENT(() => ADD_QUESTION)}>Add Question</button>
+					<button className={styles.btn} onClick={() => SET_COMPONENT(() => CREATE_USER)}>Create User</button>
 				</div>
 			</div>
-			<div className='admin-main'>
+			<div className={styles.adminMain}>
 				<COMPONENT />
 			</div>
 		</div>

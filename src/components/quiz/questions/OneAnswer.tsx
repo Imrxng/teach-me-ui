@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Question } from '../../../types';
 import { QuizContext } from '../provider/QuizContext';
 import { getColorAnswer, multipleOrSingleChoice } from './questions.functions';
-import './questions.component.css';
+import styles from './questions.module.css';
 
 interface OneQuestionProps {
 	index: number;
@@ -28,7 +28,7 @@ const OneAnswer = ({ index, answer, QUESTION, CURRENT_ANSWER, SET_CURRENT_ANSWER
 	};
 
 	return (
-		<div key={index}>
+		<div key={index} className={styles.answer}>
 			<input
 				type={multipleOrSingleChoice(QUESTION)}
 				name='answer'
@@ -36,7 +36,7 @@ const OneAnswer = ({ index, answer, QUESTION, CURRENT_ANSWER, SET_CURRENT_ANSWER
 				checked={CURRENT_ANSWER.includes(answer)}
 				onClick={clickHandler}
 				disabled={SHOW_RIGHT_ANSWERS}
-				className='inputQuestions'
+				className={styles.inputQuestions}
 			/>
 			<label
 				style={{ color: CHECK_BETWEEN_QUESTIONS ? getColorAnswer(SHOW_RIGHT_ANSWERS, CURRENT_ANSWER, answer, QUESTION) : '' }}

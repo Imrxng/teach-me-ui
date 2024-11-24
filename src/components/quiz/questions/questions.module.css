@@ -1,0 +1,122 @@
+.inputQuestions {
+    margin-right: 10px;
+}
+
+
+button:hover {
+    background: #87c9b8;
+}
+
+.inputQuestions {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #87c9b8;
+    background-color: white;
+    position: relative;
+    vertical-align: middle;
+    transition: background-color 0.3s, border-color 0.3s;
+    box-sizing: unset;
+}
+
+.inputQuestions:hover{
+    cursor: pointer;
+}
+
+.inputQuestions:checked {
+    background-color: #87c9b8;
+    border-color: #87c9b8;
+}
+
+.inputQuestions:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.inputQuestions:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(135, 201, 184, 0.5);
+}
+
+.nextBtn {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: .5rem;
+    font-weight: 600;
+}
+
+.nextBtn:hover {
+    background-color: var(--primary-dark-color);
+    color: var(--primary-light-color);
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+} 
+
+.container h1 {
+    text-align: center;
+    font-size: 30pt;
+    font-weight: 700;
+}
+
+.quizContainer {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    color: var(--primary-dark-color);
+    width: 800px;
+    min-height: 300px;
+    padding: 2rem;
+    border-radius: .5rem;
+    gap:20px;
+}
+
+.quizContainerLight {
+    box-shadow: 0 0 30px rgba(135, 201, 184, 0.5);
+}
+
+.quizHeader{
+    display: flex;
+    justify-content: space-between;
+}
+
+.quizHeader h1 {
+    font-size: 16pt;
+    color: var(--primary-dark-color);
+    font-weight: 700;
+}
+
+.quizAnswers{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.progressBarContainer {
+    width: 100%;
+    height: 10px;
+    background-color: var(--primary-light-color);
+    border-radius: .5rem;
+    overflow: hidden;
+    margin: 10px 0;
+  }
+  
+  .progressBar {
+    height: 100%;
+    background-color: var(--secondary-color);
+    width: 0%; 
+    transition: width 0.3s ease; 
+    border-radius: .5rem;
+  }

@@ -1,0 +1,67 @@
+.container {
+    background: white;
+    color: var(--primary-dark-color);
+    padding: 2rem;
+    border-radius: .5rem;
+    position: relative;
+}
+
+.containerLight {
+    box-shadow: 0 0 30px rgba(135, 201, 184, 0.5);
+}
+
+.container h3 {
+    font-size: 30pt;
+    font-weight: 600;
+}
+
+.resultsContainer {
+    width: 800px;
+    min-height: 300px;
+}
+
+.resultsContainer h4{
+    font-size: 16pt;
+    font-weight: 600;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.answers {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.info {
+    margin-bottom: 15px;
+}
+
+.info p {
+    font-weight: normal;
+}
+
+.info .answerTitle{
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.btn {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: .5rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.btn:hover {
+    background-color: var(--primary-dark-color);
+    color: var(--primary-light-color);
+    cursor: pointer;
+}
