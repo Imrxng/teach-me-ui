@@ -15,12 +15,9 @@ const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 	const { CURRENT_INDEX, SET_CURRENT_INDEX, AMOUNT_OF_QUESTIONS, CHECK_BETWEEN_QUESTIONS, SET_SHOW_RESULTS, TIME, COURSE } = useContext(QuizContext);
 	const { DARKMODE } = useContext(DATACONTEXT);
 
-	const handleAnswerReview = () => {
-		SET_SHOW_RIGHT_ANSWERS(true);
-		QUESTION.yourAnswer = CURRENT_ANSWER;
-	};
 
 	const moveToNextQuestion = () => {
+		QUESTION.yourAnswer = CURRENT_ANSWER;
 		if (CURRENT_INDEX + 1 < AMOUNT_OF_QUESTIONS) {
 			SET_SHOW_RIGHT_ANSWERS(false);
 			SET_CURRENT_ANSWER([]);
@@ -38,7 +35,7 @@ const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 		if (SHOW_RIGHT_ANSWERS || !CHECK_BETWEEN_QUESTIONS) {
 			moveToNextQuestion();
 		} else {
-			handleAnswerReview();
+			SET_SHOW_RIGHT_ANSWERS(true);
 		}
 	};
 	useEffect(() => {

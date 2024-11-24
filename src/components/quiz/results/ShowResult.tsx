@@ -2,13 +2,15 @@ import { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { QuizContext } from '../provider/QuizContext';
 import Pagination from '../../home/Pagination';
-import styles from './ShowResult.module.css'
+import styles from './ShowResult.module.css';
 import DATACONTEXT from '../../../context/DataContext';
+import { renderHeader, renderResultText } from './ShowResult.functions';
+import { Question } from '../../../types';
 
 const ShowResult = () => {
 	const [currentPage, setCurrentPage] = useState(1);
-	const { DARKMODE } = useContext(DATACONTEXT)
-	const { COURSE, AMOUNT_OF_QUESTIONS } = useContext(QuizContext);
+	const { DARKMODE } = useContext(DATACONTEXT);
+	const { COURSE, AMOUNT_OF_QUESTIONS, CURRENT_INDEX } = useContext(QuizContext);
 	const NAVIGATE = useNavigate();
 	const { ID } = useParams();
 	let score = 0;
@@ -16,22 +18,37 @@ const ShowResult = () => {
 
 	const INCORRECT_ANSWERS: { question: string, correctAnswer: string[], yourAnswer:  string[] | undefined }[] = [];
 
-	COURSE.questions.slice(0, AMOUNT_OF_QUESTIONS).forEach((question) => {
+	const checkAnswer = (yourAnswer: string[] | undefined, correctAnswer: string[]) => {
+		return yourAnswer && correctAnswer.every(answer => yourAnswer.includes(answer));
+	  };
+	  
+	  const handleCorrectAnswer = () => {
+		score++;
+	  };
+	  
+	  const handleIncorrectAnswer = (question: Question, correctAnswer: string[], yourAnswer: string[] | undefined) => {
+		INCORRECT_ANSWERS.push({
+		  question: question.question,
+		  correctAnswer: correctAnswer,
+		  yourAnswer: yourAnswer,
+		});
+	  };
+	  
+	  COURSE.questions.slice(0, AMOUNT_OF_QUESTIONS).map((question, index) => {
 		const yourAnswer = question.yourAnswer;
 		const correctAnswer = question.questionAnswerResult;
-
-		const IS_CORRECT = yourAnswer && correctAnswer.every(answer => yourAnswer.includes(answer));
-
-		if (IS_CORRECT) {
-			score++;
-		} else {
-			INCORRECT_ANSWERS.push({
-				question: question.question,
-				correctAnswer: correctAnswer,  
-				yourAnswer: yourAnswer,
-			});
+	  
+		if (index >= CURRENT_INDEX) {
+		  return;
 		}
-	});
+	  
+		if (checkAnswer(yourAnswer, correctAnswer)) {
+		  handleCorrectAnswer();
+		} else {
+		  handleIncorrectAnswer(question, correctAnswer, yourAnswer);
+		}
+	  });
+	  
 
 	const TOTAL_PAGES = Math.ceil(INCORRECT_ANSWERS.length / answersPerPage);
 	const CURRENT_INCORRECT_ANSWERS = INCORRECT_ANSWERS.slice((currentPage - 1) * answersPerPage, currentPage * answersPerPage);
@@ -51,8 +68,9 @@ const ShowResult = () => {
 	return (
 		<div className={`${!DARKMODE ? styles.containerLight : ''} ${styles.container}`}>
 			<h3>score: {((score / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</h3>
+			<p>Answered Questions: {CURRENT_INDEX} of the {AMOUNT_OF_QUESTIONS}</p>
 			<div className={styles.resultsContainer}>
-				<h4>{INCORRECT_ANSWERS.length > 0 ? 'Incorrect Answers:' : 'Resultaten:'}</h4>
+				<h4>{renderHeader(INCORRECT_ANSWERS.length)}</h4>
 				{INCORRECT_ANSWERS.length > 0 ? (
 					<div>
 						<ul className={styles.answers}>
@@ -86,7 +104,7 @@ const ShowResult = () => {
 						</div>
 					</div>
 				) : (
-					<p>All answers are correct!</p>  
+					<p>{renderResultText(CURRENT_INDEX, AMOUNT_OF_QUESTIONS)}</p>  
 				)}
 			</div>
 			<button className={styles.btn} onClick={() => NAVIGATE('/home')}>Back to home</button>
