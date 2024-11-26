@@ -16,6 +16,7 @@ const DATE_INPUT = ({ register, errors }: DateInputProps) => {
 				{...register('date', {
 					required: 'Date is required'
 				})}
+				id='cy-create-course-date-input'
 				className={styles.formInput}
 				placeholder="Enter date"
 			/>

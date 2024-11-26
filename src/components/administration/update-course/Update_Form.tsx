@@ -146,6 +146,7 @@ const UPDATE_FORM = () => {
 
 				<button
 					type="submit"
+					id='cy-update-course-btn'
 					className={BUTTON_CLASSNAME}
 				>
 					Update Course

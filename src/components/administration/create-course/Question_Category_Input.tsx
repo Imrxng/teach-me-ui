@@ -14,6 +14,7 @@ const QUESTION_CATEGORY_INPUT = ({ questionCategories, setQuestionCategories, ha
 			<button
 				type="button"
 				onClick={() => handleRemoveCategory(index)}
+				id='cy-create-course-delete-question-category-btn'
 				className={styles.deleteCategoryButton}
 			>
 				Delete
@@ -35,6 +36,7 @@ const QUESTION_CATEGORY_INPUT = ({ questionCategories, setQuestionCategories, ha
 									newCategories[index] = e.target.value;
 									setQuestionCategories(newCategories);
 								}}
+								id='cy-create-course-question-category-input'
 								className={styles.formInput}
 								placeholder="Enter question category"
 								required
@@ -48,6 +50,7 @@ const QUESTION_CATEGORY_INPUT = ({ questionCategories, setQuestionCategories, ha
 			<button
 				type="button"
 				onClick={() => handleAddCategory()}
+				id='cy-create-course-add-question-category-btn'
 				className={styles.addCategoryButton}
 			>
 				Add Question Category

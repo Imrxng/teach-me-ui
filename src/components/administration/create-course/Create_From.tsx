@@ -80,6 +80,7 @@ const CREATE_FORM = () => {
 
 				<button
 					type="submit"
+					id='cy-create-course-btn' 
 					className={BUTTON_CLASSNAME}
 				>
                     Create Course

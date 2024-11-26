@@ -1,21 +1,21 @@
-.coursesContainer {
+.pageTitle{
+    font-size: 40pt;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.usersContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
 }
 
-.deleteTitle {
-    font-size: 40pt;
-    margin-bottom: 2rem;
+.userFooter{
+    margin-top: 1rem;
 }
 
-p{
-    font-size: 11pt;
-    font-weight: bolder;
-}
-
-.coursesList {
+.usersList {
     display: flex;
     justify-content: start;
     flex-wrap: wrap;
@@ -24,7 +24,7 @@ p{
     max-width: 1200px;
 }
 
-.courseCard {
+.usersCard {
     text-align: center;
     background: var(--primary-light-color);
     color: var(--primary-dark-color);
@@ -47,8 +47,4 @@ p{
     color: red;
     cursor: pointer;
     background-color: transparent;
-}
-
-.deleteCourseFooter {
-    margin-top: 1rem;
 }

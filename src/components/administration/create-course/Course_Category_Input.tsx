@@ -16,6 +16,7 @@ const COURSE_CATEGORY_INPUT = ({ register, errors, disable }: CourseCategoryInpu
 				<label className={styles.formLabel}>Course</label>
 				<input
 					{...register('name', { required: 'Course title is required' })}
+					id='cy-create-course-title-input'
 					className={styles.formInput}
 					placeholder="Enter course title"
 					disabled={disable}
@@ -27,6 +28,7 @@ const COURSE_CATEGORY_INPUT = ({ register, errors, disable }: CourseCategoryInpu
 				<label className={styles.formLabel}>Category</label>
 				<input
 					{...register('category', { required: 'Category is required' })}
+					id='cy-create-course-category-input'
 					className={styles.formInput}
 					placeholder="Enter category"
 				/>

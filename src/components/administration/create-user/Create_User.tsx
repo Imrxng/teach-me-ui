@@ -7,7 +7,7 @@ import DATACONTEXT from '../../../context/DataContext';
 import LoadingSpinner from '../../loader/LoadingSpinner';
 
 const CREATE_USER = () => {
-	const {SET_LOADING, LOADING} = useContext(DATACONTEXT)
+	const { SET_LOADING, LOADING } = useContext(DATACONTEXT);
 	const {
 		register,
 		handleSubmit,
@@ -52,6 +52,7 @@ const CREATE_USER = () => {
 					<label className={styles.label}>Username</label>
 					<input
 						{...register('username', { required: true })}
+						id='cy-create-user-username-input'
 						className={styles.formControl}
 						placeholder="Enter username"
 						type='text'
@@ -64,6 +65,7 @@ const CREATE_USER = () => {
 					<label className={styles.label}>Password</label>
 					<input
 						{...register('password', { required: true })}
+						id='cy-create-user-password-input'
 						className={styles.formControl}
 						placeholder="Enter password"
 						type='password'
@@ -75,13 +77,13 @@ const CREATE_USER = () => {
 				<div className={styles.formGroup}>
 					<label className={styles.label}>Select user type</label>
 					<select {...register('type', { required: true })} className={styles.formControl}>
-						<option value="user">User</option>
-						<option value="admin">Admin</option>
+						<option id='cy-create-user-user-option' value="user">User</option>
+						<option id='cy-create-user-admin-option' value="admin">Admin</option>
 					</select>
 					{ typeError() }
 				</div>
 
-				<button type="submit" className={styles.btnSubmit}>Create</button>
+				<button id='cy-create-user-create-btn' type="submit" className={styles.btnSubmit}>Create</button>
 			</form>
 		</div>
 	);

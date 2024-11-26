@@ -36,7 +36,7 @@ const TABLE = ({ COURSES, CURRENT_INDEX }: TABLE_Props) => {
 									<td>{course.content.name}</td>
 									<td>{course.content.category}</td>
 									<td>{course.content.date}</td>
-									<td style={{ padding: 0 }}><button className="startQuizButton" onClick={()=> navigate(`/quiz/${course.key}`)} >Start</button></td>
+									<td style={{ padding: 0 }}><button id={`cy-home-start-quiz-btn-${index}`} className="startQuizButton" onClick={()=> navigate(`/quiz/${course.key}`)} >Start</button></td>
 								</tr>
 							);
 						}

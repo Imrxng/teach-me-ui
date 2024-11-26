@@ -16,7 +16,7 @@ const COURSE_INPUT = ({ course, courseTitles, onSelect }: CourseInputProps) => {
 				required
 			>
 				<option value="">--SELECT COURSE--</option>
-				{courseTitles.map((course, index) => <option key={index} value={course}>{course}</option>)}
+				{courseTitles.map((course, index) => <option id={`cy-update-course-option-${index}`} key={index} value={course}>{course}</option>)}
 			</select>
 			{course === '' && <div className={styles.errorMessage}>Course is required</div>}
 		</>

@@ -57,6 +57,7 @@ const Login = () => {
 							value={INPUT_USERNAME}
 							onChange={(event) => SET_INPUT_USERNAME(event.target.value)}
 							name="username"
+							id='cy-login-username-input'
 							className="input"
 						/>
 					</div>
@@ -70,11 +71,12 @@ const Login = () => {
 							value={INPUT_PASSWORD}
 							onChange={(event) => SET_INPUT_PASSWORD(event.target.value)}
 							name="password"
+							id='cy-login-password-input'
 							className="input"
 						/>
 					</div>
 				</div>
-				<button className='startQuizButton' onClick={handleLoginClick}>LOGIN</button>
+				<button id='cy-login-btn' className='startQuizButton' onClick={handleLoginClick}>LOGIN</button>
 				{ERROR_MESSAGE && <p id='errorMessage'>{ERROR_MESSAGE} </p>}
 			</div>
 			<div className="hexagon">

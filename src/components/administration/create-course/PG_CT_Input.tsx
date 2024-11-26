@@ -20,6 +20,7 @@ const PG_CT_INPUT = ({ register, errors }: PgCtInputProps) => {
 						min: { value: 50, message: 'Passing grade must be between 50 and 100' },
 						max: { value: 100, message: 'Passing grade must be between 50 and 100' },
 					})}
+					id='cy-create-course-passing-grade-input'
 					className={styles.formInput}
 					placeholder="Enter passing grade"
 				/>
@@ -35,6 +36,7 @@ const PG_CT_INPUT = ({ register, errors }: PgCtInputProps) => {
 						min: { value: 60, message: 'Complete time must be between 60 and 120' },
 						max: { value: 120, message: 'Complete time must be between 60 and 120' },
 					})}
+					id='cy-create-course-complete-time-input'
 					className={styles.formInput}
 					placeholder="Enter complete time"
 				/>
