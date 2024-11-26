@@ -41,7 +41,7 @@ const QuizPage = () => {
 
 	return (
 		<div>
-			<ShowResult />
+			<ShowResult CURRENT_INDEX={CURRENT_INDEX + 1}/>
 		</div>
 	);
 };

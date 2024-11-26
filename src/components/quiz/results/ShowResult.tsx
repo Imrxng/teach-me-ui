@@ -1,22 +1,27 @@
-import { useContext, useState } from 'react';
+import { useContext	, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { QuizContext } from '../provider/QuizContext';
 import Pagination from '../../home/Pagination';
 import styles from './ShowResult.module.css';
 import DATACONTEXT from '../../../context/DataContext';
 import { renderHeader, renderResultText } from './ShowResult.functions';
-import { Question } from '../../../types';
+import { IncorrectAnswer, Question } from '../../../types';
 
-const ShowResult = () => {
+interface ShowResultProps {
+	CURRENT_INDEX: number;
+}
+
+const ShowResult = ({ CURRENT_INDEX } : ShowResultProps) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const { DARKMODE } = useContext(DATACONTEXT);
-	const { COURSE, AMOUNT_OF_QUESTIONS, CURRENT_INDEX } = useContext(QuizContext);
+	const { COURSE, AMOUNT_OF_QUESTIONS } = useContext(QuizContext);
 	const NAVIGATE = useNavigate();
 	const { ID } = useParams();
 	let score = 0;
 	const answersPerPage = 3;   
 
-	const INCORRECT_ANSWERS: { question: string, correctAnswer: string[], yourAnswer:  string[] | undefined }[] = [];
+
+	const INCORRECT_ANSWERS: IncorrectAnswer[] = [];
 
 	const checkAnswer = (yourAnswer: string[] | undefined, correctAnswer: string[]) => {
 		return yourAnswer && correctAnswer.every(answer => yourAnswer.includes(answer));
@@ -64,11 +69,10 @@ const ShowResult = () => {
 			setCurrentPage(currentPage - 1);
 		}
 	};
-
 	return (
 		<div className={`${!DARKMODE ? styles.containerLight : ''} ${styles.container}`}>
 			<h3>score: {((score / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</h3>
-			<p>Answered Questions: {CURRENT_INDEX} of the {AMOUNT_OF_QUESTIONS}</p>
+			<p>Reached Questions: {CURRENT_INDEX} of the {AMOUNT_OF_QUESTIONS}</p>
 			<div className={styles.resultsContainer}>
 				<h4>{renderHeader(INCORRECT_ANSWERS.length)}</h4>
 				{INCORRECT_ANSWERS.length > 0 ? (
@@ -104,8 +108,9 @@ const ShowResult = () => {
 						</div>
 					</div>
 				) : (
-					<p>{renderResultText(CURRENT_INDEX, AMOUNT_OF_QUESTIONS)}</p>  
+					<p>All answers are correct!</p> 
 				)}
+				<p>{renderResultText(CURRENT_INDEX, AMOUNT_OF_QUESTIONS, INCORRECT_ANSWERS)}</p>
 			</div>
 			<button className={styles.btn} onClick={() => NAVIGATE('/home')}>Back to home</button>
 			<a className={styles.btn} href={`/quiz/${ID}`}>Restart quiz</a>

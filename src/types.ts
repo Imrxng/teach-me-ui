@@ -56,3 +56,8 @@ export interface User {
     password: string;
     type: 'admin' | 'user';
 }
+export interface IncorrectAnswer {
+    question: string;                
+    correctAnswer: string[];         
+    yourAnswer?: string[];   
+  }

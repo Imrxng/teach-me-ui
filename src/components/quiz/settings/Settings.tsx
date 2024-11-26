@@ -7,7 +7,7 @@ const SETTINGS = () => {
 
 	const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
 		SET_START_QUIZ(true);
-		SET_TIME(COURSE.completeTime * 60);
+		SET_TIME(5);
 	};
 
 	return (
