@@ -7,7 +7,7 @@ const SETTINGS = () => {
 
 	const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
 		SET_START_QUIZ(true);
-		SET_TIME(5);
+		SET_TIME(COURSE.completeTime * 60);
 	};
 
 	return (
@@ -17,7 +17,7 @@ const SETTINGS = () => {
 					<h2>Settings</h2>
 					<div className='doos'>
 						<label htmlFor="AMOUNT_OF_QUESTIONS">
-                            Amount of questions (max {COURSE.questions.length})
+							Amount of questions (max {COURSE.questions.length})
 						</label>
 						<input
 							type="number"
@@ -43,8 +43,8 @@ const SETTINGS = () => {
 							onChange={(e) => SET_CHECK_BETWEEN_QUESTIONS(e.target.value === 'true' ? true : false)}
 						/>
 						<label htmlFor="checkBetweenQuestionsYes">Yes</label>
-						<br/>
-                    
+						<br />
+
 						<input
 							type="radio"
 							name="CHECK_BETWEEN_QUESTIONS"
@@ -54,7 +54,7 @@ const SETTINGS = () => {
 							onChange={(e) => SET_CHECK_BETWEEN_QUESTIONS(e.target.value === 'true' ? true : false)}
 						/>
 						<label htmlFor="checkBetweenQuestionsNo">No</label>
-						<br/>
+						<br />
 					</div>
 					<button className='startQuizButton' onClick={onClickHandler}>Start quiz</button>
 				</>

@@ -35,6 +35,7 @@ const Login = () => {
 		};
 		tryLogin();
 		 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [INPUT_PASSWORD, INPUT_USERNAME, LOGIN_REQUEST, SET_LOGIN_SESSION]);
 
 	const handleLoginClick = () => {
