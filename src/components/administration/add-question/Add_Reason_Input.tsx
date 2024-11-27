@@ -33,6 +33,7 @@ const ADD_REASON_INPUT = ({ register, errors, index }: AddReasonInputProps) => {
 			<label>Reason</label>
 			<input
 				{...register(`answers.${index}.reason`, { required: true })}
+				id='cy-add-question-reason-input'
 				className={styles.formControl}
 				placeholder="Enter reason"
 			/>

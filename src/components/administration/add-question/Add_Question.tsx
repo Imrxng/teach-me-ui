@@ -105,6 +105,7 @@ const ADD_QUESTION = () => {
 		return index > 0 && (
 			<button
 				type="button"
+				id='cy-add-question-delete-correct-answer-btn'
 				className={styles.btnDelete}
 				onClick={() => removeCorrectAnswer(index)}
 			>
@@ -121,7 +122,12 @@ const ADD_QUESTION = () => {
 
 	const answerFieldDeleteButton = (index: number) => {
 		return index > 0 && (
-			<button type="button" className={styles.btnDelete} onClick={() => removeAnswer(index)}>
+			<button 
+				type="button"
+				id='cy-add-question-delete-answer-btn'
+				className={styles.btnDelete}
+				onClick={() => removeAnswer(index)}
+			>
 				Delete
 			</button>
 		);
@@ -129,7 +135,12 @@ const ADD_QUESTION = () => {
 
 	const answersFieldAddButton = () => {
 		return answerFields.length < 4 && (
-			<button type="button" className={styles.btnAdd} onClick={() => appendAnswer({ answer: '', reason: '' })}>
+			<button 
+				type="button"
+				id='cy-add-question-add-answer-btn'
+				className={styles.btnAdd}
+				onClick={() => appendAnswer({ answer: '', reason: '' })}
+			>
 				Add Answer
 			</button>
 		);
@@ -140,6 +151,7 @@ const ADD_QUESTION = () => {
 			CORRECT_ANSWERS.length < answerFields.length && (
 				<button
 					type="button"
+					id='cy-add-question-add-correct-answer-btn'
 					className={styles.btnAdd}
 					onClick={() => appendCorrectAnswer()}
 				>
@@ -188,6 +200,7 @@ const ADD_QUESTION = () => {
 							<label>Correct Answer {index + 1}</label>
 							<input
 								{...register(`questionAnswerResult.${index}`, { required: true })}
+								id={`cy-add-question-correct-answer-${index}`}
 								className={styles.formControl}
 								placeholder="Enter correct answer"
 							/>
@@ -198,10 +211,20 @@ const ADD_QUESTION = () => {
 					{handleCorrectAnswer()}
 				</div>
 
-				<button type="submit" className={styles.btnSubmit} disabled={answerFields.length < 2 || COURSE === ''}>
+				<button 
+					type="submit" 
+					id='cy-add-question-btn'
+					className={styles.btnSubmit} 
+					disabled={answerFields.length < 2 || COURSE === ''}
+				>
 					Add Question
 				</button>
-				<button type="button" className={styles.btnReset} onClick={() => resetForm()}>
+				<button 
+					type="button" 
+					id='cy-add-question-reset-btn'
+					className={styles.btnReset} 
+					onClick={() => resetForm()}
+				>
 					Reset form
 				</button>
 			</form>

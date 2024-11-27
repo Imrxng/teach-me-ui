@@ -22,10 +22,15 @@ const ADD_TYPE_CATEGORY_INPUT = ({ register, errors, handleTypeChange }: AddType
 		<div className={styles.row}>
 			<div className={styles.formGroup}>
 				<label className={styles.label}>Type</label>
-				<select {...register('type', { required: true })} className={styles.formControl} onChange={handleTypeChange}>
-					<option value="">-- SELECT TYPE --</option>
-					<option value={Type.Single}>Single</option>
-					<option value={Type.Multi}>Multiple</option>
+				<select 
+					{...register('type', { required: true })} 
+					id='cy-add-question-select-type'
+					className={styles.formControl}
+					onChange={handleTypeChange}
+				>
+					<option id='cy-add-question-empty-option' value="">-- SELECT TYPE --</option>
+					<option id='cy-add-question-single-option' value={Type.Single}>Single</option>
+					<option id='cy-add-question-multiple-option' value={Type.Multi}>Multiple</option>
 				</select>
 				{errors.type && <div className={styles.errorMessage}>Type is required</div>}
 			</div>
@@ -34,6 +39,7 @@ const ADD_TYPE_CATEGORY_INPUT = ({ register, errors, handleTypeChange }: AddType
 				<label className={styles.label}>Category</label>
 				<input
 					{...register('category', { required: true })}
+					id='cy-add-question-question-category-input'
 					className={styles.formControl}
 					placeholder="Enter question category"
 				/>

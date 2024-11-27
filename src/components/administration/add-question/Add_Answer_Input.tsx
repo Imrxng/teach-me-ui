@@ -32,6 +32,7 @@ const ADD_ANSWER_INPUT = ({ register, errors, index }: AddAnswersInputProps) => 
 			<label>Answer</label>
 			<input
 				{...register(`answers.${index}.answer`, { required: true })}
+				id='cy-add-question-answer-input'
 				className={styles.formControl}
 				placeholder="Enter answer"
 			/>

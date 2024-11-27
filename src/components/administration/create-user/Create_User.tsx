@@ -76,7 +76,11 @@ const CREATE_USER = () => {
 
 				<div className={styles.formGroup}>
 					<label className={styles.label}>Select user type</label>
-					<select {...register('type', { required: true })} className={styles.formControl}>
+					<select 
+						{...register('type', { required: true })} 
+						id='cy-create-user-select-role'
+						className={styles.formControl}
+					>
 						<option id='cy-create-user-user-option' value="user">User</option>
 						<option id='cy-create-user-admin-option' value="admin">Admin</option>
 					</select>
