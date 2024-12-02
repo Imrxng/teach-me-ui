@@ -22,7 +22,7 @@ const ADD_QUESTION_INPUT = ({ register, errors }: AddQuestionInputProps) => {
 			<label className={styles.label}>Question</label>
 			<input
 				{...register('question', { required: true })}
-                id='cy-add-question-question-input'
+				id='cy-add-question-question-input'
 				className={styles.formControl}
 				placeholder="Enter question"
 			/>

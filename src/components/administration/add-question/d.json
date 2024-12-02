@@ -1,0 +1,73 @@
+{
+    "id": "1733146952",
+    "name": "Space Exploration",
+    "category": "Science",
+    "passingGrade": 80,
+    "completeTime": 10,
+    "questionCategories": [
+        "history",
+        "missions",
+        "astronauts"
+    ],
+    "questions": [
+        {
+            "question": "When was the first moon landing?",
+            "type": "single",
+            "category": "history",
+            "answers": [
+                {
+                    "answer": "1967",
+                    "reason": "The first moon landing was later."
+                },
+                {
+                    "answer": "1969",
+                    "reason": "Correct! The Apollo 11 mission landed on the moon in 1969."
+                },
+                {
+                    "answer": "1971",
+                    "reason": "The first moon landing was earlier."
+                },
+                {
+                    "answer": "1973",
+                    "reason": "The first moon landing was much earlier."
+                }
+            ],
+            "questionAnswerResult": [
+                "1969"
+            ]
+        },
+        {
+            "question": "Which of the following are NASA Mars missions?",
+            "type": "multi",
+            "category": "missions",
+            "answers": [
+                {
+                    "answer": "Curiosity Rover",
+                    "reason": "Correct! The Curiosity Rover landed on Mars in 2012."
+                },
+                {
+                    "answer": "Voyager 1",
+                    "reason": "Voyager 1 is an interstellar probe, not a Mars mission."
+                },
+                {
+                    "answer": "Perseverance Rover",
+                    "reason": "Correct! Perseverance Rover landed on Mars in 2021."
+                },
+                {
+                    "answer": "Cassini",
+                    "reason": "Cassini studied Saturn, not Mars."
+                },
+                {
+                    "answer": "Spirit Rover",
+                    "reason": "Correct! Spirit Rover explored Mars from 2004 to 2010."
+                }
+            ],
+            "questionAnswerResult": [
+                "Curiosity Rover",
+                "Perseverance Rover",
+                "Spirit Rover"
+            ]
+        }
+    ],
+    "date": "12-02-2024 14:45:00"
+}

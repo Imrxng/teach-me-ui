@@ -1,3 +1,4 @@
+import { count } from 'console';
 import { Course, RootObject, User } from './types';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
@@ -30,8 +31,7 @@ export const deleteCourse = async (course: string) => {
 
 const handleError = (error: unknown, errorMessage: string): void => {
 	if (error instanceof Error) {
-		console.error('error: '+error.message);
-		alert(errorMessage);
+		console.error('error: '+error.message+errorMessage);
 	}
 };
 
@@ -75,7 +75,7 @@ export const getCourse = async (course: string): Promise<Course> => {
 	return DATA;
 };
 
-export const updateCourse = async (data: Course) => {
+export const updateCourse = async (data: Course): Promise<string> => {
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/modify-course`, {
 			method: 'PUT',
@@ -88,9 +88,10 @@ export const updateCourse = async (data: Course) => {
 		if (!RESPONSE.ok) {
 			throw new Error(`Error: failed to update: ${data.name}`);
 		}
-		alert(`${data.name}, has been updated successfully`);
+		return `${data.name}, has been updated successfully`;
 	} catch (error) {
 		handleError(error, 'Failed to update course. Please try again.');
+		return `Failed to update "${data.name}". Please try again.`
 	}
 };
 

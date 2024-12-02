@@ -11,8 +11,13 @@ import DATE_INPUT from '../create-course/Date_Input';
 import PG_CT_INPUT from '../create-course/PG_CT_Input';
 import QUESTION_CATEGORY_INPUT from '../create-course/Question_Category_Input';
 import COURSE_INPUT from './Course_Input';
+import modal from '../modal/Modal.module.css';
+import MODAL from '../modal/Modal';
 
 const UPDATE_FORM = () => {
+	const [OPEN, SET_OPEN] = useState<boolean>(false);
+	const [OPEN_MESSAGE, SET_OPEN_MESSAGE] = useState<boolean>(false);
+	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	const [QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES] = useState<string[]>(['']);
 	const [COURSE_TITLES, SET_COURSE_TITLES] = useState<string[]>([]);
@@ -55,11 +60,15 @@ const UPDATE_FORM = () => {
 	};
 
 	const onSubmit = async (data: Course) => {
-		const confirmation: boolean = confirm('Are you sure you want to update this course?');
-		if (confirmation) {
+		try {
 			SET_LOADING(true);
 			data.questionCategories = QUESTION_CATEGORIES;
-			await updateCourse(data);
+
+			const RESPONE_MESSAGE = await updateCourse(data);
+			SET_MESSAGE(RESPONE_MESSAGE);
+		} catch (error) {
+			SET_MESSAGE(`Failed to update ${data.name}. Please try again.`); 
+		} finally {
 			reset({
 				id: new Date().getTime().toString(),
 				name: '',
@@ -68,12 +77,13 @@ const UPDATE_FORM = () => {
 				completeTime: 60,
 				questionCategories: [''],
 				questions: [],
-				date: ''
+				date: '',
 			});
 			SET_QUESTION_CATEGORIES(['']);
 			SET_COURSE('');
 			SET_LOADING(false);
-			console.log(data);
+			SET_OPEN(false); 
+			SET_OPEN_MESSAGE(true);
 		}
 	};
 
@@ -131,11 +141,11 @@ const UPDATE_FORM = () => {
 				onSubmit(data)
 			)}>
 				<h2 className={stylesUpdate.detailTitle}>Course Details</h2>
-				<COURSE_CATEGORY_INPUT register={register} errors={errors} disable={true}/>
+				<COURSE_CATEGORY_INPUT register={register} errors={errors} disable={true} />
 
-				<PG_CT_INPUT register={register} errors={errors}/>
+				<PG_CT_INPUT register={register} errors={errors} />
 
-				<DATE_INPUT register={register} errors={errors}/>
+				<DATE_INPUT register={register} errors={errors} />
 
 				<QUESTION_CATEGORY_INPUT
 					questionCategories={QUESTION_CATEGORIES}
@@ -145,13 +155,27 @@ const UPDATE_FORM = () => {
 				/>
 
 				<button
-					type="submit"
+					type="button"
+					onClick={() => SET_OPEN(true)}
 					id='cy-update-course-btn'
 					className={BUTTON_CLASSNAME}
 				>
 					Update Course
 				</button>
+				<MODAL open={OPEN} onClose={() => SET_OPEN(false)}>
+					<div className={modal.modal} style={{ color: 'black' }}>
+						<h1 className={modal.modalTitle} style={{ color: 'black' }}>Confirm Update</h1>
+						<p className={modal.modalTxt}>Are you sure you want to update?</p>
+						<p>{COURSE}</p>
+						<button type="submit" className={modal.modalBtn}>Update</button>
+					</div>
+				</MODAL>
 			</form>
+			<MODAL open={OPEN_MESSAGE} onClose={() => SET_OPEN_MESSAGE(false)}>
+				<div className={modal.modal} style={{ color: 'black' }}>
+					<p>{MESSAGE}</p>
+				</div>
+			</MODAL>
 		</div>
 	);
 };

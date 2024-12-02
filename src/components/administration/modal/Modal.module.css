@@ -1,0 +1,50 @@
+.modalContainer{
+    z-index: 10;
+}
+.modal h1{
+    color: black;
+}
+.modalTitle{
+    color: black;
+}
+.modalTxt{
+    font-weight: normal;
+}
+.modalBtn{
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: .5rem;
+}
+
+.backdrop{
+    position: fixed;
+    inset: 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index: 10;
+}
+
+.modalBackdrop{
+    width:300px;
+    height:200px;
+    background:#fff;
+    position:relative;
+    padding:20px;
+    border-radius: .5rem;
+}
+
+.modalCloseBtn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    color:gray;
+    font-weight: 700;
+}
+
+.modalCloseBtn:hover{
+    color:red;
+    background-color: transparent;
+    cursor: pointer;
+}

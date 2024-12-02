@@ -9,6 +9,7 @@ import COURSE_CATEGORY_INPUT from './Course_Category_Input';
 import PG_CT_INPUT from './PG_CT_Input';
 import DATE_INPUT from './Date_Input';
 import QUESTION_CATEGORY_INPUT from './Question_Category_Input';
+import DOWNLOAD_TEMPLATE from '../download-template/Download_Template';
 
 const CREATE_FORM = () => {
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
@@ -61,6 +62,7 @@ const CREATE_FORM = () => {
 	return (
 		<div className={styles.createFormContainer} style={{ minWidth: '5rem' }}>
 			<h1 className={styles.createTitle}>Create Course</h1>
+			<DOWNLOAD_TEMPLATE />
 			<form className={styles.createForm} onSubmit={handleSubmit((data) =>
 				uploadCourse(data, QUESTION_CATEGORIES, SET_LOADING, reset, SET_QUESTION_CATEGORIES)
 			)}>

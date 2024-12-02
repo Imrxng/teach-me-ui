@@ -8,6 +8,7 @@ import DELETE_COURSE from './delete-course/Delete_Course';
 import ADD_QUESTION from './add-question/Add_Question';
 import CREATE_USER from './create-user/Create_User';
 import DELETE_USER from './delete-user/Delete_User';
+import UPDATE_COURSE from './update-course/Update_Course';
 
 const ADMINISTRATION = () => {
 	const { DARKMODE, LOGIN_SESSION } = useContext(DATACONTEXT);
@@ -25,7 +26,7 @@ const ADMINISTRATION = () => {
 				<h1 className={styles.pageTitle}>Hello Admin,<br/>what would you like to do?</h1>
 				<div className={styles.btnList}>
 					<button id='cy-admin-create-course-btn' className={styles.btn} onClick={() => SET_COMPONENT(() => CREATE_FORM)}>Create Course</button>
-					<button id='cy-admin-update-course-btn' className={styles.btn} onClick={() => SET_COMPONENT(() => UPDATE_FORM)}>Update Course</button>
+					<button id='cy-admin-update-course-btn' className={styles.btn} onClick={() => SET_COMPONENT(() => UPDATE_COURSE)}>Update Course</button>
 					<button id='cy-admin-delete-course-btn' className={styles.btn} onClick={() => SET_COMPONENT(() => DELETE_COURSE)}>Delete Course</button>
 					<button id='cy-admin-add-question-btn' className={styles.btn} onClick={() => SET_COMPONENT(() => ADD_QUESTION)}>Add Question</button>
 					<button id='cy-admin-create-user-btn' className={styles.btn} onClick={() => SET_COMPONENT(() => CREATE_USER)}>Create User</button>

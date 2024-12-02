@@ -74,7 +74,7 @@ const DELETE_USER = () => {
 						<div key={index} className={styles.usersCard}>
 							<button
 								onClick={() => DELETE_THIS_USER(username)}
-                                id={`cy-delete-user-btn-${index}`}
+								id={`cy-delete-user-btn-${index}`}
 								className={styles.deleteButton}
 							>
                                 &times;
