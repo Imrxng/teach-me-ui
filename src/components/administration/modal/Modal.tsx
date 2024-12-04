@@ -14,7 +14,7 @@ const MODAL = ({ open, onClose, children }: modalProps) => {
 			background: open ? 'rgb(0,0,0,0.6)' : ''
 		}}>
 			<div className={styles.modalBackdrop} onClick={(e) => e.stopPropagation()}>
-				<button type='button' className={styles.modalCloseBtn} onClick={onClose}>
+				<button type='button' id='cy-modal-close-modal-btn' className={styles.modalCloseBtn} onClick={onClose}>
                 X
 				</button>
 				{children}

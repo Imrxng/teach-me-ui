@@ -282,7 +282,7 @@ const ADD_QUESTION = () => {
 								</div>
 							)}
 						</div>
-						<button type="submit" className={modal.actionBtn}>Add</button>
+						<button type="submit" id='cy-add-question-reset-btn-confirm' className={modal.actionBtn}>Add</button>
 					</div>
 				</MODAL>
 			</form>

@@ -130,6 +130,7 @@ const DELETE_COURSE = () => {
 					<p>{SELECTED_COURSE}</p>
 					<button
 						type="button"
+						id='cy-delete-course-btn-confirm'
 						className={modal.actionBtn}
 						onClick={() => DELETE_THIS_COURSE(SELECTED_COURSE)}
 					>

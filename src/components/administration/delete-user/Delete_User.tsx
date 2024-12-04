@@ -123,6 +123,7 @@ const DELETE_USER = () => {
 					<p>{SELECTED_USER}</p>
 					<button
 						type="button"
+						id='cy-delete-user-btn-confirm'
 						className={modal.actionBtn}
 						onClick={() => DELETE_THIS_USER(SELECTED_USER)}
 					>

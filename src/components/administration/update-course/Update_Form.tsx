@@ -167,7 +167,7 @@ const UPDATE_FORM = () => {
 						<p className={modal.modalTitle} style={{ color: 'black' }}>Confirm Update</p>
 						<p className={modal.modalTxt}>Are you sure you want to update?</p>
 						<p>{COURSE}</p>
-						<button type="submit" className={modal.actionBtn}>Update</button>
+						<button type="submit" id='cy-update-course-btn-confirm' className={modal.actionBtn}>Update</button>
 					</div>
 				</MODAL>
 			</form>
