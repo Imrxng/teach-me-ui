@@ -3,7 +3,6 @@ import styles from './administration.module.css';
 import { useNavigate } from 'react-router-dom';
 import DATACONTEXT from '../../context/DataContext';
 import CREATE_FORM from './create-course/Create_From';
-import UPDATE_FORM from './update-course/Update_Form';
 import DELETE_COURSE from './delete-course/Delete_Course';
 import ADD_QUESTION from './add-question/Add_Question';
 import CREATE_USER from './create-user/Create_User';

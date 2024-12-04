@@ -15,8 +15,8 @@ import modal from '../modal/Modal.module.css';
 import MODAL from '../modal/Modal';
 
 const UPDATE_FORM = () => {
-	const [OPEN, SET_OPEN] = useState<boolean>(false);
-	const [OPEN_MESSAGE, SET_OPEN_MESSAGE] = useState<boolean>(false);
+	const [CONFIRMATION_MODAL, SET_CONFIRMATION_MODAL] = useState<boolean>(false);
+	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	const [QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES] = useState<string[]>(['']);
@@ -63,10 +63,10 @@ const UPDATE_FORM = () => {
 		try {
 			SET_LOADING(true);
 			data.questionCategories = QUESTION_CATEGORIES;
-
 			const RESPONE_MESSAGE = await updateCourse(data);
 			SET_MESSAGE(RESPONE_MESSAGE);
-		} catch (error) {
+		} catch (error: unknown) {
+			console.error(error);
 			SET_MESSAGE(`Failed to update ${data.name}. Please try again.`); 
 		} finally {
 			reset({
@@ -82,8 +82,8 @@ const UPDATE_FORM = () => {
 			SET_QUESTION_CATEGORIES(['']);
 			SET_COURSE('');
 			SET_LOADING(false);
-			SET_OPEN(false); 
-			SET_OPEN_MESSAGE(true);
+			SET_CONFIRMATION_MODAL(false); 
+			SET_RESPONSE_MODAL(true);
 		}
 	};
 
@@ -156,23 +156,23 @@ const UPDATE_FORM = () => {
 
 				<button
 					type="button"
-					onClick={() => SET_OPEN(true)}
+					onClick={() => SET_CONFIRMATION_MODAL(true)}
 					id='cy-update-course-btn'
 					className={BUTTON_CLASSNAME}
 				>
 					Update Course
 				</button>
-				<MODAL open={OPEN} onClose={() => SET_OPEN(false)}>
+				<MODAL open={CONFIRMATION_MODAL} onClose={() => SET_CONFIRMATION_MODAL(false)}>
 					<div className={modal.modal} style={{ color: 'black' }}>
-						<h1 className={modal.modalTitle} style={{ color: 'black' }}>Confirm Update</h1>
+						<p className={modal.modalTitle} style={{ color: 'black' }}>Confirm Update</p>
 						<p className={modal.modalTxt}>Are you sure you want to update?</p>
 						<p>{COURSE}</p>
-						<button type="submit" className={modal.modalBtn}>Update</button>
+						<button type="submit" className={modal.actionBtn}>Update</button>
 					</div>
 				</MODAL>
 			</form>
-			<MODAL open={OPEN_MESSAGE} onClose={() => SET_OPEN_MESSAGE(false)}>
-				<div className={modal.modal} style={{ color: 'black' }}>
+			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
+				<div className={modal.responseModal} style={{ color: 'black' }}>
 					<p>{MESSAGE}</p>
 				</div>
 			</MODAL>

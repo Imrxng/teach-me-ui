@@ -14,18 +14,18 @@ export const fetchCourseTitles = async (): Promise<string[]> => {
 };
 
 export const deleteCourse = async (course: string) => {
-
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/delete-course/${course}`, {
 			method: 'DELETE'
 		});
 
-		if (RESPONSE.ok) {
-			alert(`${course} has been deleted successfully!`);
-		} else throw new Error(`Failed to delete course ${course}`);
+		if (!RESPONSE.ok) {
+			throw new Error(`Failed to delete course ${course}`);
+		} 
 	}
 	catch (error) {
 		handleError(error,'Error deleting course. Please try again.');
+		return `Failed to delete course ${course}`;
 	}
 };
 
@@ -35,7 +35,7 @@ const handleError = (error: unknown, errorMessage: string): void => {
 	}
 };
 
-export const addCourse = async (course: Course) => {
+export const addCourse = async (course: Course): Promise<string> => {
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/create-course`, {
 			method: 'POST',
@@ -46,10 +46,12 @@ export const addCourse = async (course: Course) => {
 		});
 
 		if (RESPONSE.ok) {
-			alert(`${course.name}, has been created successfully!`);
+			return `${course.name}, has been created successfully`;
 		} else throw new Error(`Failed to create course: ${course}`);
+		
 	} catch (error) {
 		handleError(error, 'Failed to add course. Please try again.');
+		return `Failed to create "${course.name}". Please try again.`
 	}
 };
 
@@ -108,7 +110,6 @@ export const addQuestion = async (data: Course) => {
 		if (!RESPONSE.ok) {
 			throw new Error(`Error: failed to update: ${data.name}`);
 		}
-		alert(`${data.name}, has been updated successfully`);
 	} catch (error) {
 		handleError(error, 'Failed to add question. Please try again.');
 	}
@@ -124,9 +125,9 @@ export const createUser = async (user: User) => {
 			body: JSON.stringify(user),
 		});
 
-		if (RESPONSE.ok) {
-			alert(`${user.username}, has been created successfully!`);
-		} else throw new Error(`Failed to create user: ${user.username}`);
+		if (!RESPONSE.ok) {
+			throw new Error(`Failed to create user: ${user.username}`);
+		} 
 	} catch (error) {
 		handleError(error, 'Failed to create user. Please try again.');
 	}
@@ -148,9 +149,9 @@ export const DELETE_USER_FROM_DB = async (username: string) => {
 		const RESPONSE = await fetch(`${BASE_URL}/delete-user/${username}`, {
 			method: 'DELETE'
 		})
-		if (RESPONSE.ok) {
-			alert(`${username.toUpperCase()} has been deleted successfully!`);
-		} else throw new Error(`Failed to delete course ${username.toUpperCase()}`);
+		if (!RESPONSE.ok) {
+			throw new Error(`Failed to delete course ${username.toUpperCase()}`);
+		}
 	} catch (error) {
 		handleError(error, `Failed to user: ${username.toUpperCase()}. Please try again.`);
 	}

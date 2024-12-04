@@ -10,8 +10,12 @@ import PG_CT_INPUT from './PG_CT_Input';
 import DATE_INPUT from './Date_Input';
 import QUESTION_CATEGORY_INPUT from './Question_Category_Input';
 import DOWNLOAD_TEMPLATE from '../download-template/Download_Template';
+import MODAL from '../modal/Modal';
+import modal from '../modal/Modal.module.css';
 
 const CREATE_FORM = () => {
+	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
+	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	const [QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES] = useState<string[]>(['']);
 	const {
@@ -36,20 +40,21 @@ const CREATE_FORM = () => {
 	
 	const handleRemoveCategory = ( index: number,) => SET_QUESTION_CATEGORIES( QUESTION_CATEGORIES.filter((_, i) => i !== index));
 	
-	const uploadCourse = async (
-		data: Course,
-		questionCategories: string[],
-		setLoading: (loading: boolean) => void,
-		reset: () => void,
-		setQuestionCategories: (categories: string[]) => void
-	) => {
-		data.questionCategories = questionCategories;
-		setLoading(true);
-		await addCourse(data);
-		reset();
-		setQuestionCategories(['']);
-		setLoading(false);
-		console.log(data);
+	const uploadCourse = async (data: Course) => {
+		try {
+			SET_LOADING(true);
+			data.questionCategories = QUESTION_CATEGORIES;
+			const RESPONE_MESSAGE = await addCourse(data);;
+			SET_MESSAGE(RESPONE_MESSAGE);
+		} catch (error: unknown) {
+			console.error(error);
+			SET_MESSAGE(`Failed to add ${data.name}. Please try again.`); 
+		} finally {
+			reset();
+			SET_QUESTION_CATEGORIES(['']);
+			SET_LOADING(false);
+			SET_RESPONSE_MODAL(true);
+		}
 	};
 
 	const BUTTON_CLASSNAME = `
@@ -62,9 +67,8 @@ const CREATE_FORM = () => {
 	return (
 		<div className={styles.createFormContainer} style={{ minWidth: '5rem' }}>
 			<h1 className={styles.createTitle}>Create Course</h1>
-			<DOWNLOAD_TEMPLATE />
 			<form className={styles.createForm} onSubmit={handleSubmit((data) =>
-				uploadCourse(data, QUESTION_CATEGORIES, SET_LOADING, reset, SET_QUESTION_CATEGORIES)
+				uploadCourse(data)
 			)}>
 
 				<COURSE_CATEGORY_INPUT register={register} errors={errors} disable={false}/>
@@ -88,6 +92,11 @@ const CREATE_FORM = () => {
                     Create Course
 				</button>
 			</form>
+			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
+				<div className={modal.responseModal} style={{ color: 'black' }}>
+					<p>{MESSAGE}</p>
+				</div>
+			</MODAL>
 		</div>
 	);
 };

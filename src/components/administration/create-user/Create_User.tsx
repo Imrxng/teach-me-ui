@@ -1,12 +1,16 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { createUser } from '../../../ApiService';
 import { User } from '../../../types';
 import styles from './Create_User.module.css';
 import { useForm } from 'react-hook-form';
 import DATACONTEXT from '../../../context/DataContext';
 import LoadingSpinner from '../../loader/LoadingSpinner';
+import MODAL from '../modal/Modal';
+import modal from '../modal/Modal.module.css';
 
 const CREATE_USER = () => {
+	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
+	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { SET_LOADING, LOADING } = useContext(DATACONTEXT);
 	const {
 		register,
@@ -22,11 +26,18 @@ const CREATE_USER = () => {
 	});
 
 	const onSubmit = async (data: User) => {
-		console.log(data);
-		SET_LOADING(true);
-		await createUser(data);
-		reset();
-		SET_LOADING(false);
+		try {
+			SET_LOADING(true);
+			await createUser(data);
+			SET_MESSAGE(`"${data.username}" was successfully created`);
+		} catch (error: unknown) {
+			console.error(error);
+			SET_MESSAGE(`Failed to "${data.username}". Please try again.`);
+		} finally {
+			reset();
+			SET_LOADING(false);
+			SET_RESPONSE_MODAL(true);
+		}
 	};
 
 	const usernameError = () => {
@@ -89,6 +100,11 @@ const CREATE_USER = () => {
 
 				<button id='cy-create-user-create-btn' type="submit" className={styles.btnSubmit}>Create</button>
 			</form>
+			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
+				<div className={modal.responseModal} style={{ color: 'black' }}>
+					<p>{MESSAGE}</p>
+				</div>
+			</MODAL>
 		</div>
 	);
 };

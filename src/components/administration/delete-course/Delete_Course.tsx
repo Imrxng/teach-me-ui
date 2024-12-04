@@ -5,8 +5,14 @@ import Search from '../../home/Search';
 import { deleteCourse, fetchCourseTitles } from '../../../ApiService';
 import styles from './Delete_Course.module.css';
 import Pagination from '../../home/Pagination';
+import MODAL from '../modal/Modal';
+import modal from '../modal/Modal.module.css';
 
 const DELETE_COURSE = () => {
+	const [CONFIRMATION_MODAL, SET_CONFIRMATION_MODAL] = useState<boolean>(false);
+	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
+	const [MESSAGE, SET_MESSAGE] = useState<string>('');
+	const [SELECTED_COURSE, SET_SELECTED_COURSE] = useState<string>('');
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	const [COURSE_TITLES, SET_COURSE_TITLES] = useState<string[]>([]);
 	const [SEARCH, SET_SEARCH] = useState<string>('');
@@ -43,10 +49,18 @@ const DELETE_COURSE = () => {
 	};
 
 	const DELETE_THIS_COURSE = async (course: string) => {
-		const CONFIRMATION: boolean = confirm(`Are you sure you want to delete ${course}?`);
-		if (CONFIRMATION) {
+		try {
+			SET_LOADING(true);
 			await deleteCourse(course);
+			SET_MESSAGE(`"${course}" deleted succesfully`);
+		} catch (error: unknown) {
+			console.error(error);
+			SET_MESSAGE(`Failed to delete "${course}". Please try again.`);
+		} finally {
 			LOAD_COURSE_TITLES();
+			SET_LOADING(false);
+			SET_CONFIRMATION_MODAL(false);
+			SET_RESPONSE_MODAL(true);
 		}
 	};
 
@@ -79,16 +93,21 @@ const DELETE_COURSE = () => {
 			{COURSE_TITLES.length > 0 ? (
 				<div className={styles.coursesList}>
 					{FILTERED_COURSES().map((course, index) => (
-						<div key={index} className={styles.courseCard}>
-							<button
-								onClick={() => DELETE_THIS_COURSE(course)}
-								id={`cy-delete-course-btn-${index}`}
-								className={styles.deleteButton}
-							>
-								&times;
-							</button>
-							<p className={styles.courseTitle}>{course.toUpperCase()}</p>
-						</div>
+						<>
+							<div key={index} className={styles.courseCard}>
+								<button
+									onClick={() => {
+										SET_SELECTED_COURSE(course);
+										SET_CONFIRMATION_MODAL(true);
+									}}
+									id={`cy-delete-course-btn-${index}`}
+									className={styles.deleteButton}
+								>
+									&times;
+								</button>
+								<p className={styles.courseTitle}>{course.toUpperCase()}</p>
+							</div>
+						</>
 					))}
 				</div>
 			)
@@ -104,6 +123,25 @@ const DELETE_COURSE = () => {
 					onNext={HANDLE_NEXT_PAGE}
 				/>
 			</div>
+			<MODAL open={CONFIRMATION_MODAL} onClose={() => SET_CONFIRMATION_MODAL(false)}>
+				<div className={modal.modal} style={{ color: 'black' }}>
+					<p className={modal.modalTitle} style={{ color: 'black' }}>Confirm Delete</p>
+					<p className={modal.modalTxt}>Are you sure you want to delete this course?</p>
+					<p>{SELECTED_COURSE}</p>
+					<button
+						type="button"
+						className={modal.actionBtn}
+						onClick={() => DELETE_THIS_COURSE(SELECTED_COURSE)}
+					>
+						Delete
+					</button>
+				</div>
+			</MODAL>
+			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
+				<div className={modal.responseModal} style={{ color: 'black' }}>
+					<p>{MESSAGE}</p>
+				</div>
+			</MODAL>
 		</div>
 	);
 };

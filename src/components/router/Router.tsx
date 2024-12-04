@@ -39,23 +39,23 @@ export const ROUTER = createBrowserRouter([
 				element: <LOGOUT />
 			},
 			{
-				path: '/administration',
+				path: '/settings',
 				element: <ADMINISTRATION />
 			},
 			{
-				path: '/administration/create-course',
+				path: '/settings/create-course',
 				element: <CREATE_COURSE />
 			},
 			{
-				path: '/administration/delete-course',
+				path: '/settings/delete-course',
 				element: <DELETE_COURSE />
 			},
 			{
-				path: '/administration/add-question',
+				path: '/settings/add-question',
 				element: <ADD_QUESTION />
 			},
 			{
-				path: '/administration/update-course',
+				path: '/settings/update-course',
 				element: <UPDATE_COURSE />
 			},
 			{

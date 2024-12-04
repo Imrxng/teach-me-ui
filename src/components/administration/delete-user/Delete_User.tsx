@@ -5,8 +5,14 @@ import { DELETE_USER_FROM_DB, GET_ALL_USERS } from '../../../ApiService';
 import DATACONTEXT from '../../../context/DataContext';
 import LoadingSpinner from '../../loader/LoadingSpinner';
 import Pagination from '../../home/Pagination';
+import MODAL from '../modal/Modal';
+import modal from '../modal/Modal.module.css';
 
 const DELETE_USER = () => {
+	const [CONFIRMATION_MODAL, SET_CONFIRMATION_MODAL] = useState<boolean>(false);
+	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
+	const [MESSAGE, SET_MESSAGE] = useState<string>('');
+	const [SELECTED_USER, SET_SELECTED_USER] = useState<string>('');
 	const [SEARCH, SET_SEARCH] = useState<string>('');
 	const [CURRENT_PAGE, SET_CURRENT_PAGE] = useState(1);
 	const [USERS_LIST, SET_USERS_LIST] = useState<string[]>([]);
@@ -39,13 +45,19 @@ const DELETE_USER = () => {
 	};
 
 	const DELETE_THIS_USER = async (username: string) => {
-		const CONFRIRMATION: boolean = confirm(`Are you sure you want to delete: ${username.toUpperCase()}`);
-		SET_LOADING(true);
-		if (CONFRIRMATION) {
+		try {
+			SET_LOADING(true);
 			await DELETE_USER_FROM_DB(username);
+			SET_MESSAGE(`"${username}" succesfully deleted`);
+		} catch (error: unknown) {
+			console.error(error);
+			SET_MESSAGE(`Failed to delete "${username}". Please try again.`);
+		} finally {
 			LOAD_USERS();
+			SET_LOADING(false);
+			SET_CONFIRMATION_MODAL(false);
+			SET_RESPONSE_MODAL(true);
 		}
-		SET_LOADING(false);
 	};
 
 	const HANDLE_NEXT_PAGE = () => {
@@ -71,16 +83,21 @@ const DELETE_USER = () => {
 			{USERS_LIST.length > 0 ? (
 				<div className={styles.usersList}>
 					{FILTERED_USERS().map((username, index) => (
-						<div key={index} className={styles.usersCard}>
-							<button
-								onClick={() => DELETE_THIS_USER(username)}
-								id={`cy-delete-user-btn-${index}`}
-								className={styles.deleteButton}
-							>
-                                &times;
-							</button>
-							<p className={styles.courseTitle}>{username.toUpperCase()}</p>
-						</div>
+						<>
+							<div key={index} className={styles.usersCard}>
+								<button
+									onClick={() => {
+										SET_SELECTED_USER(username);
+										SET_CONFIRMATION_MODAL(true);
+									}}
+									id={`cy-delete-user-btn-${index}`}
+									className={styles.deleteButton}
+								>
+									&times;
+								</button>
+								<p className={styles.courseTitle}>{username.toUpperCase()}</p>
+							</div>
+						</>
 					))}
 				</div>
 			)
@@ -99,6 +116,25 @@ const DELETE_USER = () => {
 					onNext={HANDLE_NEXT_PAGE}
 				/>
 			</div>
+			<MODAL open={CONFIRMATION_MODAL} onClose={() => SET_CONFIRMATION_MODAL(false)}>
+				<div className={modal.modal} style={{ color: 'black' }}>
+					<p className={modal.modalTitle} style={{ color: 'black' }}>Confirm Delete</p>
+					<p className={modal.modalTxt}>Are you sure you want to delete this user?</p>
+					<p>{SELECTED_USER}</p>
+					<button
+						type="button"
+						className={modal.actionBtn}
+						onClick={() => DELETE_THIS_USER(SELECTED_USER)}
+					>
+						Delete
+					</button>
+				</div>
+			</MODAL>
+			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
+				<div className={modal.responseModal} style={{ color: 'black' }}>
+					<p>{MESSAGE}</p>
+				</div>
+			</MODAL>
 		</div>
 	);
 };

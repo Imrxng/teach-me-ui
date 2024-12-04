@@ -74,6 +74,7 @@
 }
 
 .btnAdd,
+.btnModal,
 .btnDelete,
 .btnSubmit,
 .btnReset {
@@ -105,18 +106,7 @@
     background-color: #dc2626;
 }
 
-.btnSubmit {
-    background-color: var(--secondary-color);
-    color: var(--primary-light-color);
-    margin-top: 1.5rem;
-}
-
-.btnSubmit:hover {
-    background-color: var(--primary-light-color);
-    color: var(--primary-dark-color);
-}
-
-.btnSubmit:disabled {
+.btnAdd:disabled {
     background-color: #d1d5db;
     cursor: not-allowed;
 }
@@ -133,4 +123,8 @@
 
 option{
     color:black
+}
+
+.modalTxt{
+    font-weight: normal;
 }

@@ -10,8 +10,20 @@ import ADD_QUESTION_INPUT from './Add_Question_Input';
 import ADD_TYPE_CATEGORY_INPUT from './Add_Type_Category_Input';
 import ADD_ANSWER_INPUT from './Add_Answer_Input';
 import ADD_REASON_INPUT from './Add_Reason_Input';
+import MODAL from '../modal/Modal';
+import modal from '../modal/Modal.module.css';
 
 const ADD_QUESTION = () => {
+	const [QUESTION_OBJECT, SET_QUESION_OBJECT] = useState<Question>({
+		question: '',
+		type: '' as Type,
+		category: '',
+		answers: [{ answer: '', reason: '' }],
+		questionAnswerResult: ['']
+	});
+	const [CONFIRMATION_MODAL, SET_CONFIRMATION_MODAL] = useState<boolean>(false);
+	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
+	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	const [COURSE_TITLES, SET_COURSE_TITLES] = useState<string[]>([]);
 	const [COURSE, SET_COURSE] = useState('');
@@ -65,9 +77,9 @@ const ADD_QUESTION = () => {
 	const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newType = e.target.value as Type;
 		setSelectedType(newType);
-	
+
 		if (newType === 'single') {
-			SET_CORRECT_ANSWERS(['']); 
+			SET_CORRECT_ANSWERS(['']);
 			reset({
 				...watch(),
 				type: newType,
@@ -93,12 +105,21 @@ const ADD_QUESTION = () => {
 	};
 
 	const onSubmit = async (data: Question) => {
-		SET_LOADING(true);
-		const course: Course = await getCourse(COURSE);
-		course.questions.push(data);
-		await addQuestion(course);
-		resetForm();
-		SET_LOADING(false);
+		try {
+			SET_LOADING(true);
+			const course: Course = await getCourse(COURSE);
+			course.questions.push(data);
+			await addQuestion(course);
+			SET_MESSAGE(`"${data.question}" has been added`);
+		} catch (error: unknown) {
+			console.error(error);
+			SET_MESSAGE(`Failed to add: "${data.question}". `);
+		} finally {
+			resetForm();
+			SET_LOADING(false);
+			SET_CONFIRMATION_MODAL(false)
+			SET_RESPONSE_MODAL(true);
+		}
 	};
 
 	const renderDeleteButton = (index: number) => {
@@ -122,7 +143,7 @@ const ADD_QUESTION = () => {
 
 	const answerFieldDeleteButton = (index: number) => {
 		return index > 0 && (
-			<button 
+			<button
 				type="button"
 				id='cy-add-question-delete-answer-btn'
 				className={styles.btnDelete}
@@ -135,7 +156,7 @@ const ADD_QUESTION = () => {
 
 	const answersFieldAddButton = () => {
 		return answerFields.length < 4 && (
-			<button 
+			<button
 				type="button"
 				id='cy-add-question-add-answer-btn'
 				className={styles.btnAdd}
@@ -211,23 +232,65 @@ const ADD_QUESTION = () => {
 					{handleCorrectAnswer()}
 				</div>
 
-				<button 
-					type="submit" 
+				<button
+					type="button"
+					onClick={() => {
+						SET_QUESION_OBJECT(watch);
+						SET_CONFIRMATION_MODAL(true);
+					}}
 					id='cy-add-question-btn'
-					className={styles.btnSubmit} 
+					className={styles.btnAdd}
 					disabled={answerFields.length < 2 || COURSE === ''}
 				>
 					Add Question
 				</button>
-				<button 
-					type="button" 
+				<button
+					type="button"
 					id='cy-add-question-reset-btn'
-					className={styles.btnReset} 
+					className={styles.btnReset}
 					onClick={() => resetForm()}
 				>
 					Reset form
 				</button>
+				<MODAL open={CONFIRMATION_MODAL} onClose={() => SET_CONFIRMATION_MODAL(false)}>
+					<div className={modal.modal} style={{ color: 'black' }}>
+						<p className={modal.modalTitle} style={{ color: 'black' }}>Verify question</p>
+						<p className={modal.modalTxt}>Are you sure you want to add this question?</p>
+						<p>Question:</p>
+						<p className={styles.modalTxt}>{QUESTION_OBJECT.question}</p>
+						<p>Type:</p>
+						<p className={styles.modalTxt}>{QUESTION_OBJECT.type}</p>
+						<p>Category:</p>
+						<p className={styles.modalTxt}>{QUESTION_OBJECT.category}</p>
+						{QUESTION_OBJECT.answers.map((answer, id) =>
+							<div key={id} style={{ display: 'flex', gap: '10px' }}>
+								<div>
+									<p>Possible answer {id + 1}:</p>
+									<p className={styles.modalTxt}>{answer.answer}</p>
+								</div>
+								<div>
+									<p>Possible reason {id + 1}:</p>
+									<p className={styles.modalTxt}>{answer.reason}</p>
+								</div>
+							</div>
+						)}
+						<div style={{ display: 'flex', gap: '10px' }}>
+							{QUESTION_OBJECT.questionAnswerResult.map((correctAnswer, id) =>
+								<div key={id}>
+									<p> Correct Answer {id + 1}:</p>
+									<p className={styles.modalTxt}>{correctAnswer}</p>
+								</div>
+							)}
+						</div>
+						<button type="submit" className={modal.actionBtn}>Add</button>
+					</div>
+				</MODAL>
 			</form>
+			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
+				<div className={modal.responseModal} style={{ color: 'black' }}>
+					<p>{MESSAGE}</p>
+				</div>
+			</MODAL>
 		</div>
 	);
 };
