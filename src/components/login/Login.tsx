@@ -29,7 +29,7 @@ const Login = () => {
 				localStorage.setItem('loginSession', JSON.stringify(data));
 			} else {
 				const message = await response.json();				
-				SET_ERROR_MESSAGE(message.message);
+				SET_ERROR_MESSAGE(message);
 			}
 			SET_LOGIN_REQUEST(undefined);
 		};
