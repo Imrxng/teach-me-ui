@@ -40,7 +40,6 @@ const DELETE_COURSE = () => {
 			SET_COURSE_TITLES(DATA);
 		} catch (error) {
 			if (error instanceof Error) {
-				console.log(`Error: ${error.message}`);
 				alert('Failed to fetch course titles.');
 			}
 		} finally {

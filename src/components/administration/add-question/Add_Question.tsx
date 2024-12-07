@@ -62,7 +62,6 @@ const ADD_QUESTION = () => {
 			SET_COURSE_TITLES(data);
 		} catch (error) {
 			if (error instanceof Error) {
-				console.log(`Error: ${error.message}`);
 				alert('Failed to fetch course titles.');
 			}
 		} finally {
