@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchCourseTitles } from '../../../ApiService';
 import DATACONTEXT from '../../../context/DataContext';
-import { Course, RootObject } from '../../../types';
+import { Course, Question, RootObject } from '../../../types';
 import LoadingSpinner from '../../loader/LoadingSpinner';
 import QuizPage from '../quiz-page/Quiz-Page';
 import { QuizContext } from './QuizContext';
@@ -21,11 +21,19 @@ const QuizProvider = () => {
 	const { ID } = useParams();
 	const NAVIGATE = useNavigate();
 
+	const shuffleArray = (questions: Question[]) => {
+		return questions
+			.map(value => ({ value, sort: Math.random() }))
+			.sort((a, b) => a.sort - b.sort)
+			.map(({ value }) => value);
+	};
+
 	const notFoundData = (data: RootObject) => {
 		if (!data.content) {
 			NAVIGATE('/not-found');
 		}
 	};
+
 	const fetchQuestions = async () => {
 		SET_LOADING(true);
 		const titles: string[] = await fetchCourseTitles();
@@ -38,10 +46,12 @@ const QuizProvider = () => {
 		const responseCourse = await fetch(`${BASE_URL}/get-course/${ID}`);
 		const data: RootObject = await responseCourse.json();
 		notFoundData(data);
+
+		data.content.questions = shuffleArray(data.content.questions);
+
 		SET_COURSE(data.content);
 		SET_LOADING(false);
 	};
-
 
 	useEffect(() => {
 		fetchQuestions();

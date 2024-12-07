@@ -112,7 +112,7 @@ const ShowResult = ({ CURRENT_INDEX } : ShowResultProps) => {
 				)}
 				<p>{renderResultText(CURRENT_INDEX, AMOUNT_OF_QUESTIONS, INCORRECT_ANSWERS)}</p>
 			</div>
-			<button className={styles.btn} onClick={() => NAVIGATE('/home')}>Back to home</button>
+			<button className={styles.btn} onClick={() => NAVIGATE('/')}>Back to home</button>
 			<a className={styles.btn} href={`/quiz/${ID}`}>Restart quiz</a>
 		</div>
 	);

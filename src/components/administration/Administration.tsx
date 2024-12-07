@@ -15,7 +15,7 @@ const ADMINISTRATION = () => {
 	const NAVIGATE = useNavigate();
 	useEffect(() => {
 		if ( LOGIN_SESSION && LOGIN_SESSION.type === 'user') {
-			NAVIGATE('/home');
+			NAVIGATE('/');
 		}
 	}, [LOGIN_SESSION, NAVIGATE]);
 

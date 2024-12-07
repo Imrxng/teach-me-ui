@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Question } from '../../../types';
+import { Answer, Question } from '../../../types';
 import { QuizContext } from '../provider/QuizContext';
 import OneAnswer from './OneAnswer';
 import styles from './questions.module.css';
@@ -12,9 +12,20 @@ interface QuestionProps {
 const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 	const [CURRENT_ANSWER, SET_CURRENT_ANSWER] = useState<string[]>([]);
 	const [SHOW_RIGHT_ANSWERS, SET_SHOW_RIGHT_ANSWERS] = useState<boolean>(false);
+	const [shuffledAnswers, setShuffledAnswers] = useState<Answer[]>(QUESTION.answers);
 	const { CURRENT_INDEX, SET_CURRENT_INDEX, AMOUNT_OF_QUESTIONS, CHECK_BETWEEN_QUESTIONS, SET_SHOW_RESULTS, TIME, COURSE } = useContext(QuizContext);
 	const { DARKMODE } = useContext(DATACONTEXT);
 
+	const shuffleArray = (asnwers: Answer[]) => {
+		return asnwers
+			.map(value => ({ value, sort: Math.random() }))
+			.sort((a, b) => a.sort - b.sort)
+			.map(({ value }) => value);
+	};
+
+	useEffect(() => {
+		setShuffledAnswers(shuffleArray(QUESTION.answers));
+	}, [QUESTION]);
 
 	const moveToNextQuestion = () => {
 		QUESTION.yourAnswer = CURRENT_ANSWER;
@@ -38,12 +49,14 @@ const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 			SET_SHOW_RIGHT_ANSWERS(true);
 		}
 	};
+
 	useEffect(() => {
 		if (TIME <= 0) {
 			finishQuiz();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [TIME]);
+
 	return (
 		<div className={styles.container}>
 			<h1>{COURSE.name}</h1>
@@ -62,7 +75,7 @@ const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 				</div>
 
 				<div className={styles.quizAnswers}>
-					{QUESTION.answers.map((answer, index) => (
+					{shuffledAnswers.map((answer, index) => (
 						<OneAnswer key={index} index={index} answer={answer.answer} QUESTION={QUESTION} CURRENT_ANSWER={CURRENT_ANSWER} SET_CURRENT_ANSWER={SET_CURRENT_ANSWER} SHOW_RIGHT_ANSWERS={SHOW_RIGHT_ANSWERS} />
 					))}
 				</div>
