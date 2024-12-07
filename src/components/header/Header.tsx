@@ -29,7 +29,7 @@ const HEADER = () => {
 				method: 'GET',
 				credentials: 'include',
 			});
-
+			
 			if (response.ok) {
 				const sessionData = await response.json();
 				SET_LOGIN_SESSION({ username: sessionData.token.USERNAME, type: sessionData.token.TYPE });
@@ -55,7 +55,7 @@ const HEADER = () => {
 		  
 		  const getRouteToNavigate = (PERSISTED_ROUTE: string | null) => {
 			if (PERSISTED_ROUTE === '/login') {
-			  return LOCATION.pathname === '/login' ? '/home' : null;
+			  return LOCATION.pathname === '/login' ? '/' : null;
 			}
 			return PERSISTED_ROUTE;
 		  };

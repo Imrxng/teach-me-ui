@@ -20,10 +20,6 @@ export const ROUTER = createBrowserRouter([
 		children: [
 			{
 				path: '',
-				element: <NOT_FOUND />
-			},
-			{
-				path: 'home',
 				element: <HOME />
 			},
 			{

@@ -18,13 +18,13 @@ const NAV = () => {
 
 	return (
 		<div className="nav">
-			<NavLink id='cy-nav-home-link' className={'navLink'} to='home' >Home</NavLink>
+			<NavLink id='cy-nav-home-link' className={'navLink'} to='/' >Home</NavLink>
 			{LOGIN_SESSION && LOGIN_SESSION.type === 'admin' ?
 				<NavLink id='cy-nav-admin-link' className={'navLink'} to="/settings" >Settings</NavLink>
 				:
 				<></>
 			}
-			<NavLink id='cy-nav-home-logout' className={'navLink'} to='logout' >Logout</NavLink>
+			<NavLink id='cy-nav-home-logout' className={'navLink'} to='/logout' >Logout</NavLink>
 			<div onClick={handlerDarkMode} style={{ marginTop: 1, fontSize: 18 }}>{iconsHandler()}</div>
 		</div>
 	);

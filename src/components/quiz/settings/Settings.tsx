@@ -1,14 +1,26 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { QuizContext } from '../provider/QuizContext';
 import './Settings.css';
+import { Link } from 'react-router-dom';
 
 const SETTINGS = () => {
-	const { SET_START_QUIZ, SET_TIME, COURSE, AMOUNT_OF_QUESTIONS, SET_AMOUNT_OF_QUESTIONS, CHECK_BETWEEN_QUESTIONS, SET_CHECK_BETWEEN_QUESTIONS } = useContext(QuizContext);
+	const { SET_START_QUIZ, SET_TIME, TIME, COURSE, AMOUNT_OF_QUESTIONS, SET_AMOUNT_OF_QUESTIONS, CHECK_BETWEEN_QUESTIONS, SET_CHECK_BETWEEN_QUESTIONS } = useContext(QuizContext);
+
+	useEffect(() => {
+		SET_TIME(COURSE.completeTime * 60);
+	}, []);
 
 	const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
 		SET_START_QUIZ(true);
-		SET_TIME(COURSE.completeTime * 60);
 	};
+
+	if (COURSE.questions.length === 0) {
+		return (
+			<div>
+				This course has no questions at the moment. Please click <Link to='/' style={{ textDecoration: 'underline' }} className='navLink'>here</Link> to go back to home page.
+			</div>
+		);
+	}
 
 	return (
 		<div className="card">
@@ -28,6 +40,20 @@ const SETTINGS = () => {
 								const value = parseInt(e.target.value);
 								if (value >= 1 && value <= COURSE.questions.length) {
 									SET_AMOUNT_OF_QUESTIONS(value);
+								}
+							}}
+						/>
+						<label htmlFor="AMOUNT_OF_QUESTIONS">
+							Time:
+						</label>
+						<input
+							type="number"
+							min={1}
+							value={Math.round(TIME / 60)}
+							onChange={(e) => {
+								const value = parseInt(e.target.value);
+								if (value >= 1) {
+									SET_TIME(value * 60);
 								}
 							}}
 						/>
