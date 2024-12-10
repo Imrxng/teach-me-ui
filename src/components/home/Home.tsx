@@ -16,7 +16,7 @@ const HOME = () => {
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	
 	 
-	const getCourses = async () => {
+	const getCourses = async (): Promise<RootObject[]> => {
 		const responseTitles = await fetch(`${BASE_URL}/get-course-titles`);
 		const titles: string[] = await responseTitles.json();
 
@@ -27,6 +27,7 @@ const HOME = () => {
 			})
 		);
 	};
+	
 	const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
 		const searchValue = event.target.value;
 		SETSEARCH(searchValue);
@@ -49,21 +50,21 @@ const HOME = () => {
 			Math.min(prevIndex + 1, Math.ceil(FILTERED_COURSES.length / 5))
 		);
 	};
+	const fetchCourses = async () => {
+		SET_LOADING(true);
+		try {
+			const coursesArray = await getCourses();
+			SET_COURSES(coursesArray);
+			SET_FILTERED_COURSES(coursesArray);
+		} catch (error) {
+			console.error('Error fetching courses:', error);
+		} finally {
+			SET_LOADING(false);
+		}
+	};
 
 	useEffect(() => {
-		const fetchQuestions = async () => {
-			SET_LOADING(true);
-			try {
-				const coursesArray = await getCourses();
-				SET_COURSES(coursesArray);
-				SET_FILTERED_COURSES(coursesArray);
-			} catch (error) {
-				console.error('Error fetching courses:', error);
-			} finally {
-				SET_LOADING(false);
-			}
-		};
-		fetchQuestions();
+		fetchCourses();
 	}, [SET_LOADING]);
 
 	if (LOADING) return <LoadingSpinner message='Gathering information, please wait!' />;
@@ -71,7 +72,7 @@ const HOME = () => {
 	return (
 		<div className="homeMain">
 			<Search search={SEARCH} onSearchChange={handleSearchChange} />
-			<TABLE COURSES={FILTERED_COURSES} CURRENT_INDEX={CURRENT_INDEX} />
+			<TABLE COURSES={FILTERED_COURSES} CURRENT_INDEX={CURRENT_INDEX} REFRESH_COURSES={fetchCourses}/>
 			{
 				FILTERED_COURSES.length > 0 
 					?

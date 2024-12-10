@@ -29,15 +29,18 @@ const HEADER = () => {
 				method: 'GET',
 				credentials: 'include',
 			});
-			
 			if (response.ok) {
 				const sessionData = await response.json();
 				SET_LOGIN_SESSION({ username: sessionData.token.USERNAME, type: sessionData.token.TYPE });
+				localStorage.setItem('loginSession', JSON.stringify({
+					username: sessionData.token.USERNAME,
+					type: sessionData.token.TYPE
+				}));
 			} else {
 				NAVIGATE('/login');
-				return;
 			}
 		};
+		
 
 		const handleLoginSession = () => {
 			if (!LOGIN_SESSION) {

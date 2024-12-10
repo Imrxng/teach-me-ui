@@ -77,7 +77,7 @@ const Login = () => {
 						/>
 					</div>
 				</div>
-				<button id='cy-login-btn' className='startQuizButton' onClick={handleLoginClick}>LOGIN</button>
+				<button id='cy-login-btn' className='mainButton' onClick={handleLoginClick}>LOGIN</button>
 				{ERROR_MESSAGE && <p id='errorMessage'>{ERROR_MESSAGE} </p>}
 			</div>
 			<div className="hexagon">

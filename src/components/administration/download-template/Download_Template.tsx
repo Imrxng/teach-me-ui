@@ -41,7 +41,7 @@ const DOWNLOAD_TEMPLATE = () => {
 	};
 
 	return (
-		<button onClick={handleDownload} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+		<button id='cy-create-courses-download-template-btn' onClick={handleDownload} style={{ padding: '10px 20px', cursor: 'pointer' }}>
             Download JSON
 		</button>
 	);

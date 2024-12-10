@@ -1,4 +1,4 @@
-import styles from './search.module.css'
+import styles from './search.module.css';
 
 interface SearchProps {
     search: string;
@@ -6,7 +6,7 @@ interface SearchProps {
 	placeholder?: string;
 }
 
-const Search = ({ search, onSearchChange, placeholder = "Search Course" } : SearchProps) => (
+const Search = ({ search, onSearchChange, placeholder = 'Search Course' } : SearchProps) => (
 	
 	<input
 		type="text"

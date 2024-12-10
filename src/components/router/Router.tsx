@@ -4,7 +4,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import ADD_QUESTION from '../administration/add-question/Add_Question';
 import ADMINISTRATION from '../administration/Administration';
 import CREATE_COURSE from '../administration/create-course/Create_Course';
-import DELETE_COURSE from '../administration/delete-course/Delete_Course';
 import HOME from '../home/Home';
 import Login from '../login/Login';
 import LOGOUT from '../logout/Logout';
@@ -43,15 +42,11 @@ export const ROUTER = createBrowserRouter([
 				element: <CREATE_COURSE />
 			},
 			{
-				path: '/settings/delete-course',
-				element: <DELETE_COURSE />
-			},
-			{
-				path: '/settings/add-question',
+				path: '/settings/add-question/:ID',
 				element: <ADD_QUESTION />
 			},
 			{
-				path: '/settings/update-course',
+				path: '/settings/edit/:ID',
 				element: <UPDATE_COURSE />
 			},
 			{

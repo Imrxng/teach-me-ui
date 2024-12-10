@@ -4,14 +4,14 @@ import { Course, Question, Type } from '../../../types';
 import styles from './Add_Question.module.css';
 import DATACONTEXT from '../../../context/DataContext';
 import LoadingSpinner from '../../loader/LoadingSpinner';
-import { addQuestion, fetchCourseTitles, getCourse } from '../../../ApiService';
-import ADD_COURSE_INPUT from './Add_Course_Input';
+import { addQuestion, getCourse } from '../../../ApiService';
 import ADD_QUESTION_INPUT from './Add_Question_Input';
 import ADD_TYPE_CATEGORY_INPUT from './Add_Type_Category_Input';
 import ADD_ANSWER_INPUT from './Add_Answer_Input';
 import ADD_REASON_INPUT from './Add_Reason_Input';
 import MODAL from '../modal/Modal';
 import modal from '../modal/Modal.module.css';
+import { useParams } from 'react-router-dom';
 
 const ADD_QUESTION = () => {
 	const [QUESTION_OBJECT, SET_QUESION_OBJECT] = useState<Question>({
@@ -25,8 +25,17 @@ const ADD_QUESTION = () => {
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
-	const [COURSE_TITLES, SET_COURSE_TITLES] = useState<string[]>([]);
-	const [COURSE, SET_COURSE] = useState('');
+	const [COURSE, SET_COURSE] = useState<Course>({
+		id:                 '',
+		name:               '',
+		category:           '',
+		passingGrade:       0,
+		completeTime:       0,
+		questionCategories: [''],
+		questions:          [],
+		date:               ''
+	});
+	const { ID } = useParams();
 	const [selectedType, setSelectedType] = useState<Type>(Type.Single);
 	const [CORRECT_ANSWERS, SET_CORRECT_ANSWERS] = useState<string[]>(['']);
 	const {
@@ -55,23 +64,25 @@ const ADD_QUESTION = () => {
 
 	const removeCorrectAnswer = (index: number) => SET_CORRECT_ANSWERS(CORRECT_ANSWERS.filter((_, i) => i !== index));
 
-	const loadCourseTitles = async () => {
+	const LOAD_COURSE = async () => {
 		try {
 			SET_LOADING(true);
-			const data = await fetchCourseTitles();
-			SET_COURSE_TITLES(data);
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log(`Error: ${error.message}`);
-				alert('Failed to fetch course titles.');
-			}
+			const DATA = await getCourse(ID as string);
+			SET_COURSE(DATA);
+			reset({
+				...DATA,
+				category: ''
+			});
+		} catch (error: unknown) {
+			SET_MESSAGE(`Failed to load course: ${ID}`);
+			SET_RESPONSE_MODAL(true);
 		} finally {
 			SET_LOADING(false);
 		}
 	};
 
 	useEffect(() => {
-		loadCourseTitles();
+		LOAD_COURSE();
 	}, [SET_LOADING]);
 
 	const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -107,9 +118,8 @@ const ADD_QUESTION = () => {
 	const onSubmit = async (data: Question) => {
 		try {
 			SET_LOADING(true);
-			const course: Course = await getCourse(COURSE);
-			course.questions.push(data);
-			await addQuestion(course);
+			COURSE.questions.push(data);
+			await addQuestion(COURSE);
 			SET_MESSAGE(`"${data.question}" has been added`);
 		} catch (error: unknown) {
 			console.error(error);
@@ -117,7 +127,7 @@ const ADD_QUESTION = () => {
 		} finally {
 			resetForm();
 			SET_LOADING(false);
-			SET_CONFIRMATION_MODAL(false)
+			SET_CONFIRMATION_MODAL(false);
 			SET_RESPONSE_MODAL(true);
 		}
 	};
@@ -182,18 +192,13 @@ const ADD_QUESTION = () => {
 		);
 	};
 
-	if (LOADING) return <LoadingSpinner message='Adding course!' />;
+	if (LOADING) return <LoadingSpinner message='Getting Course / Adding Question!' />;
 
 	return (
 		<div className={styles.container}>
-			<h1 className={styles.addQuesionTitle}>Add Question</h1>
-			<div className={styles.formGroup}>
-				<label>Select a course to add the question to</label>
-				<ADD_COURSE_INPUT course={COURSE} setCourse={SET_COURSE} courseTitles={COURSE_TITLES} />
-			</div>
+			<h1 className={styles.addQuesionTitle}>Add Question:<br/>{ID}</h1>
 
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-				<h2 className={styles.header}>Question Form</h2>
 
 				<ADD_QUESTION_INPUT register={register} errors={errors} />
 
@@ -240,7 +245,7 @@ const ADD_QUESTION = () => {
 					}}
 					id='cy-add-question-btn'
 					className={styles.btnAdd}
-					disabled={answerFields.length < 2 || COURSE === ''}
+					disabled={answerFields.length < 2}
 				>
 					Add Question
 				</button>
@@ -282,7 +287,7 @@ const ADD_QUESTION = () => {
 								</div>
 							)}
 						</div>
-						<button type="submit" id='cy-add-question-reset-btn-confirm' className={modal.actionBtn}>Add</button>
+						<button type="submit" id='cy-add-question-reset-btn-confirm' className={modal.actionBtn}>Confirm</button>
 					</div>
 				</MODAL>
 			</form>
