@@ -25,7 +25,7 @@ const HEADER = () => {
 
 	useEffect(() => {
 		const checkSession = async () => {
-			const response = await fetch(`${BASE_URL}/login/session`, {
+			const response = await fetch(`${BASE_URL}/login/session/`, {
 				method: 'GET',
 				credentials: 'include',
 			});

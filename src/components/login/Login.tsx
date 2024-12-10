@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { LoginRequest, LoginSession } from '../../types';
 import picture from '../../assets/images/testop-software-testing.webp';
 import DATACONTEXT from '../../context/DataContext';
+import { LoginRequest, LoginSession } from '../../types';
 
 const Login = () => {
 	const [LOGIN_REQUEST, SET_LOGIN_REQUEST] = useState<LoginRequest | undefined>();
@@ -21,6 +21,7 @@ const Login = () => {
 				credentials: 'include',
 				body: JSON.stringify({ USERNAME: INPUT_USERNAME, PASSWORD: INPUT_PASSWORD }),
 			});
+			console.log(response);
 
 			if (response.ok) {
 				const data: LoginSession = await response.json();
@@ -28,14 +29,14 @@ const Login = () => {
 				SET_ERROR_MESSAGE(undefined);
 				localStorage.setItem('loginSession', JSON.stringify(data));
 			} else {
-				const message = await response.json();				
+				const message = await response.json();
 				SET_ERROR_MESSAGE(message);
 			}
 			SET_LOGIN_REQUEST(undefined);
 		};
 		tryLogin();
-		 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [INPUT_PASSWORD, INPUT_USERNAME, LOGIN_REQUEST, SET_LOGIN_SESSION]);
 
 	const handleLoginClick = () => {
