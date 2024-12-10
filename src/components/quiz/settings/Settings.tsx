@@ -82,7 +82,7 @@ const SETTINGS = () => {
 						<label htmlFor="checkBetweenQuestionsNo">No</label>
 						<br />
 					</div>
-					<button className='startQuizButton' onClick={onClickHandler}>Start quiz</button>
+					<button className='mainButton' onClick={onClickHandler}>Start quiz</button>
 				</>
 				:
 				<p>No course selected</p>

@@ -12,10 +12,13 @@ import QUESTION_CATEGORY_INPUT from './Question_Category_Input';
 import DOWNLOAD_TEMPLATE from '../download-template/Download_Template';
 import MODAL from '../modal/Modal';
 import modal from '../modal/Modal.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const CREATE_FORM = () => {
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
+	const [COURSE_TITLE, SET_COURSE_TITLE] = useState<string>('');
+	const navigate = useNavigate();
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
 	const [QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES] = useState<string[]>(['']);
 	const {
@@ -45,6 +48,7 @@ const CREATE_FORM = () => {
 			SET_LOADING(true);
 			data.questionCategories = QUESTION_CATEGORIES;
 			const RESPONE_MESSAGE = await addCourse(data);;
+			SET_COURSE_TITLE(data.name)
 			SET_MESSAGE(RESPONE_MESSAGE);
 		} catch (error: unknown) {
 			console.error(error);
@@ -95,6 +99,7 @@ const CREATE_FORM = () => {
 			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
 				<div className={modal.responseModal} style={{ color: 'black' }}>
 					<p>{MESSAGE}</p>
+					<button id='cy-create-course-add-questions-btn' className='mainButton' onClick={() => navigate(`/settings/add-question/${COURSE_TITLE}`)}>Add Questions</button>
 				</div>
 			</MODAL>
 		</div>

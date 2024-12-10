@@ -19,7 +19,7 @@
 }
 
 table {
-  width: 100%;
+  min-width: 700px;
 }
 
 th {
@@ -106,21 +106,24 @@ tr {
   gap: 2rem;
 }
 
-.startQuizButton {
-  background-color: var(--secondary-color);
+.mainButton {
   color: white;
+  background-color: var(--secondary-color);
   padding: 8px 16px;
   border-radius: 5px;
   font-weight: 600;
+  margin-right: 10px;
 }
 
-.startQuizButton:hover {
-  background-color: #87c9b8e2;
+.mainButton:hover {
+  color: var(--primary-dark-color);
+  background-color: var(--primary-light-color);
+  cursor: pointer;
 }
 
 .homeMain {
-  height: 30rem;
-  width: 55rem;
+  min-height: 600px;
+  min-width: 800px;
   border: 1px var(--secondary-color) solid;
   border-radius: 10px;
   padding: 3rem;  
@@ -152,6 +155,24 @@ tr {
   height: 20px;
   bottom: 11rem;
   position: absolute;
+}
+
+#modeButton:hover{
+  cursor: pointer;
+}
+
+#cy-settings-create-course-btn{
+  color: white;
+  background-color: var(--secondary-color);
+  font-weight: 600;
+  padding: 10px 15px;
+  border-radius: .5rem;
+}
+
+#cy-settings-create-course-btn:hover{
+  color: var(--primary-dark-color);
+  background-color: var(--primary-light-color);
+  cursor: pointer;
 }
 
 .spinner {
