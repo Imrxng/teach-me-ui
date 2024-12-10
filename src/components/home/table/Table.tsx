@@ -26,7 +26,7 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 		try {
 			SET_LOADING(true);
 			await deleteCourse(course);
-			await REFRESH_COURSES()
+			await REFRESH_COURSES();
 			SET_MESSAGE(`"${course}" deleted succesfully`);
 		} catch (error: unknown) {
 			console.error(error);
@@ -76,8 +76,8 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 												<button id={`cy-settings-add-course-question-${index}`} className="mainButton settingsCourseAddQuestion" onClick={() => navigate(`/settings/add-question/${course.key}`)} >Add Question</button>
 
 												<button id={`cy-settings-delete-course-${index}`} className="mainButton settingsCourseDelete" onClick={() => {
-													SET_SELECTED_COURSE(course.content.name)
-													SET_CONFIRMATION_MODAL(true)
+													SET_SELECTED_COURSE(course.content.name);
+													SET_CONFIRMATION_MODAL(true);
 												}} >Delete</button>
 											</td>
 										</tr>

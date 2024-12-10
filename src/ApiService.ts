@@ -24,14 +24,14 @@ export const deleteCourse = async (course: string) => {
 		} 
 	}
 	catch (error) {
-		handleError(error,'Error deleting course. Please try again.');
+		handleError(error, 'Error deleting course. Please try again.');
 		return `Failed to delete course ${course}`;
 	}
 };
 
 const handleError = (error: unknown, errorMessage: string): void => {
 	if (error instanceof Error) {
-		console.error('error: '+error.message+errorMessage);
+		console.error(`error: ${error.message}${errorMessage}`);
 	}
 };
 
@@ -51,7 +51,7 @@ export const addCourse = async (course: Course): Promise<string> => {
 		
 	} catch (error) {
 		handleError(error, 'Failed to add course. Please try again.');
-		return `Failed to create "${course.name}". Please try again.`
+		return `Failed to create "${course.name}". Please try again.`;
 	}
 };
 
@@ -93,7 +93,7 @@ export const updateCourse = async (data: Course): Promise<string> => {
 		return `${data.name}, has been updated successfully`;
 	} catch (error) {
 		handleError(error, 'Failed to update course. Please try again.');
-		return `Failed to update "${data.name}". Please try again.`
+		return `Failed to update "${data.name}". Please try again.`;
 	}
 };
 
@@ -135,24 +135,24 @@ export const createUser = async (user: User) => {
 
 export const GET_ALL_USERS = async (): Promise<string[]> => {
 	try {
-		const RESPONSE = await fetch(`${BASE_URL}/get-all-usernames`)
-		const DATA: string[] = await RESPONSE.json()
-		return DATA 
+		const RESPONSE = await fetch(`${BASE_URL}/get-all-usernames`);
+		const DATA: string[] = await RESPONSE.json();
+		return DATA; 
 	} catch (error) {
 		handleError(error, 'Failed to get all user. Please try again.');
 		throw Error;
 	}
-}
+};
 
 export const DELETE_USER_FROM_DB = async (username: string) => {
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/delete-user/${username}`, {
 			method: 'DELETE'
-		})
+		});
 		if (!RESPONSE.ok) {
 			throw new Error(`Failed to delete course ${username.toUpperCase()}`);
 		}
 	} catch (error) {
 		handleError(error, `Failed to user: ${username.toUpperCase()}. Please try again.`);
 	}
-}
+};

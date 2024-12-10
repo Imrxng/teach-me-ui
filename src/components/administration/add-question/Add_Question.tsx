@@ -68,7 +68,7 @@ const ADD_QUESTION = () => {
 		try {
 			SET_LOADING(true);
 			const DATA = await getCourse(ID as string);
-			SET_COURSE(DATA)
+			SET_COURSE(DATA);
 			reset({
 				...DATA,
 				category: ''
@@ -77,7 +77,7 @@ const ADD_QUESTION = () => {
 			SET_MESSAGE(`Failed to load course: ${ID}`);
 			SET_RESPONSE_MODAL(true);
 		} finally {
-			SET_LOADING(false)
+			SET_LOADING(false);
 		}
 	};
 
@@ -127,7 +127,7 @@ const ADD_QUESTION = () => {
 		} finally {
 			resetForm();
 			SET_LOADING(false);
-			SET_CONFIRMATION_MODAL(false)
+			SET_CONFIRMATION_MODAL(false);
 			SET_RESPONSE_MODAL(true);
 		}
 	};

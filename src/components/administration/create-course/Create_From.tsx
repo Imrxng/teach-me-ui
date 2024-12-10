@@ -48,7 +48,7 @@ const CREATE_FORM = () => {
 			SET_LOADING(true);
 			data.questionCategories = QUESTION_CATEGORIES;
 			const RESPONE_MESSAGE = await addCourse(data);;
-			SET_COURSE_TITLE(data.name)
+			SET_COURSE_TITLE(data.name);
 			SET_MESSAGE(RESPONE_MESSAGE);
 		} catch (error: unknown) {
 			console.error(error);
