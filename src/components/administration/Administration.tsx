@@ -2,10 +2,18 @@ import  { useContext, useState } from 'react';
 import styles from './administration.module.css';
 import DATACONTEXT from '../../context/DataContext';
 import HOME from '../home/Home';
+import { ifAdmin } from '../home/table/Table';
+import { useNavigate } from 'react-router-dom';
 
 const ADMINISTRATION = () => {
-	const { DARKMODE } = useContext(DATACONTEXT);
+	const { DARKMODE, LOGIN_SESSION } = useContext(DATACONTEXT);
 	const [COMPONENT, SET_COMPONENT] = useState<() => JSX.Element>(() => HOME);
+	const NAVIGATE = useNavigate();
+
+	if (!ifAdmin(LOGIN_SESSION)) {
+		NAVIGATE('/');
+		return;
+	}
 
 	return (
 		<div className={`${!DARKMODE ? styles.lightMode : ''} ${styles.adminContainer}`}>

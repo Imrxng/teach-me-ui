@@ -26,7 +26,6 @@ const SETTINGS = () => {
 		<div className="card">
 			{COURSE ?
 				<>
-					<h2>Settings</h2>
 					<div className='doos'>
 						<label htmlFor="AMOUNT_OF_QUESTIONS">
 							Amount of questions (max {COURSE.questions.length})
@@ -44,7 +43,7 @@ const SETTINGS = () => {
 							}}
 						/>
 						<label htmlFor="AMOUNT_OF_QUESTIONS">
-							Time:
+							Time in minutes:
 						</label>
 						<input
 							type="number"

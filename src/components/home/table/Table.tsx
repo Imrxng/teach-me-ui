@@ -13,7 +13,7 @@ interface TABLE_Props {
 	REFRESH_COURSES: () => Promise<void>;
 }
 
-const ifAdmin = (LOGIN_SESSION: LoginSession | undefined) => {
+export const ifAdmin = (LOGIN_SESSION: LoginSession | undefined) => {
 	if (LOGIN_SESSION && LOGIN_SESSION.type === 'admin') {
 		return true;
 	} else {
