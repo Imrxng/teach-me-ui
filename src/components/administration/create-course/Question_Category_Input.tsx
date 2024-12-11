@@ -23,7 +23,7 @@ const QUESTION_CATEGORY_INPUT = ({ questionCategories, setQuestionCategories, ha
 	};
 	return (
 		<>
-			<h5 className={styles.questionCategoriesTitle}>Question Categor(y)(ies)</h5>
+			<h5 className={styles.questionCategoriesTitle}>Question Categories</h5>
 			<div className={styles.questionCategories}>
 				{questionCategories.map((category, index) => (
 					<div key={index} style={{ display: 'flex', flexDirection: 'row' }}>

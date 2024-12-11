@@ -6,6 +6,7 @@ import DATACONTEXT from '../../context/DataContext';
 import Search from './Search';
 import Pagination from './Pagination';
 import LoadingSpinner from '../loader/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 const HOME = () => {
@@ -14,8 +15,9 @@ const HOME = () => {
 	const [SEARCH, SETSEARCH] = useState<string>('');
 	const [CURRENT_INDEX, SET_CURRENT_INDEX] = useState<number>(1);
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
-	
-	 
+	const NAVIGATE = useNavigate();
+
+
 	const getCourses = async (): Promise<RootObject[]> => {
 		const responseTitles = await fetch(`${BASE_URL}/get-course-titles`);
 		const titles: string[] = await responseTitles.json();
@@ -27,11 +29,11 @@ const HOME = () => {
 			})
 		);
 	};
-	
+
 	const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
 		const searchValue = event.target.value;
 		SETSEARCH(searchValue);
-		updateFilteredCourses(searchValue);		
+		updateFilteredCourses(searchValue);
 	};
 
 	const updateFilteredCourses = (searchValue: string) => {
@@ -71,10 +73,13 @@ const HOME = () => {
 
 	return (
 		<div className="homeMain">
-			<Search search={SEARCH} onSearchChange={handleSearchChange} />
-			<TABLE COURSES={FILTERED_COURSES} CURRENT_INDEX={CURRENT_INDEX} REFRESH_COURSES={fetchCourses}/>
+			<div style={{display: 'flex', gap:'10px'}}>
+				<Search search={SEARCH} onSearchChange={handleSearchChange} />
+				<button id='cy-settings-create-course-btn' onClick={() => NAVIGATE('/settings/create-course')}>Add New Course</button>
+			</div>
+			<TABLE COURSES={FILTERED_COURSES} CURRENT_INDEX={CURRENT_INDEX} REFRESH_COURSES={fetchCourses} />
 			{
-				FILTERED_COURSES.length > 0 
+				FILTERED_COURSES.length > 0
 					?
 					<Pagination
 						currentIndex={CURRENT_INDEX}
@@ -86,7 +91,7 @@ const HOME = () => {
 					<>
 					</>
 			}
-		</div>	
+		</div>
 	);
 };
 
