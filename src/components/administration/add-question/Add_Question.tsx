@@ -76,6 +76,7 @@ const ADD_QUESTION = () => {
 		} catch (error: unknown) {
 			SET_MESSAGE(`Failed to load course: ${ID}`);
 			SET_RESPONSE_MODAL(true);
+			console.error(`ERROR: ${error}`);
 		} finally {
 			SET_LOADING(false);
 		}

@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useContext, useEffect, useState } from 'react';
 import { RootObject } from '../../types';
-import TABLE from './table/Table';
+import TABLE, { ifAdmin } from './table/Table';
 import DATACONTEXT from '../../context/DataContext';
 import Search from './Search';
 import Pagination from './Pagination';
@@ -14,7 +14,7 @@ const HOME = () => {
 	const [FILTERED_COURSES, SET_FILTERED_COURSES] = useState<RootObject[]>([]);
 	const [SEARCH, SETSEARCH] = useState<string>('');
 	const [CURRENT_INDEX, SET_CURRENT_INDEX] = useState<number>(1);
-	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
+	const { LOADING, SET_LOADING, LOGIN_SESSION } = useContext(DATACONTEXT);
 	const NAVIGATE = useNavigate();
 
 
@@ -69,13 +69,17 @@ const HOME = () => {
 		fetchCourses();
 	}, [SET_LOADING]);
 
+	const showAddCourseBtn = () => {
+		return (ifAdmin(LOGIN_SESSION) ? <button id='cy-settings-create-course-btn' onClick={() => NAVIGATE('/settings/create-course')}>Add New Course</button> : '' );
+	};
+
 	if (LOADING) return <LoadingSpinner message='Gathering information, please wait!' />;
 
 	return (
 		<div className="homeMain">
-			<div style={{display: 'flex', gap:'10px'}}>
+			<div style={{ display: 'flex', gap: '10px' }}>
 				<Search search={SEARCH} onSearchChange={handleSearchChange} />
-				<button id='cy-settings-create-course-btn' onClick={() => NAVIGATE('/settings/create-course')}>Add New Course</button>
+				{showAddCourseBtn()}
 			</div>
 			<TABLE COURSES={FILTERED_COURSES} CURRENT_INDEX={CURRENT_INDEX} REFRESH_COURSES={fetchCourses} />
 			{

@@ -9,7 +9,6 @@ import COURSE_CATEGORY_INPUT from './Course_Category_Input';
 import PG_CT_INPUT from './PG_CT_Input';
 import DATE_INPUT from './Date_Input';
 import QUESTION_CATEGORY_INPUT from './Question_Category_Input';
-import DOWNLOAD_TEMPLATE from '../download-template/Download_Template';
 import MODAL from '../modal/Modal';
 import modal from '../modal/Modal.module.css';
 import { useNavigate } from 'react-router-dom';

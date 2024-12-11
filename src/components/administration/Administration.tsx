@@ -2,7 +2,7 @@ import  { useContext, useState } from 'react';
 import styles from './administration.module.css';
 import DATACONTEXT from '../../context/DataContext';
 import HOME from '../home/Home';
-import { ifAdmin } from '../home/table/Table';
+import  { ifAdmin } from '../home/table/Table';
 import { useNavigate } from 'react-router-dom';
 
 const ADMINISTRATION = () => {
