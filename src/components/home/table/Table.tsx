@@ -8,8 +8,8 @@ import MODAL from '../../administration/modal/Modal';
 import { deleteCourse } from '../../../ApiService';
 
 interface TABLE_Props {
-    COURSES: RootObject[];
-    CURRENT_INDEX: number;
+	COURSES: RootObject[];
+	CURRENT_INDEX: number;
 	REFRESH_COURSES: () => Promise<void>;
 }
 
@@ -45,11 +45,11 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 			SET_RESPONSE_MODAL(true);
 		}
 	};
-	
+
 	if (COURSES.length === 0) {
 		return (
 			<>
-                Geen cursussen gevonden
+				Geen cursussen gevonden
 			</>
 		);
 	}
@@ -57,7 +57,6 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 	if (ifAdmin(LOGIN_SESSION)) {
 		return (
 			<>
-				<button id='cy-settings-create-course-btn' onClick={() => navigate('/settings/create-course')}>Add New Course</button>
 				<table>
 					<thead>
 						<tr>
@@ -96,7 +95,7 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 						}
 					</tbody>
 				</table>
-				
+
 				<MODAL open={CONFIRMATION_MODAL} onClose={() => SET_CONFIRMATION_MODAL(false)}>
 					<div className={modal.modal} style={{ color: 'black' }}>
 						<p className={modal.modalTitle} style={{ color: 'black' }}>Confirm Delete</p>
@@ -139,7 +138,7 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 									<td>{course.content.name}</td>
 									<td>{course.content.category}</td>
 									<td>{course.content.date}</td>
-									<td><button id={`cy-home-start-quiz-btn-${index}`} className="mainButton" onClick={()=> navigate(`/quiz/${course.key}`)} >Start</button></td>
+									<td><button id={`cy-home-start-quiz-btn-${index}`} className="mainButton" onClick={() => navigate(`/quiz/${course.key}`)} >Start</button></td>
 								</tr>
 							);
 						}
