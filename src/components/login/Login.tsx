@@ -52,7 +52,7 @@ const Login = () => {
 			<div className="loginBox">
 				<div className='inputBoxes'>
 					<div className='inputBox'>
-						<label htmlFor="username">Username: </label>
+						<label className='usernameLabel' htmlFor="username">Username: </label>
 						<input
 							type="text"
 							value={INPUT_USERNAME}
@@ -63,7 +63,7 @@ const Login = () => {
 						/>
 					</div>
 					<div className='inputBox'>
-						<label htmlFor="password">Password: </label>
+						<label className='passwordLabel' htmlFor="password">Password: </label>
 						<input
 							type="password"
 							onKeyDown={(e) => {
