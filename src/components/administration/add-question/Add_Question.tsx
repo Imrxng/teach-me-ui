@@ -13,31 +13,41 @@ import MODAL from '../modal/Modal';
 import modal from '../modal/Modal.module.css';
 import { useParams } from 'react-router-dom';
 
+interface Answer {
+	id: number;
+	answer: string;
+	reason: string;
+};
+
 const ADD_QUESTION = () => {
-	const [QUESTION_OBJECT, SET_QUESION_OBJECT] = useState<Question>({
-		question: '',
-		type: '' as Type,
-		category: '',
-		answers: [{ answer: '', reason: '' }],
-		questionAnswerResult: ['']
-	});
+	const [SELECTED_TYPE, SET_SELECTED_TYPE] = useState<Type>(Type.Single);
 	const [CONFIRMATION_MODAL, SET_CONFIRMATION_MODAL] = useState<boolean>(false);
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
-	const [COURSE, SET_COURSE] = useState<Course>({
-		id:                 '',
-		name:               '',
-		category:           '',
-		passingGrade:       0,
-		completeTime:       0,
-		questionCategories: [''],
-		questions:          [],
-		date:               ''
-	});
+	// const [CORRECT_ANSWERS, SET_CORRECT_ANSWERS] = useState<string[]>([]);
+	const [CORRECT_ANSWERS, SET_CORRECT_ANSWERS] = useState<Answer[]>([]);
 	const { ID } = useParams();
-	const [selectedType, setSelectedType] = useState<Type>(Type.Single);
-	const [CORRECT_ANSWERS, SET_CORRECT_ANSWERS] = useState<string[]>(['']);
+
+	const [COURSE, SET_COURSE] = useState<Course>({
+		id: '',
+		name: '',
+		category: '',
+		passingGrade: 0,
+		completeTime: 0,
+		questionCategories: [''],
+		questions: [],
+		date: ''
+	});
+
+	const [QUESTION_OBJECT, SET_QUESION_OBJECT] = useState<Question>({
+		question: '',
+		type: SELECTED_TYPE,
+		category: '',
+		answers: [{ answer: '', reason: '' }],
+		questionAnswerResult: ['']
+	});
+
 	const {
 		control,
 		register,
@@ -48,9 +58,9 @@ const ADD_QUESTION = () => {
 	} = useForm({
 		defaultValues: {
 			question: '',
-			type: '' as Type,
+			type: SELECTED_TYPE,
 			category: '',
-			answers: [{ answer: '', reason: '' }],
+			answers: [{ id: Date.now(), answer: '', reason: '' }],
 			questionAnswerResult: [''],
 		},
 	});
@@ -60,18 +70,17 @@ const ADD_QUESTION = () => {
 		name: 'answers',
 	});
 
-	const appendCorrectAnswer = () => SET_CORRECT_ANSWERS([...CORRECT_ANSWERS, '']);
-
-	const removeCorrectAnswer = (index: number) => SET_CORRECT_ANSWERS(CORRECT_ANSWERS.filter((_, i) => i !== index));
-
-	const LOAD_COURSE = async () => {
+	const loadCourse = async () => {
 		try {
 			SET_LOADING(true);
 			const DATA = await getCourse(ID as string);
 			SET_COURSE(DATA);
 			reset({
-				...DATA,
-				category: ''
+				question: '',
+				type: SELECTED_TYPE,
+				category: '',
+				answers: [{ id: Date.now(), answer: '', reason: '' }],
+				questionAnswerResult: [''],
 			});
 		} catch (error: unknown) {
 			SET_MESSAGE(`Failed to load course: ${ID}`);
@@ -83,37 +92,30 @@ const ADD_QUESTION = () => {
 	};
 
 	useEffect(() => {
-		LOAD_COURSE();
-	}, [SET_LOADING]);
+		loadCourse();
+	}, []);
 
-	const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const newType = e.target.value as Type;
-		setSelectedType(newType);
-
-		if (newType === 'single') {
-			SET_CORRECT_ANSWERS(['']);
-			reset({
-				...watch(),
-				type: newType,
-				questionAnswerResult: [''],
-			});
-		} else {
-			reset({
-				...watch(),
-				type: newType,
-				questionAnswerResult: watch('questionAnswerResult'),
-			});
-		}
+	const handleTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const CURRENT_TYPE = e.target.value as Type;
+		console.log(CURRENT_TYPE);
+		SET_SELECTED_TYPE(CURRENT_TYPE);
+		SET_CORRECT_ANSWERS([]);
+		reset({
+			...watch(),
+			type: CURRENT_TYPE
+		});
 	};
 
 	const resetForm = () => {
 		reset({
 			question: '',
-			type: '' as Type,
+			type: Type.Single as Type,
 			category: '',
 			answers: [{ answer: '', reason: '' }],
 			questionAnswerResult: [''],
 		});
+		SET_CORRECT_ANSWERS([]);
+		SET_SELECTED_TYPE(Type.Single);
 	};
 
 	const onSubmit = async (data: Question) => {
@@ -133,32 +135,19 @@ const ADD_QUESTION = () => {
 		}
 	};
 
-	const renderDeleteButton = (index: number) => {
-		return index > 0 && (
-			<button
-				type="button"
-				id='cy-add-question-delete-correct-answer-btn'
-				className={styles.btnDelete}
-				onClick={() => removeCorrectAnswer(index)}
-			>
-				Delete
-			</button>
-		);
-	};
-
-	const renderError = (index: number) => {
-		return errors.questionAnswerResult?.[index] && (
-			<div className={styles.errorMessage}>Correct answer is required</div>
-		);
-	};
-
 	const answerFieldDeleteButton = (index: number) => {
 		return index > 0 && (
 			<button
 				type="button"
 				id='cy-add-question-delete-answer-btn'
 				className={styles.btnDelete}
-				onClick={() => removeAnswer(index)}
+				onClick={() => {
+					const answerToDelete = watch(`answers.${index}`);
+					SET_CORRECT_ANSWERS((prev) =>
+						prev.filter((answer) => answer.id !== answerToDelete.id)
+					);
+					removeAnswer(index);
+				}}
 			>
 				Delete
 			</button>
@@ -171,39 +160,149 @@ const ADD_QUESTION = () => {
 				type="button"
 				id='cy-add-question-add-answer-btn'
 				className={styles.btnAdd}
-				onClick={() => appendAnswer({ answer: '', reason: '' })}
+				onClick={() => appendAnswer({ id: Date.now(), answer: '', reason: '' })}
 			>
 				Add Answer
 			</button>
 		);
 	};
 
-	const handleCorrectAnswer = () => {
-		return selectedType === Type.Multi && (
-			CORRECT_ANSWERS.length < answerFields.length && (
-				<button
-					type="button"
-					id='cy-add-question-add-correct-answer-btn'
-					className={styles.btnAdd}
-					onClick={() => appendCorrectAnswer()}
-				>
-					Add Correct Answer
-				</button>
-			)
-		);
+	const handleSingleCheckBox = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		answerObject: Answer
+	): void => {
+		const updatedCorrectAnswers = event.target.checked ? [answerObject] : [];
+		SET_CORRECT_ANSWERS(updatedCorrectAnswers);
+		console.log('Updated CORRECT_ANSWERS (single):', updatedCorrectAnswers);
 	};
+
+	const handleMultiCheckBox = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		answerObject: Answer
+	): void => {
+		const UPDATED_CORRECT_ANSWER = event.target.checked
+			? [...CORRECT_ANSWERS, answerObject]
+			: CORRECT_ANSWERS.filter((answer) => answer.id !== answerObject.id);
+
+		SET_CORRECT_ANSWERS(UPDATED_CORRECT_ANSWER);
+		console.log('Updated CORRECT_ANSWERS (multi):', UPDATED_CORRECT_ANSWER);
+	};
+
+	const handleCheckboxChange = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		index: number
+	): void => {
+		const ANSWER_OBJECT: Answer = watch(`answers.${index}`) as Answer;
+
+		if (SELECTED_TYPE === Type.Single) {
+			handleSingleCheckBox(event, ANSWER_OBJECT);
+		} else if (SELECTED_TYPE === Type.Multi) {
+			handleMultiCheckBox(event, ANSWER_OBJECT);
+		}
+	};
+
+	const checkForDuplicateAnswers = (correctAnswers: Answer[]): boolean => {
+		const double = new Set();
+		for (const answer of correctAnswers) {
+			if (double.has(answer.answer)) {
+				SET_RESPONSE_MODAL(true);
+				SET_MESSAGE('You have a duplicate answer');
+				return true;
+			}
+			double.add(answer.answer);
+		}
+		return false;
+	};
+
+	const isCorrectAnswersEmpty = (correctAnswers: Answer[]): boolean => {
+		return !correctAnswers || correctAnswers.length === 0;
+	};
+
+	const isAnyValidAnswer = (correctAnswers: Answer[]): boolean => {
+		return correctAnswers.some(answer => answer);
+	};
+
+	const validateCorrectAnswers = (correctAnswers: Answer[]): boolean => {
+		if (isCorrectAnswersEmpty(correctAnswers)) {
+			SET_RESPONSE_MODAL(true);
+			SET_MESSAGE('You have to pick a correct answer');
+			return false;
+		}
+
+		if (!isAnyValidAnswer(correctAnswers)) {
+			SET_RESPONSE_MODAL(true);
+			SET_MESSAGE('You have to pick a correct answer');
+			return false;
+		}
+
+		return true;
+	};
+
+	const handleFormSubmission = (correctAnswers: Answer[]): void => {
+		reset({
+			...watch(),
+			questionAnswerResult: correctAnswers.map(correctAnswer => correctAnswer.answer)
+		});
+		const currentAnswers = watch('answers');
+		const updatedCorrectAnswers = correctAnswers.filter(correctAnswer =>
+			currentAnswers.some(answer => answer.answer === correctAnswer.answer)
+		);
+
+		SET_CORRECT_ANSWERS(updatedCorrectAnswers);
+		SET_QUESION_OBJECT({
+			...watch(),
+			questionAnswerResult: updatedCorrectAnswers.map(correctAnswer => correctAnswer.answer),
+			answers: [...watch('answers')]
+		});
+		SET_CONFIRMATION_MODAL(true);
+		console.log(watch());
+	};
+
+	const handleAddQuestionBtn = () => {
+
+		if (checkForDuplicateAnswers(CORRECT_ANSWERS)) {
+			return;
+		}
+
+		if (!validateCorrectAnswers(CORRECT_ANSWERS)) {
+			return;
+		}
+
+		handleFormSubmission(CORRECT_ANSWERS);
+	};
+
+	useEffect(() => {
+		const answers = watch('answers');
+		const validCorrectAnswers = CORRECT_ANSWERS.filter((correctAnswer) =>
+			answers.some((answer: Answer) => answer.id === correctAnswer.id)
+		);
+
+		const updatedCorrectAnswers = validCorrectAnswers.map((correctAnswer) => {
+			const matchingAnswer = answers.find((answer: Answer) => answer.id === correctAnswer.id);
+			return matchingAnswer || correctAnswer;
+		});
+
+		SET_CORRECT_ANSWERS(updatedCorrectAnswers);
+	}, [watch('answers')]);
+
+	useEffect(() => {
+		reset({
+			...watch(),
+			type: SELECTED_TYPE,
+		});
+	}, [SELECTED_TYPE]);
 
 	if (LOADING) return <LoadingSpinner message='Getting Course / Adding Question!' />;
 
 	return (
 		<div className={styles.container}>
-			<h1 className={styles.addQuesionTitle}>Add Question:<br/>{ID}</h1>
+			<h1 className={styles.addQuesionTitle}>Add Question:<br />{ID}</h1>
 
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 
 				<ADD_QUESTION_INPUT register={register} errors={errors} />
 
-				<ADD_TYPE_CATEGORY_INPUT register={register} errors={errors} handleTypeChange={handleTypeChange} />
+				<ADD_TYPE_CATEGORY_INPUT register={register} errors={errors} selectedType={SELECTED_TYPE} handleTypeChange={handleTypeChange} />
 
 				<div>
 					<h5 className={styles.subTitle}>Possible Answers</h5>
@@ -214,42 +313,33 @@ const ADD_QUESTION = () => {
 
 							<ADD_REASON_INPUT register={register} errors={errors} index={index} />
 
+							<div>
+								<label>Correct answer?</label>
+								<input
+									id={`cy-add-question-correct-answer-checkbox-${index}`}
+									type="checkbox"
+									className={styles.AddQuestionCheckbox}
+									checked={CORRECT_ANSWERS.some((answer) => answer.id === watch(`answers.${index}`).id)}
+									onChange={(event) => handleCheckboxChange(event, index)}
+								/>
+							</div>
+
 							{answerFieldDeleteButton(index)}
 						</div>
 					))}
 					{answersFieldAddButton()}
 				</div>
 
-				<div>
-					<h5 className={styles.subTitle}>Correct Answer(s)</h5>
-					{CORRECT_ANSWERS.map((_, index) => (
-						<div key={index} className={styles.answerSection}>
-							<label>Correct Answer {index + 1}</label>
-							<input
-								{...register(`questionAnswerResult.${index}`, { required: true })}
-								id={`cy-add-question-correct-answer-${index}`}
-								className={styles.formControl}
-								placeholder="Enter correct answer"
-							/>
-							{renderError(index)}
-							{renderDeleteButton(index)}
-						</div>
-					))}
-					{handleCorrectAnswer()}
-				</div>
-
 				<button
 					type="button"
-					onClick={() => {
-						SET_QUESION_OBJECT(watch);
-						SET_CONFIRMATION_MODAL(true);
-					}}
+					onClick={() => handleAddQuestionBtn()}
 					id='cy-add-question-btn'
 					className={styles.btnAdd}
 					disabled={answerFields.length < 2}
 				>
 					Add Question
 				</button>
+
 				<button
 					type="button"
 					id='cy-add-question-reset-btn'
@@ -259,8 +349,8 @@ const ADD_QUESTION = () => {
 					Reset form
 				</button>
 				<MODAL open={CONFIRMATION_MODAL} onClose={() => SET_CONFIRMATION_MODAL(false)}>
-					<div className={modal.modal} style={{ color: 'black' }}>
-						<p className={modal.modalTitle} style={{ color: 'black' }}>Verify question</p>
+					<div className={modal.modal}>
+						<p className={modal.modalTitle}>Verify question</p>
 						<p className={modal.modalTxt}>Are you sure you want to add this question?</p>
 						<p>Question:</p>
 						<p className={styles.modalTxt}>{QUESTION_OBJECT.question}</p>

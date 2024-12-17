@@ -8,6 +8,7 @@ interface AddReasonInputProps {
         type: Type;
         category: string;
         answers: {
+			id: number;
             answer: string;
             reason: string;
         }[];
@@ -31,7 +32,7 @@ const ADD_REASON_INPUT = ({ register, errors, index }: AddReasonInputProps) => {
 	return (
 		<div className={styles.formGroup}>
 			<label>Reason</label>
-			<input
+			<textarea
 				{...register(`answers.${index}.reason`, { required: true })}
 				id='cy-add-question-reason-input'
 				className={styles.formControl}
