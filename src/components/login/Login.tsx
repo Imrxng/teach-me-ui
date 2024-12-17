@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import picture from '../../assets/images/testop-software-testing.webp';
 import DATACONTEXT from '../../context/DataContext';
 import { LoginRequest, LoginSession } from '../../types';
 
@@ -79,9 +78,6 @@ const Login = () => {
 				</div>
 				<button id='cy-login-btn' className='mainButton' onClick={handleLoginClick}>LOGIN</button>
 				{ERROR_MESSAGE && <p id='errorMessage'>{ERROR_MESSAGE} </p>}
-			</div>
-			<div className="hexagon">
-				<img src={picture} alt='decoLogin' />
 			</div>
 		</div>
 	);

@@ -1,258 +1,244 @@
 :root {
-	--primary-light-color: #f5f5f5;
-	/* --primary-dark-color: #ef7524; */
-	--primary-dark-color: #0d3b50;
-	--secondary-color: #87c9b8;
-	--input-bg-color: #f5f5f5;
-	--input-txt-color: #0d3b50;
+    --primary-light-color: #f5f5f5;
+    /* --primary-dark-color: #ef7524; */
+    --primary-dark-color: #0d3b50;
+    --secondary-color: #87c9b8;
+    --input-bg-color: #f5f5f5;
+    --input-txt-color: #0d3b50;
 }
 
 @font-face {
-	font-family: 'Nunito';
-	font-style: normal;
-	font-weight: 400;
-	font-display: swap;
-	src: url(https://fonts.gstatic.com/s/nunito/v26/XRXI3I6Li01BKofiOc5wtlZ2di8HDLshdTQ3jw.woff2) format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/nunito/v26/XRXI3I6Li01BKofiOc5wtlZ2di8HDLshdTQ3jw.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 ::placeholder {
-	opacity: 0.5;
+    opacity: 0.5;
 }
 
 table {
-	min-width: 700px;
+    min-width: 700px;
 }
 
 th {
-	font-weight: bolder;
+    font-weight: bolder;
 }
 
 
 td {
-	font-size: 14px;
+    font-size: 14px;
 }
 
 th,
 td {
-	padding: 10px 15px 10px;
-	text-align: left;
-	padding: 1rem;
+    padding: 10px 15px 10px;
+    text-align: left;
+    padding: 1rem;
 }
 
 tr {
-	width: 100%;
-	border-bottom: var(--secondary-color) 0.5px solid;
+    width: 100%;
+    border-bottom: var(--secondary-color) 0.5px solid;
 }
 
 .body {
-	background-color: var(--primary-dark-color);
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-	font-family: Arial, sans-serif;
-	color: white;
-	min-height: 100vh;
-	font-family: 'Nunito';
+    background-color: var(--primary-dark-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    color: white;
+    min-height: 100vh;
+    font-family: 'Nunito';
 }
 
 
 .lightmode {
-	background-color: white;
-	color: var(--primary-dark-color);
+    background-color: white;
+    color: var(--primary-dark-color);
 }
 
 .navLink {
-	transition-duration: 1s;
+    transition-duration: 1s;
 }
 
 .navLink:hover {
-	color: var(--secondary-color);
+    color: var(--secondary-color);
 }
 
 .main,
 .loginBox,
 .mainLogin {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: -2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -2rem;
 }
 
 .mainLogin {
-	gap: 5rem;
-	justify-content: space-between;
-	margin-left: 25rem;
-	margin-top: 4rem;
+    gap: 5rem;
+    justify-content: space-between;
+    margin-top: 7rem;
 }
 
 .loginBox {
-	border: var(--secondary-color) 1px solid;
-	flex-direction: column;
-	align-items: center;
-	gap: 2rem;
-	width: 400px;
-	height: 400px;
-	border-radius: 10px;
-}
-
-.loginFieldLabel{
-	
+    border: var(--secondary-color) 1px solid;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
 }
 
 .inputBox {
-	margin-top: 2.5rem;
-	flex-direction: row;
+    margin-top: 2.5rem;
+    flex-direction: row;
 }
 
 .inputBox>label {
-	font-size: large;
+    font-size: large;
 }
 
 .usernameLabel{
-	margin-right: 1rem;
+    margin-right: 1rem;
 }
 .passwordLabel{
-	margin-right: 1.2rem;
+    margin-right: 1.2rem;
 }
 
 .inputBoxes {
-	flex-direction: column;
-	gap: 2rem;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .mainButton {
-	color: white;
-	background-color: var(--secondary-color);
-	padding: 8px 16px;
-	border-radius: 5px;
-	font-weight: 600;
-	margin-right: 10px;
+    color: white;
+    background-color: var(--secondary-color);
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-right: 10px;
 }
 
 .mainButton:hover {
-	color: var(--primary-dark-color);
-	background-color: var(--primary-light-color);
-	cursor: pointer;
+    color: var(--primary-dark-color);
+    background-color: var(--primary-light-color);
+    cursor: pointer;
 }
 
 .homeMain {
-	min-height: 600px;
-	min-width: 800px;
-	border: 1px var(--secondary-color) solid;
-	border-radius: 10px;
-	padding: 3rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-	align-items: start;
-	position: relative
-}
-
-.hexagon {
-	width: 500px;
-	clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: -3.25rem;
+    min-height: 600px;
+    min-width: 800px;
+    border: 1px var(--secondary-color) solid;
+    border-radius: 10px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: start;
+    position: relative
 }
 
 #search,
 .input {
-	border-bottom: 1px var(--secondary-color) solid;
-	transition: border-bottom 0.3s ease-in-out;
+    border-bottom: 1px var(--secondary-color) solid;
+    transition: border-bottom 0.3s ease-in-out;
 }
 
 #search:focus,
 .input {
-	border-bottom: 1.5px var(--secondary-color) solid;
+    border-bottom: 1.5px var(--secondary-color) solid;
 }
 
 #errorMessage {
-	color: red;
-	height: 20px;
-	bottom: 11rem;
-	position: absolute;
+    color: red;
+    height: 20px;
+    bottom: 11rem;
+    position: absolute;
 }
 
 #modeButton:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 #cy-settings-create-course-btn {
-	color: white;
-	background-color: var(--secondary-color);
-	font-weight: 600;
-	padding: 10px 15px;
-	border-radius: .5rem;
+    color: white;
+    background-color: var(--secondary-color);
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: .5rem;
 }
 
 #cy-settings-create-course-btn:hover {
-	color: var(--primary-dark-color);
-	background-color: var(--primary-light-color);
-	cursor: pointer;
+    color: var(--primary-dark-color);
+    background-color: var(--primary-light-color);
+    cursor: pointer;
 }
 
 .spinner {
-	border: 8px solid var(--primary-light-color);
-	/* Light border */
-	border-top: 8px solid var(--secondary-color);
-	/* Color of the spinner */
-	border-radius: 50%;
-	width: 50px;
-	height: 50px;
-	animation: spin 1.5s linear infinite;
-	margin: 0 auto;
-	margin-bottom: 2rem;
+    border: 8px solid var(--primary-light-color);
+    /* Light border */
+    border-top: 8px solid var(--secondary-color);
+    /* Color of the spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1.5s linear infinite;
+    margin: 0 auto;
+    margin-bottom: 2rem;
 }
 
 
 
 label,
 p {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 .arrow {
-	color: var(--secondary-color);
+    color: var(--secondary-color);
 }
 
 .arrow:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .skipPagesTopDiv {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	padding: 1rem 3rem 1rem 3rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 1rem 3rem 1rem 3rem;
 }
 
 .skipPages {
-	display: flex;
-	justify-content: end;
-	align-items: space;
-	gap: 10px;
-	padding-right: 10px;
+    display: flex;
+    justify-content: end;
+    align-items: space;
+    gap: 10px;
+    padding-right: 10px;
 }
 
 .deleteCourseButton:hover {
-	cursor: pointer;
-	opacity: 0.7;
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 @keyframes spin {
-	0% {
-		transform: rotate(0deg);
-	}
+    0% {
+        transform: rotate(0deg);
+    }
 
-	100% {
-		transform: rotate(360deg);
-	}
+    100% {
+        transform: rotate(360deg);
+    }
 }
