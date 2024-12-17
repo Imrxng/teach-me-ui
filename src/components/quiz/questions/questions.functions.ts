@@ -11,11 +11,11 @@ export const multipleOrSingleChoice = (QUESTION: Question) => {
 const isCorrectAnswer = (CURRENT_ANSWER: string[], answer: string): boolean => CURRENT_ANSWER.includes(answer);
 
 const getCorrectAnswerColor = (QUESTION: Question, answer: string): string => {
-	return QUESTION.questionAnswerResult.includes(answer) ? 'green' : 'red';
+	return QUESTION.questionAnswerResult.includes(answer) ? '#A1CFCF' : '#EBA5A3';
 };
 
 const getIncorrectAnswerColor = (QUESTION: Question, answer: string): string => {
-	return QUESTION.questionAnswerResult.includes(answer) ? 'green' : '';
+	return QUESTION.questionAnswerResult.includes(answer) ? '#A1CFCF' : '';
 };
 
 const determineAnswerColor = (QUESTION: Question, CURRENT_ANSWER: string[], answer: string): string => {
