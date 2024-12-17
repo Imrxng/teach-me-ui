@@ -1,14 +1,20 @@
 .modalContainer{
     z-index: 10;
 }
-.modal h1{
+.modal{
     color: black;
 }
+
+.modal p{
+    font-size: 14pt;
+}
+
 .modalTitle{
     color: black;
     font-size: 14pt;
     margin-bottom: 10px;
 }
+
 .modalTxt{
     font-weight: normal;
     margin-bottom: 10px;

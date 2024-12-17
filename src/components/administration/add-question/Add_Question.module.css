@@ -3,30 +3,30 @@
     min-width: 700px;
 }
 
-.addQuesionTitle{
+.addQuesionTitle {
     font-size: 40pt;
     margin-bottom: 1rem;
     text-align: left;
 }
 
-.header{
+.header {
     font-size: 28pt;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
-.label{
+.label {
     font-size: 1rem;
 }
 
-.subTitle{
+.subTitle {
     font-size: 16pt;
     font-weight: 700;
     margin: 10px 0;
 }
 
 .formGroup {
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
 }
 
 .formGroup label {
@@ -43,6 +43,16 @@
     border-radius: 0.5rem;
     outline: none;
     color: var(--input-txt-color);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+    box-sizing: border-box;
+    width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .errorMessage {
@@ -81,16 +91,16 @@
 .btnReset {
     display: inline-block;
     padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     font-weight: 600;
     text-align: center;
     cursor: pointer;
 }
 
 .btnAdd {
-    background-color: var( --secondary-color);
+    background-color: var(--secondary-color);
     color: white;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .btnAdd:hover {
@@ -101,6 +111,7 @@
 .btnDelete {
     background-color: #ef4444;
     color: white;
+    margin-top: 10px;
 }
 
 .btnDelete:hover {
@@ -110,22 +121,60 @@
 .btnAdd:disabled {
     background-color: #d1d5db;
     cursor: not-allowed;
+    color: var(--primary-dark-color);
 }
 
 .btnReset {
     background-color: #f59e0b;
     color: white;
-    margin-left: 1rem;
+    margin-left: 10px;
 }
 
 .btnReset:hover {
     background-color: #d97706;
 }
 
-option{
-    color:black
+option {
+    color: black
 }
 
-.modalTxt{
+.modalTxt {
     font-weight: normal;
+}
+
+.AddQuestionCheckbox {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #87c9b8;
+    background-color: white;
+    position: relative;
+    vertical-align: middle;
+    transition: background-color 0.3s, border-color 0.3s;
+    box-sizing: unset;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.AddQuestionCheckbox:checked {
+    background-color: #87c9b8;
+    border-color: #87c9b8;
+}
+
+.AddQuestionCheckbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.AddQuestionCheckbox:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(135, 201, 184, 0.5);
 }

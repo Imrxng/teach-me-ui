@@ -8,6 +8,7 @@ interface AddQuestionInputProps {
         type: Type;
         category: string;
         answers: {
+			id: number;
             answer: string;
             reason: string;
         }[];
@@ -20,12 +21,13 @@ const ADD_QUESTION_INPUT = ({ register, errors }: AddQuestionInputProps) => {
 	return (
 		<div className={styles.formGroup}>
 			<label className={styles.label}>Question</label>
-			<input
+			<textarea
 				{...register('question', { required: true })}
 				id='cy-add-question-question-input'
 				className={styles.formControl}
 				placeholder="Enter question"
 			/>
+			
 			{errors.question && <div className={styles.errorMessage}>Question is required</div>}
 		</div>
 	);
