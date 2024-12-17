@@ -1,11 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginSession, RootObject } from '../../../types';
 import { useContext, useState } from 'react';
 import DATACONTEXT from '../../../context/DataContext';
 import modal from '../../administration/modal/Modal.module.css';
 import MODAL from '../../administration/modal/Modal';
 import { deleteCourse } from '../../../ApiService';
+import { FaTrashAlt } from 'react-icons/fa';
 
 interface TABLE_Props {
 	COURSES: RootObject[];
@@ -21,6 +22,13 @@ export const ifAdmin = (LOGIN_SESSION: LoginSession | undefined) => {
 	}
 };
 
+const checkUrl = (LOCATION: string, LOGIN_SESSION: LoginSession | undefined) => {
+	if (LOCATION !== '/' && ifAdmin(LOGIN_SESSION)) {
+		return true;
+	}
+	return false;
+};
+
 const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 	const { SET_LOADING, LOGIN_SESSION } = useContext(DATACONTEXT);
 	const startIndex = (CURRENT_INDEX - 1) * 5;
@@ -29,6 +37,8 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const [SELECTED_COURSE, SET_SELECTED_COURSE] = useState<string>('');
+	const LOCATION = useLocation();	
+
 
 	const DELETE_THIS_COURSE = async (course: string) => {
 		try {
@@ -54,7 +64,7 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 		);
 	}
 
-	if (ifAdmin(LOGIN_SESSION)) {
+	if (checkUrl(LOCATION.pathname, LOGIN_SESSION)) {
 		return (
 			<>
 				<table>
@@ -74,18 +84,24 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 										<tr key={index}>
 											<td>{course.content.name}</td>
 											<td>{course.content.category}</td>
-											<td>{course.content.date}</td>
 											<td>
-												<button id={`cy-settings-start-quiz-btn-${index}`} className="mainButton" onClick={() => navigate(`/quiz/${course.key}`)} >Start</button>
-
+												{new Date(course.content.date).toLocaleDateString('nl-NL', {
+													day: '2-digit',
+													month: '2-digit',
+													year: 'numeric',
+												})}
+											</td>
+											<td style={{ display: 'flex', alignItems: 'center' }}>
 												<button id={`cy-settings-edit-course-${index}`} className="mainButton settingsCourseEdit" onClick={() => navigate(`/settings/edit/${course.key}`)} >Edit</button>
 
 												<button id={`cy-settings-add-course-question-${index}`} className="mainButton settingsCourseAddQuestion" onClick={() => navigate(`/settings/add-question/${course.key}`)} >Add Question</button>
 
-												<button id={`cy-settings-delete-course-${index}`} className="mainButton settingsCourseDelete" onClick={() => {
-													SET_SELECTED_COURSE(course.content.name);
-													SET_CONFIRMATION_MODAL(true);
-												}} >Delete</button>
+												<FaTrashAlt id={`cy-settings-delete-course-${index}`} className='deleteCourseButton'
+													style={{ color: '#d9534f', padding: 0, fontSize: 30 }}
+													onClick={() => {
+														SET_SELECTED_COURSE(course.content.name);
+														SET_CONFIRMATION_MODAL(true);
+													}} />
 											</td>
 										</tr>
 									);
@@ -137,7 +153,13 @@ const TABLE = ({ COURSES, CURRENT_INDEX, REFRESH_COURSES }: TABLE_Props) => {
 								<tr key={index}>
 									<td>{course.content.name}</td>
 									<td>{course.content.category}</td>
-									<td>{course.content.date}</td>
+									<td>
+										{new Date(course.content.date).toLocaleDateString('nl-NL', {
+											day: '2-digit',
+											month: '2-digit',
+											year: 'numeric',
+										})}
+									</td>									
 									<td><button id={`cy-home-start-quiz-btn-${index}`} className="mainButton" onClick={() => navigate(`/quiz/${course.key}`)} >Start</button></td>
 								</tr>
 							);

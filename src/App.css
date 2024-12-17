@@ -147,6 +147,7 @@ tr {
 	flex-direction: column;
 	gap: 1.5rem;
 	align-items: start;
+	position: relative
 }
 
 .hexagon {
@@ -222,13 +223,28 @@ p {
 	cursor: pointer;
 }
 
+.skipPagesTopDiv {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	padding: 1rem 3rem 1rem 3rem;
+}
+
 .skipPages {
 	display: flex;
 	justify-content: end;
-	align-items: center;
+	align-items: space;
 	gap: 10px;
-	width: 100%;
 	padding-right: 10px;
+}
+
+.deleteCourseButton:hover {
+	cursor: pointer;
+	opacity: 0.7;
 }
 
 @keyframes spin {
