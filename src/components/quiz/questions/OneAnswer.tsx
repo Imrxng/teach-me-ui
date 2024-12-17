@@ -39,7 +39,7 @@ const OneAnswer = ({ index, answer, QUESTION, CURRENT_ANSWER, SET_CURRENT_ANSWER
 				className={styles.inputQuestions}
 			/>
 			<label
-				style={{ color: CHECK_BETWEEN_QUESTIONS ? getColorAnswer(SHOW_RIGHT_ANSWERS, CURRENT_ANSWER, answer, QUESTION) : '' }}
+				style={{ padding:5, borderRadius:10, backgroundColor: CHECK_BETWEEN_QUESTIONS ? getColorAnswer(SHOW_RIGHT_ANSWERS, CURRENT_ANSWER, answer, QUESTION) : '' }}
 				htmlFor={`answer-${index}`}
 			>
 				{index + 1}. {answer}
