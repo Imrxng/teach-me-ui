@@ -6,13 +6,13 @@
   }
 
 .createFormContainer {
-    margin: 0 auto;
+    margin: 20px auto;
     width: 720px;
 }
 
 .createTitle {
     font-size: 40pt;
-    margin-bottom: 2rem;
+    margin: 0;
     text-align: left;
 }
 

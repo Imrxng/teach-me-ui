@@ -9,13 +9,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -2rem;
 }
 
 .mainLogin {
     gap: 5rem;
     justify-content: space-between;
-    margin-top: 7rem;
+    margin-top: 5rem;
 }
 
 .loginBox {

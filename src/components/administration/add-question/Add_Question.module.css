@@ -6,13 +6,13 @@
 }
 
 .container {
-    margin: 0 auto;
+    margin: 20px auto;
     min-width: 700px;
 }
 
 .addQuesionTitle {
     font-size: 40pt;
-    margin-bottom: 1rem;
+    margin: 0;
     text-align: left;
 }
 
