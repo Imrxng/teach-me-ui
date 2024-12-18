@@ -28,7 +28,7 @@ const OneAnswer = ({ index, answer, QUESTION, CURRENT_ANSWER, SET_CURRENT_ANSWER
 	};
 
 	return (
-		<div key={index} className={styles.answer}>
+		<div key={index} className={styles.answerContainer}>
 			<div>
 				<input
 					type={multipleOrSingleChoice(QUESTION)}
@@ -41,7 +41,7 @@ const OneAnswer = ({ index, answer, QUESTION, CURRENT_ANSWER, SET_CURRENT_ANSWER
 				/>
 			</div>
 			<div style={{ padding: 5, borderRadius: 10, backgroundColor: CHECK_BETWEEN_QUESTIONS ? getColorAnswer(SHOW_RIGHT_ANSWERS, CURRENT_ANSWER, answer, QUESTION) : '' }}>
-				<label htmlFor={`answer-${index}`}>
+				<label htmlFor={`answer-${index}`} className={styles.answer}>
 					{index + 1}. {answer}
 				</label>
 			</div>

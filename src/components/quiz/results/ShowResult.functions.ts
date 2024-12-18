@@ -6,6 +6,6 @@ export const renderHeader = (incorrectAnswersCount: number) => {
 
 export const renderResultText = (CURRENT_INDEX: number, AMOUNT_OF_QUESTIONS: number, INCORRECT_ANSWERS: IncorrectAnswer[]) => {
 	if (CURRENT_INDEX < AMOUNT_OF_QUESTIONS && INCORRECT_ANSWERS.length > 0) {
-		return 'The quiz time was up, there were no mistakes, but the quiz was not completed.';
+		return 'Time\'s up! Thanks for giving it your best shot. Let\'s see how you did!';
 	}
 };

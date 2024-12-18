@@ -61,28 +61,28 @@ const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 
 	const minuteSpelling = () => {
 		if (Math.round(TIME / 60) <= 1) {
-			return 'minute'
+			return 'minute';
 		}
-		else return 'minutes'
-	} 
+		else return 'minutes';
+	}; 
 
 	const lightStyle = () => {
-		return `${!DARKMODE ? styles.quizLight : ''}`
-	}
+		return `${!DARKMODE ? styles.quizLight : ''}`;
+	};
 
 	const showQuestionSelectAmountText = () => {
-		if (COURSE.questions[CURRENT_INDEX].type == 'multi') {
-			return `(Multiple Choice)`
+		if (COURSE.questions[CURRENT_INDEX].type === 'multi') {
+			return '(Multiple Choice)';
 		} 
-	}
+	};
 
 	const showMoveToPrevQuestionBtn = () => {
 		if (!CHECK_BETWEEN_QUESTIONS) {
 			if (CURRENT_INDEX !== 0) {
-				return <button className={styles.nextBtn} onClick={moveToPrevQuestion}>Previous Question</button>
+				return <button id='quiz-page-prev-btn' className={styles.nextBtn} onClick={moveToPrevQuestion}>Previous Question</button>;
 			}
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (TIME <= 0) {
@@ -110,7 +110,7 @@ const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 					<p>Question {CURRENT_INDEX + 1} of {AMOUNT_OF_QUESTIONS}</p>
 					<div className={styles.progressBarContainer}>
 						<div className={styles.progressBar}
-							style={{ width: `${(CURRENT_INDEX / AMOUNT_OF_QUESTIONS) * 100}%` }}
+							style={{ width: `${((CURRENT_INDEX + 1)/ AMOUNT_OF_QUESTIONS) * 100}%` }}
 						></div>
 					</div>
 				</div>
@@ -135,7 +135,7 @@ const QuestionsPage = ({ QUESTION }: QuestionProps) => {
 
 					<div className={styles.quizFooter}>
 						{showMoveToPrevQuestionBtn()}
-						<button className={styles.nextBtn} onClick={CURRENT_ANSWER.length > 0 ? clickHandler : undefined}>Next Question</button>
+						<button id='cy-quiz-page-next-button' className={styles.nextBtn} onClick={CURRENT_ANSWER.length > 0 ? clickHandler : undefined}>Next Question</button>
 					</div>
 
 				</div>

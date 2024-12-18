@@ -12,14 +12,14 @@ interface ShowResultProps {
 }
 
 const ShowResult = ({ CURRENT_INDEX } : ShowResultProps) => {
-    const { DARKMODE } = useContext(DATACONTEXT);
-    const { COURSE, AMOUNT_OF_QUESTIONS } = useContext(QuizContext);
-    const NAVIGATE = useNavigate();
-    const { ID } = useParams();
-    let score = 0;  
+	const { DARKMODE } = useContext(DATACONTEXT);
+	const { COURSE, AMOUNT_OF_QUESTIONS } = useContext(QuizContext);
+	const NAVIGATE = useNavigate();
+	const { ID } = useParams();
+	let score = 0;  
 
 
-    const INCORRECT_ANSWERS: IncorrectAnswer[] = [];
+	const INCORRECT_ANSWERS: IncorrectAnswer[] = [];
 
 	const checkAnswer = (yourAnswer: string[] | undefined, correctAnswer: string[]) => {
 		if (!yourAnswer) return false; 
@@ -27,62 +27,62 @@ const ShowResult = ({ CURRENT_INDEX } : ShowResultProps) => {
 		return correctAnswer.every(answer => yourAnswer.includes(answer)); 
 	};
       
-      const handleCorrectAnswer = () => {
-        score++;
-      };
+	const handleCorrectAnswer = () => {
+		score++;
+	};
       
-      const handleIncorrectAnswer = (question: Question, correctAnswer: string[], yourAnswer: string[] | undefined) => {
-        INCORRECT_ANSWERS.push({
-          question: question.question,
-          correctAnswer: correctAnswer,
-          yourAnswer: yourAnswer,
-        });
-      };
+	const handleIncorrectAnswer = (question: Question, correctAnswer: string[], yourAnswer: string[] | undefined) => {
+		INCORRECT_ANSWERS.push({
+			question: question.question,
+			correctAnswer: correctAnswer,
+			yourAnswer: yourAnswer,
+		});
+	};
       
-      COURSE.questions.slice(0, AMOUNT_OF_QUESTIONS).map((question, index) => {
-        const yourAnswer = question.yourAnswer;
-        const correctAnswer = question.questionAnswerResult;
+	COURSE.questions.slice(0, AMOUNT_OF_QUESTIONS).map((question, index) => {
+		const yourAnswer = question.yourAnswer;
+		const correctAnswer = question.questionAnswerResult;
       
-        if (index >= CURRENT_INDEX) {
-          return;
-        }
+		if (index >= CURRENT_INDEX) {
+			return;
+		}
       
-        if (checkAnswer(yourAnswer, correctAnswer)) {
-          handleCorrectAnswer();
-        } else {
-          handleIncorrectAnswer(question, correctAnswer, yourAnswer);
-        }
-      });
+		if (checkAnswer(yourAnswer, correctAnswer)) {
+			handleCorrectAnswer();
+		} else {
+			handleIncorrectAnswer(question, correctAnswer, yourAnswer);
+		}
+	});
 
-      const correctScorePassedStyle = () => {
-        return `${((score/AMOUNT_OF_QUESTIONS)*100) >= COURSE.passingGrade ? styles.passed : styles.failed}`;
-      };
+	const correctScorePassedStyle = () => {
+		return `${((score/AMOUNT_OF_QUESTIONS)*100) >= COURSE.passingGrade ? styles.passed : styles.failed}`;
+	};
 
-    return (
-        <div className={`${!DARKMODE ? styles.containerLight : ''} ${styles.container}`}>
-            <p className={` ${correctScorePassedStyle()} ${styles.score}`}>Score: {((score / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</p>
-            <p className={styles.questionAmount}>Reached Questions: {CURRENT_INDEX} of the {AMOUNT_OF_QUESTIONS}</p>
-            <div className={styles.resultsContainer}>
-                <h4>{renderHeader(INCORRECT_ANSWERS.length)}</h4>
-                {INCORRECT_ANSWERS.length > 0 ? (
-                    <div>
-                        <div className={styles.answers}>
-                            {INCORRECT_ANSWERS.map((answer, index) => (
-                                <INCORRECT_ANSWER_CARD key={index} incorrectQuestion={answer}/>
-                            ))}
-                        </div>
-                    </div>
-                ) : (
-                    <p>All answers are correct!</p> 
-                )}
-                <p>{renderResultText(CURRENT_INDEX, AMOUNT_OF_QUESTIONS, INCORRECT_ANSWERS)}</p>
-            </div>
-            <div className={styles.btnsContainer}>
-                <button className={styles.btn} onClick={() => NAVIGATE('/')}>Back to home</button>
-                <a className={styles.btn} href={`/quiz/${ID}`}>Restart quiz</a>
-            </div>
-        </div>
-    );
+	return (
+		<div className={`${!DARKMODE ? styles.containerLight : ''} ${styles.container}`}>
+			<p className={` ${correctScorePassedStyle()} ${styles.score}`}>Score: {((score / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</p>
+			<p className={styles.questionAmount}>{CURRENT_INDEX}/{AMOUNT_OF_QUESTIONS} Questions Answered</p>
+			<div className={styles.resultsContainer}>
+				<h4>{renderHeader(INCORRECT_ANSWERS.length)}</h4>
+				{INCORRECT_ANSWERS.length > 0 ? (
+					<div>
+						<div className={styles.answers}>
+							{INCORRECT_ANSWERS.map((answer, index) => (
+								<INCORRECT_ANSWER_CARD key={index} incorrectQuestion={answer}/>
+							))}
+						</div>
+					</div>
+				) : (
+					<p>All answers are correct!</p> 
+				)}
+				<p>{renderResultText(CURRENT_INDEX, AMOUNT_OF_QUESTIONS, INCORRECT_ANSWERS)}</p>
+			</div>
+			<div className={styles.btnsContainer}>
+				<button id='cy-quiz-result-page-back-home-btn' className={styles.btn} onClick={() => NAVIGATE('/')}>Back to home</button>
+				<a id='cy-quiz-result-page-restart-btn' className={styles.btn} href={`/quiz/${ID}`}>Restart quiz</a>
+			</div>
+		</div>
+	);
 };
 
 export default ShowResult;
