@@ -52,9 +52,13 @@ const ShowResult = ({ CURRENT_INDEX } : ShowResultProps) => {
 		}
 	  });
 
+	  const correctScorePassedStyle = () => {
+		return `${((score/AMOUNT_OF_QUESTIONS)*100) >= COURSE.passingGrade ? styles.passed : styles.failed}`;
+	  };
+
 	return (
 		<div className={`${!DARKMODE ? styles.containerLight : ''} ${styles.container}`}>
-			<p className={`${((score/AMOUNT_OF_QUESTIONS)*100) >= COURSE.passingGrade ? styles.passed : styles.failed} ${styles.score}`}>Score: {((score / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</p>
+			<p className={` ${correctScorePassedStyle()} ${styles.score}`}>Score: {((score / AMOUNT_OF_QUESTIONS) * 100).toFixed(2)}%</p>
 			<p className={styles.questionAmount}>Reached Questions: {CURRENT_INDEX} of the {AMOUNT_OF_QUESTIONS}</p>
 			<div className={styles.resultsContainer}>
 				<h4>{renderHeader(INCORRECT_ANSWERS.length)}</h4>
