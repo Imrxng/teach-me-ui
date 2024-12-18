@@ -4,14 +4,35 @@
     padding: 2rem;
     border-radius: .5rem;
     position: relative;
+    margin-bottom: 2rem;
 }
 
 .containerLight {
-    box-shadow: 0 0 30px rgba(135, 201, 184, 0.5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .container h3 {
     font-size: 30pt;
+    font-weight: 600;
+}
+
+.score{
+    font-size: 15pt;
+    font-weight: 600;
+    position: absolute;
+    right: 2rem;
+}
+
+.passed{
+    color: #a1cfcf;
+}
+
+.failed{
+    color: #eba5a3;
+}
+
+.questionAmount{
+    font-size: 15pt;
     font-weight: 600;
 }
 
@@ -25,25 +46,13 @@
     font-weight: 600;
 }
 
-.pagination {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-}
-
-.answers {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
 .info {
     margin-bottom: 15px;
 }
 
 .info p {
     font-weight: normal;
+    font-size: 14pt;
 }
 
 .info .answerTitle{
@@ -64,4 +73,29 @@
     background-color: var(--primary-dark-color);
     color: var(--primary-light-color);
     cursor: pointer;
+}
+
+.answers {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    white-space: wrap; 
+    position: relative;
+    animation: scroll 10s linear infinite;
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.card{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: .5rem;
+    padding: 15px;
+}
+
+.btnsContainer{
+    display: flex;
+    justify-content: space-between;
 }
