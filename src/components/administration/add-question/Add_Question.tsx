@@ -24,7 +24,7 @@ const ADD_QUESTION = () => {
 	const [CONFIRMATION_MODAL, SET_CONFIRMATION_MODAL] = useState<boolean>(false);
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
-	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
+	const { LOADING, SET_LOADING, DARKMODE } = useContext(DATACONTEXT);
 	// const [CORRECT_ANSWERS, SET_CORRECT_ANSWERS] = useState<string[]>([]);
 	const [CORRECT_ANSWERS, SET_CORRECT_ANSWERS] = useState<Answer[]>([]);
 	const { ID } = useParams();
@@ -292,10 +292,14 @@ const ADD_QUESTION = () => {
 		});
 	}, [SELECTED_TYPE]);
 
+	const lightModeStyle = () => {
+		return `${!DARKMODE ? styles.lightMode : ''}`;
+	};
+
 	if (LOADING) return <LoadingSpinner message='Getting Course / Adding Question!' />;
 
 	return (
-		<div className={styles.container}>
+		<div className={`${lightModeStyle()} ${styles.container}`}>
 			<h1 className={styles.addQuesionTitle}>Add Question:<br />{ID}</h1>
 
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>

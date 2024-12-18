@@ -7,6 +7,7 @@ import Search from './Search';
 import Pagination from './Pagination';
 import LoadingSpinner from '../loader/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
+import styles from './Home.module.css';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
 
 const HOME = () => {
@@ -14,7 +15,7 @@ const HOME = () => {
 	const [FILTERED_COURSES, SET_FILTERED_COURSES] = useState<RootObject[]>([]);
 	const [SEARCH, SETSEARCH] = useState<string>('');
 	const [CURRENT_INDEX, SET_CURRENT_INDEX] = useState<number>(1);
-	const { LOADING, SET_LOADING, LOGIN_SESSION } = useContext(DATACONTEXT);
+	const { LOADING, SET_LOADING, LOGIN_SESSION, DARKMODE } = useContext(DATACONTEXT);
 	const NAVIGATE = useNavigate();
 
 
@@ -73,10 +74,14 @@ const HOME = () => {
 		return (ifAdmin(LOGIN_SESSION) ? <button id='cy-settings-create-course-btn' onClick={() => NAVIGATE('/settings/create-course')}>Add New Course</button> : '' );
 	};
 
+	const lightModeStyle = () => {
+		return `${!DARKMODE ? styles.lightMode : ''}`;
+	};
+
 	if (LOADING) return <LoadingSpinner message='Gathering information, please wait!' />;
 
 	return (
-		<div className="homeMain">
+		<div className={`${lightModeStyle()} ${styles.homeMain}`}>
 			<div style={{ display: 'flex', gap: '10px' }}>
 				<Search search={SEARCH} onSearchChange={handleSearchChange} />
 				{showAddCourseBtn()}

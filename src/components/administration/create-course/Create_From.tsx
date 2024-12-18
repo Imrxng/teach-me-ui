@@ -18,7 +18,7 @@ const CREATE_FORM = () => {
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const [COURSE_TITLE, SET_COURSE_TITLE] = useState<string>('');
 	const navigate = useNavigate();
-	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
+	const { LOADING, SET_LOADING, DARKMODE } = useContext(DATACONTEXT);
 	const [QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES] = useState<string[]>(['']);
 	const {
 		register,
@@ -64,11 +64,14 @@ const CREATE_FORM = () => {
     ${styles.submitButton} 
     ${Object.keys(errors).length === 0 ? styles.valid : styles.invalid}
 	`;
+	const lightModeStyle = () => {
+		return `${!DARKMODE ? styles.lightMode : ''}`;
+	};
 
 	if (LOADING) return <LoadingSpinner message='Adding course!' />;
 
 	return (
-		<div className={styles.createFormContainer} style={{ minWidth: '5rem' }}>
+		<div className={`${lightModeStyle()} ${styles.createFormContainer}`} style={{ minWidth: '5rem' }}>
 			<h1 className={styles.createTitle}>Create Course</h1>
 			<form className={styles.createForm} onSubmit={handleSubmit((data) =>
 				uploadCourse(data)

@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import DATACONTEXT from '../../context/DataContext';
 import { LoginRequest, LoginSession } from '../../types';
+import styles from './Login.module.css';
 
 const Login = () => {
+	const { DARKMODE } = useContext(DATACONTEXT);
 	const [LOGIN_REQUEST, SET_LOGIN_REQUEST] = useState<LoginRequest | undefined>();
 	const [INPUT_USERNAME, SET_INPUT_USERNAME] = useState<string>('');
 	const [INPUT_PASSWORD, SET_INPUT_PASSWORD] = useState<string>('');
@@ -46,23 +48,28 @@ const Login = () => {
 		}
 	};
 
+	const lightModeStyle = () => {
+		return `${!DARKMODE ? styles.lightMode : ''}`;
+	};
+
 	return (
-		<div className='mainLogin'>
-			<div className="loginBox">
-				<div className='inputBoxes'>
-					<div className='inputBox'>
-						<label className='usernameLabel' htmlFor="username">Username: </label>
+		<div className={` ${lightModeStyle()} ${styles.mainLogin}`}>
+			<div className={styles.loginBox}>
+				{ERROR_MESSAGE && <p className={styles.errorMessage}>{ERROR_MESSAGE} </p>}
+				<div className={styles.inputBoxes}>
+					<div className={styles.inputBox}>
+						<label className={styles.label} htmlFor="username">Username</label>
 						<input
 							type="text"
 							value={INPUT_USERNAME}
 							onChange={(event) => SET_INPUT_USERNAME(event.target.value)}
 							name="username"
 							id='cy-login-username-input'
-							className="input"
+							className={styles.input}
 						/>
 					</div>
-					<div className='inputBox'>
-						<label className='passwordLabel' htmlFor="password">Password: </label>
+					<div className={styles.inputBox}>
+						<label className={styles.label} htmlFor="password">Password</label>
 						<input
 							type="password"
 							onKeyDown={(e) => {
@@ -72,12 +79,11 @@ const Login = () => {
 							onChange={(event) => SET_INPUT_PASSWORD(event.target.value)}
 							name="password"
 							id='cy-login-password-input'
-							className="input"
+							className={styles.input}
 						/>
 					</div>
 				</div>
-				<button id='cy-login-btn' className='mainButton' onClick={handleLoginClick}>LOGIN</button>
-				{ERROR_MESSAGE && <p id='errorMessage'>{ERROR_MESSAGE} </p>}
+				<button id='cy-login-btn' className={`mainButton ${styles.btn}`} onClick={handleLoginClick}>LOGIN</button>
 			</div>
 		</div>
 	);

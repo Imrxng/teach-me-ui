@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { QuizContext } from '../provider/QuizContext';
-import './Settings.css';
+import styles from './settings.module.css';
 import { Link } from 'react-router-dom';
 
 const SETTINGS = () => {
@@ -23,10 +23,10 @@ const SETTINGS = () => {
 	}
 
 	return (
-		<div className="card">
+		<div className={styles.card}>
 			{COURSE ?
 				<>
-					<div className='doos'>
+					<div className={styles.doos}>
 						<label htmlFor="AMOUNT_OF_QUESTIONS">
 							Amount of questions (max {COURSE.questions.length})
 						</label>
@@ -57,7 +57,7 @@ const SETTINGS = () => {
 							}}
 						/>
 					</div>
-					<div className='doos'>
+					<div className={styles.doos}>
 						<p>Check for outcome in between questions?</p>
 						<input
 							type="radio"
@@ -81,7 +81,9 @@ const SETTINGS = () => {
 						<label htmlFor="checkBetweenQuestionsNo">No</label>
 						<br />
 					</div>
-					<button className='mainButton' onClick={onClickHandler}>Start quiz</button>
+					<div className={styles.cardFooter}>
+						<button className={`mainButton ${styles.btn}`} onClick={onClickHandler}>Start quiz</button>
+					</div>
 				</>
 				:
 				<p>No course selected</p>

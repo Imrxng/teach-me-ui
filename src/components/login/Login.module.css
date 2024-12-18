@@ -1,0 +1,72 @@
+.lightMode {
+    --primary-light-color: #0d3b50;
+    /* --primary-dark-color: #ef7524; */
+    --primary-dark-color: #f5f5f5;
+    --secondary-color: #87c9b8;
+}
+
+.loginBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -2rem;
+}
+
+.mainLogin {
+    gap: 5rem;
+    justify-content: space-between;
+    margin-top: 7rem;
+}
+
+.loginBox {
+    border: var(--secondary-color) 1px solid;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.inputBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.label{
+    margin: 0;
+}
+
+.input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    background: var(--input-bg-color);
+    border-radius: 0.5rem;
+    outline: none;
+    color: var(--input-txt-color);
+    margin-bottom: 10px;
+}
+
+.inputBox label {
+    font-size: large;
+}
+
+.inputBoxes {
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.btn{
+    margin: 0;
+}
+
+
+.errorMessage {
+    color: red;
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    font-size: 12pt;
+}

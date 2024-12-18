@@ -18,7 +18,7 @@ const UPDATE_FORM = () => {
 	const [CONFIRMATION_MODAL, SET_CONFIRMATION_MODAL] = useState<boolean>(false);
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
-	const { LOADING, SET_LOADING } = useContext(DATACONTEXT);
+	const { LOADING, SET_LOADING, DARKMODE } = useContext(DATACONTEXT);
 	const [QUESTION_CATEGORIES, SET_QUESTION_CATEGORIES] = useState<string[]>(['']);
 	const [COURSE, SET_COURSE] = useState<Course>({
 		id:                 '',
@@ -86,6 +86,10 @@ const UPDATE_FORM = () => {
 		}
 	};
 
+	const lightModeStyle = () => {
+		return `${!DARKMODE ? styles.lightMode : ''}`;
+	};
+
 	useEffect(() => {
 		LOAD_COURSE();
 	}, []);
@@ -98,7 +102,7 @@ const UPDATE_FORM = () => {
 	if (LOADING) return <LoadingSpinner message={`Loading ${ID} data!`} />;
 
 	return (
-		<div className={styles.createFormContainer}>
+		<div className={`${lightModeStyle()} ${styles.createFormContainer}`}>
 			<h1 className={stylesUpdate.updateTitle}>Edit Course:<br/>{ID}</h1>
 			<form className={styles.createForm} onSubmit={handleSubmit((data) =>
 				onSubmit(data)

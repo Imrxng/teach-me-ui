@@ -1,3 +1,10 @@
+.lightMode {
+    --primary-light-color: #0d3b50;
+    /* --primary-dark-color: #ef7524; */
+    --primary-dark-color: #f5f5f5;
+    --secondary-color: #87c9b8;
+}
+
 .container {
     margin: 0 auto;
     min-width: 700px;
