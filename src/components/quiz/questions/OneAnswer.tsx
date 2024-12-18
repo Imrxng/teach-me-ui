@@ -29,21 +29,22 @@ const OneAnswer = ({ index, answer, QUESTION, CURRENT_ANSWER, SET_CURRENT_ANSWER
 
 	return (
 		<div key={index} className={styles.answer}>
-			<input
-				type={multipleOrSingleChoice(QUESTION)}
-				name='answer'
-				value={answer}
-				checked={CURRENT_ANSWER.includes(answer)}
-				onClick={clickHandler}
-				disabled={SHOW_RIGHT_ANSWERS}
-				className={styles.inputQuestions}
-			/>
-			<label
-				style={{ padding:5, borderRadius:10, backgroundColor: CHECK_BETWEEN_QUESTIONS ? getColorAnswer(SHOW_RIGHT_ANSWERS, CURRENT_ANSWER, answer, QUESTION) : '' }}
-				htmlFor={`answer-${index}`}
-			>
-				{index + 1}. {answer}
-			</label>
+			<div>
+				<input
+					type={multipleOrSingleChoice(QUESTION)}
+					name='answer'
+					value={answer}
+					checked={CURRENT_ANSWER.includes(answer)}
+					onClick={clickHandler}
+					disabled={SHOW_RIGHT_ANSWERS}
+					className={styles.inputQuestions}
+				/>
+			</div>
+			<div style={{ padding: 5, borderRadius: 10, backgroundColor: CHECK_BETWEEN_QUESTIONS ? getColorAnswer(SHOW_RIGHT_ANSWERS, CURRENT_ANSWER, answer, QUESTION) : '' }}>
+				<label htmlFor={`answer-${index}`}>
+					{index + 1}. {answer}
+				</label>
+			</div>
 		</div>
 	);
 };
