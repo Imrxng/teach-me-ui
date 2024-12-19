@@ -49,6 +49,7 @@
 
 .formInput:disabled{
     background: rgba(220, 220, 220);
+    cursor: not-allowed;
 }
 
 .questionCategoryItem .formInput{

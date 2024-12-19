@@ -11,6 +11,8 @@ import NOT_FOUND from '../not-found/Not_Found';
 import QUIZ from '../quiz/provider/QuizProvider';
 import Root from '../root/Root';
 import UPDATE_COURSE from '../administration/update-course/Update_Course';
+import CREATE_USER from '../administration/user-management/User_Form';
+import { UPDATE_USER } from '../administration/user-management/Update_User';
 
 export const ROUTER = createBrowserRouter([
 	{
@@ -48,6 +50,14 @@ export const ROUTER = createBrowserRouter([
 			{
 				path: '/settings/edit/:ID',
 				element: <UPDATE_COURSE />
+			},
+			{
+				path: '/settings/create-user',
+				element: <CREATE_USER />
+			},
+			{
+				path: '/settings/edit-user/:USERNAME',
+				element: <UPDATE_USER />
 			},
 			{
 				path: '/not-found',

@@ -28,6 +28,11 @@
     color: var(--input-txt-color);
 }
 
+.formControl:disabled{
+    background: rgba(220, 220, 220);
+    cursor: not-allowed;
+}
+
 .errorMessage {
     color: #ef4444;
     font-size: 0.875rem;

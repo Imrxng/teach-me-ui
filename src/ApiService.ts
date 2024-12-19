@@ -132,7 +132,7 @@ export const createUser = async (user: User) => {
 	}
 };
 
-export const GET_ALL_USERS = async (): Promise<string[]> => {
+export const getAllUsernames = async (): Promise<string[]> => {
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/get-all-usernames`);
 		const DATA: string[] = await RESPONSE.json();
@@ -143,7 +143,7 @@ export const GET_ALL_USERS = async (): Promise<string[]> => {
 	}
 };
 
-export const DELETE_USER_FROM_DB = async (username: string) => {
+export const deleteUserFromDb = async (username: string) => {
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/delete-user/${username}`, {
 			method: 'DELETE'
@@ -153,5 +153,25 @@ export const DELETE_USER_FROM_DB = async (username: string) => {
 		}
 	} catch (error) {
 		handleError(error, `Failed to user: ${username.toUpperCase()}. Please try again.`);
+	}
+};
+
+export const updateUser = async (data: User): Promise<string> => {
+	try {
+		const RESPONSE = await fetch(`${BASE_URL}/modify-user/`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (!RESPONSE.ok) {
+			throw new Error(`Error: failed to update: ${data.username}`);
+		}
+		return `${data.username} was updated succesfully`
+	} catch (error) {
+		handleError(error, 'Failed to update user. Please try again.');
+		return `Failed to update: ${data.username}`
 	}
 };

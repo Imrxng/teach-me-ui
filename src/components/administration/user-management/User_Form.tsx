@@ -1,14 +1,18 @@
-import { useContext, useState } from 'react';
-import { createUser } from '../../../ApiService';
+import { useContext, useEffect, useState } from 'react';
+import { createUser, updateUser } from '../../../ApiService';
 import { User } from '../../../types';
-import styles from './Create_User.module.css';
+import styles from './User_Form.module.css';
 import { useForm } from 'react-hook-form';
 import DATACONTEXT from '../../../context/DataContext';
 import LoadingSpinner from '../../loader/LoadingSpinner';
 import MODAL from '../modal/Modal';
 import modal from '../modal/Modal.module.css';
 
-const CREATE_USER = () => {
+interface CreateUserFormProps {
+	user?: string
+}
+
+const USER_FORM = ({ user }:CreateUserFormProps) => {
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { SET_LOADING, LOADING } = useContext(DATACONTEXT);
@@ -25,14 +29,28 @@ const CREATE_USER = () => {
 		},
 	});
 
+	useEffect(() => {
+		if (user) {
+			reset({
+				username: user
+			});
+		}
+	}, [user, reset]);
+
 	const onSubmit = async (data: User) => {
 		try {
 			SET_LOADING(true);
-			await createUser(data);
-			SET_MESSAGE(`"${data.username}" was successfully created`);
+			if (user) {
+				const RESPONSE = await updateUser(data);
+				SET_MESSAGE(RESPONSE);
+			}
+			else {
+				await createUser(data);
+				SET_MESSAGE(`"${data.username}" was successfully created`);
+			}
 		} catch (error: unknown) {
 			console.error(error);
-			SET_MESSAGE(`Failed to "${data.username}". Please try again.`);
+			SET_MESSAGE(`Failed to create/update "${data.username}". Please try again.`);
 		} finally {
 			reset();
 			SET_LOADING(false);
@@ -52,11 +70,17 @@ const CREATE_USER = () => {
 		return errors.password && <div className={styles.errorMessage}>Password is required</div>;
 	};
 
+	const rightTitle = () => {
+		if (user) {
+			return 'Edit';
+		} else return 'Create';
+	};
+
 	if (LOADING) return <LoadingSpinner message='Creating user!' />;
 
 	return (
 		<div className={styles.container}>
-			<h1 className={styles.createUserTitle}>Create User</h1>
+			<h1 className={styles.createUserTitle}>{rightTitle()} User</h1>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form} autoComplete='off'>
 
 				<div className={styles.formGroup}>
@@ -68,6 +92,7 @@ const CREATE_USER = () => {
 						placeholder="Enter username"
 						type='text'
 						autoComplete='off'
+						disabled={user ? true : false}
 					/>
 					{ usernameError() }
 				</div>
@@ -98,7 +123,7 @@ const CREATE_USER = () => {
 					{ typeError() }
 				</div>
 
-				<button id='cy-create-user-create-btn' type="submit" className={styles.btnSubmit}>Create</button>
+				<button id='cy-create-user-create-btn' type="submit" className={styles.btnSubmit}>{rightTitle()}</button>
 			</form>
 			<MODAL open={RESPONSE_MODAL} onClose={() => SET_RESPONSE_MODAL(false)}>
 				<div className={modal.responseModal} style={{ color: 'black' }}>
@@ -109,4 +134,4 @@ const CREATE_USER = () => {
 	);
 };
 
-export default CREATE_USER;
+export default USER_FORM;
