@@ -7,6 +7,7 @@ import DATACONTEXT from '../../../context/DataContext';
 import LoadingSpinner from '../../loader/LoadingSpinner';
 import MODAL from '../modal/Modal';
 import modal from '../modal/Modal.module.css';
+import { useNavigate } from 'react-router-dom';
 
 interface CreateUserFormProps {
 	user?: string
@@ -16,6 +17,7 @@ const USER_FORM = ({ user }:CreateUserFormProps) => {
 	const [RESPONSE_MODAL, SET_RESPONSE_MODAL] = useState<boolean>(false);
 	const [MESSAGE, SET_MESSAGE] = useState<string>('');
 	const { SET_LOADING, LOADING } = useContext(DATACONTEXT);
+	const NAVIGATE = useNavigate()
 	const {
 		register,
 		handleSubmit,
@@ -41,8 +43,9 @@ const USER_FORM = ({ user }:CreateUserFormProps) => {
 		try {
 			SET_LOADING(true);
 			if (user) {
-				const RESPONSE = await updateUser(data);
+				const RESPONSE = await updateUser(data, user);
 				SET_MESSAGE(RESPONSE);
+				NAVIGATE('/settings')
 			}
 			else {
 				await createUser(data);
@@ -92,7 +95,6 @@ const USER_FORM = ({ user }:CreateUserFormProps) => {
 						placeholder="Enter username"
 						type='text'
 						autoComplete='off'
-						disabled={user ? true : false}
 					/>
 					{ usernameError() }
 				</div>

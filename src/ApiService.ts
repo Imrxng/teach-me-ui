@@ -156,9 +156,9 @@ export const deleteUserFromDb = async (username: string) => {
 	}
 };
 
-export const updateUser = async (data: User): Promise<string> => {
+export const updateUser = async (data: User, oldUsername: string): Promise<string> => {
 	try {
-		const RESPONSE = await fetch(`${BASE_URL}/modify-user/`, {
+		const RESPONSE = await fetch(`${BASE_URL}/modify-user/${oldUsername}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
