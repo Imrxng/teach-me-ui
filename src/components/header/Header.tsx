@@ -29,7 +29,6 @@ const HEADER = () => {
 				method: 'GET',
 				credentials: 'include',
 			});
-			console.log(document.cookie);
 			
 			if (response.ok) {
 				const sessionData = await response.json();
@@ -40,6 +39,7 @@ const HEADER = () => {
 				}));
 			} else {
 				NAVIGATE('/login');
+				return;
 			}
 		};
 		
