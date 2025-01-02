@@ -44,6 +44,7 @@ const HEADER = () => {
 				}
 			} catch {
 				NAVIGATE('/login');
+				return;
 			}
 		};
 		
