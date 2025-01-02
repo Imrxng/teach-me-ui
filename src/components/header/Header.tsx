@@ -25,20 +25,24 @@ const HEADER = () => {
 
 	useEffect(() => {
 		const checkSession = async () => {
-			const response = await fetch(`${BASE_URL}/login-session/`, {
-				method: 'GET',
-				credentials: 'include',
-			});
-			console.log(document.cookie);
-			
-			if (response.ok) {
-				const sessionData = await response.json();
-				SET_LOGIN_SESSION({ username: sessionData.token.USERNAME, type: sessionData.token.TYPE });
-				localStorage.setItem('loginSession', JSON.stringify({
-					username: sessionData.token.USERNAME,
-					type: sessionData.token.TYPE
-				}));
-			} else {
+			try {
+				const response = await fetch(`${BASE_URL}/login-session/`, {
+					method: 'GET',
+					credentials: 'include',
+				});
+				
+				if (response.ok) {
+					const sessionData = await response.json();
+					SET_LOGIN_SESSION({ username: sessionData.token.USERNAME, type: sessionData.token.TYPE });
+					localStorage.setItem('loginSession', JSON.stringify({
+						username: sessionData.token.USERNAME,
+						type: sessionData.token.TYPE
+					}));
+				} else {
+					NAVIGATE('/login');
+					return;
+				}
+			} catch {
 				NAVIGATE('/login');
 			}
 		};
