@@ -7,5 +7,5 @@ export default defineConfig({
 	define: {
 		'process.env': {}, 
 	},
-	base: '/teach-me-ui',
+	base: '/teach-me-ui/',
 });

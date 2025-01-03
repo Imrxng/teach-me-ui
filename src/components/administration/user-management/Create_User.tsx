@@ -1,4 +1,3 @@
-import React from 'react';
 import USER_FROM from './User_Form';
 
 const CREATE_USER = () => {
