@@ -9,4 +9,3 @@ export default defineConfig({
 	},
 	base: '/teach-me-ui/',
 });
-	

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable react-refresh/only-export-components */
-import { createBrowserRouter } from 'react-router-dom';
+import {  createHashRouter } from 'react-router-dom';
 import ADD_QUESTION from '../administration/add-question/Add_Question';
 import ADMINISTRATION from '../administration/Administration';
 import CREATE_COURSE from '../administration/create-course/Create_Course';
@@ -14,7 +14,7 @@ import UPDATE_COURSE from '../administration/update-course/Update_Course';
 import CREATE_USER from '../administration/user-management/User_Form';
 import { UPDATE_USER } from '../administration/user-management/Update_User';
 
-export const ROUTER = createBrowserRouter(
+export const ROUTER = createHashRouter(
 	[
 	  {
 			path: '/',
