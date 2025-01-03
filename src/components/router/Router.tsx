@@ -18,7 +18,7 @@ export const ROUTER = createHashRouter(
 	[
 	  {
 			path: '/',
-			element: <Root />,
+			 element: <Root />,
 			children: [
 		  { path: '', element: <HOME /> },
 		  { path: 'quiz/:ID', element: <QUIZ /> },
@@ -36,7 +36,6 @@ export const ROUTER = createHashRouter(
 	  },
 	],
 	{
-	//   basename: '/teach-me-ui/',
 	  future: {
 			v7_relativeSplatPath: true,
 			v7_fetcherPersist: true,
