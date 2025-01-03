@@ -1,5 +1,5 @@
 import { Course, RootObject, User } from './types';
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
+const BASE_URL = process.env.BASE_URL || 'https://teach-me-backend.vercel.app/api';
 
 export const fetchCourseTitles = async (): Promise<string[]> => {
 	try {
@@ -169,9 +169,9 @@ export const updateUser = async (data: User, oldUsername: string): Promise<strin
 		if (!RESPONSE.ok) {
 			throw new Error(`Error: failed to update: ${data.username}`);
 		}
-		return `${data.username} was updated succesfully`
+		return `${data.username} was updated succesfully`;
 	} catch (error) {
 		handleError(error, 'Failed to update user. Please try again.');
-		return `Failed to update: ${data.username}`
-	}
+		return `Failed to update: ${data.username}`;
+	};
 };

@@ -8,7 +8,7 @@ import Pagination from './Pagination';
 import LoadingSpinner from '../loader/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import styles from './Home.module.css';
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
+const BASE_URL = process.env.BASE_URL || 'https://teach-me-backend.vercel.app/api';
 
 const HOME = () => {
 	const [COURSES, SET_COURSES] = useState<RootObject[]>([]);

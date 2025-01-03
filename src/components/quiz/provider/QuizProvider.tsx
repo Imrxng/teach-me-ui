@@ -7,7 +7,7 @@ import LoadingSpinner from '../../loader/LoadingSpinner';
 import QuizPage from '../quiz-page/Quiz-Page';
 import { QuizContext } from './QuizContext';
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
+const BASE_URL = process.env.BASE_URL || 'https://teach-me-backend.vercel.app/api';
 
 const QuizProvider = () => {
 	const [COURSE, SET_COURSE] = useState<Course>();

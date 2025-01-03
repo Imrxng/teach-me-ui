@@ -10,7 +10,7 @@ const Login = () => {
 	const [INPUT_PASSWORD, SET_INPUT_PASSWORD] = useState<string>('');
 	const [ERROR_MESSAGE, SET_ERROR_MESSAGE] = useState<string | undefined>(undefined);
 	const { SET_LOGIN_SESSION } = useContext(DATACONTEXT);
-	const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
+	const BASE_URL = process.env.BASE_URL || 'https://teach-me-backend.vercel.app/api';
 
 
 	useEffect(() => {

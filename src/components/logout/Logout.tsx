@@ -2,7 +2,7 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DATACONTEXT from '../../context/DataContext';
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
+const BASE_URL = process.env.BASE_URL || 'https://teach-me-backend.vercel.app/api';
 
 const LOGOUT = () => {
 	const { SET_LOGIN_SESSION } = useContext(DATACONTEXT);

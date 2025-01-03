@@ -6,7 +6,7 @@ import DATACONTEXT from '../../context/DataContext';
 import {  useLocation, useNavigate } from 'react-router-dom';
 import NAV from './Nav';
 import './Header.component.css';
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
+const BASE_URL = process.env.BASE_URL || 'https://teach-me-backend.vercel.app/api';
 
 const HEADER = () => {
 	const { DARKMODE, LOGIN_SESSION, SET_LOGIN_SESSION } = useContext(DATACONTEXT);
