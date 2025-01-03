@@ -18,7 +18,7 @@ export const ROUTER = createHashRouter(
 	[
 	  {
 			path: '/',
-			 element: <Root />,
+			element: <Root />,
 			children: [
 		  { path: '', element: <HOME /> },
 		  { path: 'quiz/:ID', element: <QUIZ /> },
