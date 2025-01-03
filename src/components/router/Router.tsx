@@ -36,7 +36,7 @@ export const ROUTER = createHashRouter(
 	  },
 	],
 	{
-	  basename: '/teach-me-ui/',
+	//   basename: '/teach-me-ui/',
 	  future: {
 			v7_relativeSplatPath: true,
 			v7_fetcherPersist: true,
