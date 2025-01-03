@@ -1,6 +1,5 @@
 {
-  "name": "teach-me-ui",
-  "homepage": "https://imrxng.github.io/teach-me-ui/",
+  "name": "-teach-me-ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,9 +7,7 @@
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@eslint/compat": "^1.2.3",
