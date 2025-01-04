@@ -22,7 +22,6 @@ const Login = () => {
 				credentials: 'include',
 				body: JSON.stringify({ USERNAME: INPUT_USERNAME, PASSWORD: INPUT_PASSWORD }),
 			});
-			console.log(response);
 
 			if (response.ok) {
 				const data: LoginSession = await response.json();

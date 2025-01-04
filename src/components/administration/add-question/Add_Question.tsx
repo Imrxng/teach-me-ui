@@ -97,7 +97,6 @@ const ADD_QUESTION = () => {
 
 	const handleTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const CURRENT_TYPE = e.target.value as Type;
-		console.log(CURRENT_TYPE);
 		SET_SELECTED_TYPE(CURRENT_TYPE);
 		SET_CORRECT_ANSWERS([]);
 		reset({
@@ -173,7 +172,6 @@ const ADD_QUESTION = () => {
 	): void => {
 		const updatedCorrectAnswers = event.target.checked ? [answerObject] : [];
 		SET_CORRECT_ANSWERS(updatedCorrectAnswers);
-		console.log('Updated CORRECT_ANSWERS (single):', updatedCorrectAnswers);
 	};
 
 	const handleMultiCheckBox = (
@@ -185,7 +183,6 @@ const ADD_QUESTION = () => {
 			: CORRECT_ANSWERS.filter((answer) => answer.id !== answerObject.id);
 
 		SET_CORRECT_ANSWERS(UPDATED_CORRECT_ANSWER);
-		console.log('Updated CORRECT_ANSWERS (multi):', UPDATED_CORRECT_ANSWER);
 	};
 
 	const handleCheckboxChange = (
@@ -255,7 +252,6 @@ const ADD_QUESTION = () => {
 			answers: [...watch('answers')]
 		});
 		SET_CONFIRMATION_MODAL(true);
-		console.log(watch());
 	};
 
 	const handleAddQuestionBtn = () => {
