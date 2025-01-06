@@ -43,7 +43,10 @@ const QuizProvider = () => {
 			return;
 		}
 
-		const responseCourse = await fetch(`${BASE_URL}/get-course/${ID}`);
+		const responseCourse = await fetch(`${BASE_URL}/get-course/${ID}`, {
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include'
+		});
 		const data: RootObject = await responseCourse.json();
 		notFoundData(data);
 

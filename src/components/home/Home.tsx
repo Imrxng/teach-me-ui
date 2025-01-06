@@ -20,12 +20,18 @@ const HOME = () => {
 
 
 	const getCourses = async (): Promise<RootObject[]> => {
-		const responseTitles = await fetch(`${BASE_URL}/get-course-titles`);
+		const responseTitles = await fetch(`${BASE_URL}/get-course-titles`, {
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include'
+		});
 		const titles: string[] = await responseTitles.json();
 
 		return await Promise.all(
 			titles.map(async (title) => {
-				const responseCourse = await fetch(`${BASE_URL}/get-course/${title}`);
+				const responseCourse = await fetch(`${BASE_URL}/get-course/${title}`, {
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include'
+				});
 				return await responseCourse.json();
 			})
 		);

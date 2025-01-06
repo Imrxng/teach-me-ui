@@ -3,7 +3,10 @@ const BASE_URL = process.env.BASE_URL || 'https://teach-me-backend.vercel.app/ap
 
 export const fetchCourseTitles = async (): Promise<string[]> => {
 	try {
-		const RESPONSE = await fetch(`${BASE_URL}/get-course-titles`);
+		const RESPONSE = await fetch(`${BASE_URL}/get-course-titles`, {
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include',
+		});
 		const DATA = await RESPONSE.json();
 		return DATA;
 	} catch (error) {
@@ -15,7 +18,9 @@ export const fetchCourseTitles = async (): Promise<string[]> => {
 export const deleteCourse = async (course: string) => {
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/delete-course/${course}`, {
-			method: 'DELETE'
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include'
 		});
 
 		if (!RESPONSE.ok) {
@@ -41,6 +46,7 @@ export const addCourse = async (course: Course): Promise<string> => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			credentials: 'include',
 			body: JSON.stringify(course),
 		});
 
@@ -66,7 +72,10 @@ export const getCourse = async (course: string): Promise<Course> => {
 		date: ''
 	};
 	try {
-		const RESPONSE = await fetch(`${BASE_URL}/get-course/${course}`);
+		const RESPONSE = await fetch(`${BASE_URL}/get-course/${course}`, {
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include'
+		});
 		const JSON: RootObject = await RESPONSE.json();
 		DATA = JSON.content;
 		if(!RESPONSE.ok) throw new Error('');
@@ -83,6 +92,7 @@ export const updateCourse = async (data: Course): Promise<string> => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			credentials: 'include',
 			body: JSON.stringify(data),
 		});
 
@@ -103,6 +113,7 @@ export const addQuestion = async (data: Course) => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			credentials: 'include',
 			body: JSON.stringify(data),
 		});
 
@@ -121,6 +132,7 @@ export const createUser = async (user: User) => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			credentials: 'include',
 			body: JSON.stringify(user),
 		});
 
@@ -134,7 +146,10 @@ export const createUser = async (user: User) => {
 
 export const getAllUsernames = async (): Promise<string[]> => {
 	try {
-		const RESPONSE = await fetch(`${BASE_URL}/get-all-usernames`);
+		const RESPONSE = await fetch(`${BASE_URL}/get-all-usernames`, {
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include'
+		});
 		const DATA: string[] = await RESPONSE.json();
 		return DATA; 
 	} catch (error) {
@@ -146,7 +161,9 @@ export const getAllUsernames = async (): Promise<string[]> => {
 export const deleteUserFromDb = async (username: string) => {
 	try {
 		const RESPONSE = await fetch(`${BASE_URL}/delete-user/${username}`, {
-			method: 'DELETE'
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include'
 		});
 		if (!RESPONSE.ok) {
 			throw new Error(`Failed to delete course ${username.toUpperCase()}`);
@@ -163,6 +180,7 @@ export const updateUser = async (data: User, oldUsername: string): Promise<strin
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			credentials: 'include',
 			body: JSON.stringify(data),
 		});
 
