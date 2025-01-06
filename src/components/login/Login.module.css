@@ -50,6 +50,7 @@
 
 .inputBox label {
     font-size: large;
+    padding-bottom: 10px;
 }
 
 .inputBoxes {
@@ -59,13 +60,15 @@
 
 .btn{
     margin: 0;
+    text-align: center;
+    margin-top: -10px;
 }
 
 
 .errorMessage {
     color: red;
     position: absolute;
-    top: 20px;
+    bottom: 30px;
     text-align: center;
     font-size: 12pt;
 }
