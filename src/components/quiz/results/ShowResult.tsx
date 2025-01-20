@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link  } from 'react-router-dom';
 import { QuizContext } from '../provider/QuizContext';
 import styles from './ShowResult.module.css';
 import DATACONTEXT from '../../../context/DataContext';
@@ -79,7 +79,7 @@ const ShowResult = ({ CURRENT_INDEX } : ShowResultProps) => {
 			</div>
 			<div className={styles.btnsContainer}>
 				<button id='cy-quiz-result-page-back-home-btn' className={styles.btn} onClick={() => NAVIGATE('/')}>Back to home</button>
-				<a id='cy-quiz-result-page-restart-btn' className={styles.btn} href={`https://teach-me-ui.vercel.app/#/quiz/${ID}`}>Restart quiz</a>
+				<Link id='cy-quiz-result-page-restart-btn' className={styles.btn} to={`/#/quiz/${ID}`}>Restart quiz</a>
 			</div>
 		</div>
 	);
