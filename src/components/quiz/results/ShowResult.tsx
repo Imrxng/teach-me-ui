@@ -79,7 +79,7 @@ const ShowResult = ({ CURRENT_INDEX } : ShowResultProps) => {
 			</div>
 			<div className={styles.btnsContainer}>
 				<button id='cy-quiz-result-page-back-home-btn' className={styles.btn} onClick={() => NAVIGATE('/')}>Back to home</button>
-				<a id='cy-quiz-result-page-restart-btn' className={styles.btn} href={`/quiz/${ID}`}>Restart quiz</a>
+				<a id='cy-quiz-result-page-restart-btn' className={styles.btn} href={`#/quiz/${ID}`}>Restart quiz</a>
 			</div>
 		</div>
 	);
